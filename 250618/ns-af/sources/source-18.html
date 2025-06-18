@@ -1,0 +1,371 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > VoucherLocalType</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.domain.entities</a>
+</div>
+
+<h1>Coverage Summary for Class: VoucherLocalType (vn.momo.compose.payment.promotion.domain.entities)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">VoucherLocalType</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (55/55)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">VoucherLocalType$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (60/60)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.domain.entities
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;
+&nbsp;enum class VoucherStatus(val code: Int) {
+&nbsp;    Default(1),
+&nbsp;    GiftMask(12),
+&nbsp;    VoucherCoin(3001),
+&nbsp;    ConnectionError(1000),
+&nbsp;}
+&nbsp;
+<b class="fc">&nbsp;@Serializable</b>
+&nbsp;enum class VoucherLocalType {
+<b class="fc">&nbsp;    Recommend,</b>
+<b class="fc">&nbsp;    Invalid,</b>
+<b class="fc">&nbsp;    GiftMask,</b>
+<b class="fc">&nbsp;    InvalidGiftMask,</b>
+<b class="fc">&nbsp;    VoucherCoin,</b>
+<b class="fc">&nbsp;    InvalidVoucherCoin,</b>
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;enum class VoucherGroup {
+&nbsp;    group_0,
+&nbsp;    group_external,
+&nbsp;    group_sof,
+&nbsp;    group_non_sof,
+&nbsp;    discount_code,
+&nbsp;    promo_code;
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        fun from(group: String?): VoucherGroup? {
+&nbsp;            return when (group) {
+&nbsp;                &quot;group_0&quot; -&gt; group_0
+&nbsp;                &quot;group_external&quot; -&gt; group_external
+&nbsp;                &quot;group_sof&quot; -&gt; group_sof
+&nbsp;                &quot;group_non_sof&quot; -&gt; group_non_sof
+&nbsp;                &quot;discount_code&quot; -&gt; discount_code
+&nbsp;                &quot;promo_code&quot; -&gt; promo_code
+&nbsp;                else -&gt; null
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherUserProfStatus(
+&nbsp;    val btnTitle: JsonElement? = null,
+&nbsp;    val description: JsonElement? = null,
+&nbsp;    val errorCode: Int? = null,
+&nbsp;    val extra: JsonObject? = null,
+&nbsp;    val refId: String? = null,
+&nbsp;    val subText: JsonElement? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherCoinExtraGiftType(
+&nbsp;    val voucherServiceName: String? = null,
+&nbsp;    val prefixName: String? = null,
+&nbsp;    val suffixName: String? = null,
+&nbsp;    val btnTitle: String? = null,
+&nbsp;    val serviceGroup: String? = null,
+&nbsp;    val serviceType: String? = null,
+&nbsp;    val finalService: String? = null,
+&nbsp;    val giftCondition: JsonObject? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;sealed interface IVoucherExtra {
+&nbsp;    val voucherServiceName: String?
+&nbsp;    val paymentMethod: String?
+&nbsp;    val campaignId: String?
+&nbsp;    val collectId: String?
+&nbsp;    val failGiftDesc: String?
+&nbsp;    val btnTitle: String?
+&nbsp;    val campaign: String?
+&nbsp;    val finalService: String?
+&nbsp;    val prefixName: String?
+&nbsp;    val serviceGroup: String?
+&nbsp;    val serviceType: String?
+&nbsp;    val suffixName: String?
+&nbsp;    val task: String?
+&nbsp;    val userProfStatus: VoucherUserProfStatus?
+&nbsp;    val giftCondition: JsonObject?
+&nbsp;    val isInvalid: Boolean?
+&nbsp;
+&nbsp;    // voucher reward
+&nbsp;    val rewardId: String?
+&nbsp;    val isInsufficientCoin: Boolean?
+&nbsp;    val salePrice: Long?
+&nbsp;    val originalPrice: Long?
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherExtra(
+&nbsp;    override val voucherServiceName: String? = null,
+&nbsp;    override val paymentMethod: String? = null,
+&nbsp;    override val campaignId: String? = null,
+&nbsp;    override val collectId: String? = null,
+&nbsp;    override val failGiftDesc: String? = null,
+&nbsp;    override val btnTitle: String? = null,
+&nbsp;    override val campaign: String? = null,
+&nbsp;    override val finalService: String? = null,
+&nbsp;    override val prefixName: String? = null,
+&nbsp;    override val serviceGroup: String? = null,
+&nbsp;    override val serviceType: String? = null,
+&nbsp;    override val suffixName: String? = null,
+&nbsp;    override val task: String? = null,
+&nbsp;    override val userProfStatus: VoucherUserProfStatus? = null,
+&nbsp;    override val giftCondition: JsonObject? = null,
+&nbsp;    override val isInvalid: Boolean? = null,
+&nbsp;
+&nbsp;    // voucher reward
+&nbsp;    override val rewardId: String? = null,
+&nbsp;    override val isInsufficientCoin: Boolean? = null,
+&nbsp;    override val salePrice: Long? = null,
+&nbsp;    override val originalPrice: Long? = null,
+&nbsp;) : IVoucherExtra
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherDescription(
+&nbsp;    val policyDesc: String? = null,
+&nbsp;    val conditionDesc: String? = null,
+&nbsp;    val shortConditionDesc: String? = null,
+&nbsp;    val userGuideDesc: String? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;sealed interface IVoucherBase {
+&nbsp;    val ID: String?
+&nbsp;    val id: String?
+&nbsp;    val giftId: String?
+&nbsp;    val modelId: String?
+&nbsp;    val typeId: String?
+&nbsp;    val giftType: String?
+&nbsp;    val autoId: Double?
+&nbsp;    val serviceId: String?
+&nbsp;    val icon: String?
+&nbsp;    val prefixName: String?
+&nbsp;    val suffixName: String?
+&nbsp;    val groups: List&lt;VoucherGroup?&gt;?
+&nbsp;    val campaign: String?
+&nbsp;    val type_: Int?
+&nbsp;    val extra: IVoucherExtra?
+&nbsp;    val amount: Double?
+&nbsp;    val amountGT: Double?
+&nbsp;    val status: Int?
+&nbsp;    val isLock: Boolean
+&nbsp;    val note: String?
+&nbsp;    val name: String
+&nbsp;    val desc: String
+&nbsp;    val policy: String
+&nbsp;    val ver: Double?
+&nbsp;    val owner: String?
+&nbsp;    val giftConditionDesc: String?
+&nbsp;    val descGift: VoucherDescription?
+&nbsp;    val startDate: Double?
+&nbsp;    val endDate: Double?
+&nbsp;
+&nbsp;    val localType: VoucherLocalType?
+&nbsp;    val generatedAt: Long?
+&nbsp;
+&nbsp;    // voucher reward
+&nbsp;    val extraGiftType: VoucherCoinExtraGiftType?
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherBase(
+&nbsp;    override val ID: String? = null,
+&nbsp;    override val id: String? = null,
+&nbsp;    override val giftId: String? = null,
+&nbsp;    override val modelId: String? = null,
+&nbsp;    override val typeId: String? = null,
+&nbsp;    override val giftType: String? = null,
+&nbsp;    override val autoId: Double? = null,
+&nbsp;    override val serviceId: String? = null,
+&nbsp;    override val icon: String? = null,
+&nbsp;    override val prefixName: String? = &quot;&quot;,
+&nbsp;    override val suffixName: String? = &quot;&quot;,
+&nbsp;    override val groups: List&lt;VoucherGroup?&gt;? = emptyList(),
+&nbsp;    override val campaign: String? = null,
+&nbsp;    override val type_: Int? = null,
+&nbsp;    override val extra: VoucherExtra? = null,
+&nbsp;    override val amount: Double? = null,
+&nbsp;    override val amountGT: Double? = null,
+&nbsp;    override val status: Int? = null,
+&nbsp;    override val isLock: Boolean = false,
+&nbsp;    override val note: String? = &quot;&quot;,
+&nbsp;    override val name: String = &quot;&quot;,
+&nbsp;    override val desc: String = &quot;&quot;,
+&nbsp;    override val policy: String = &quot;&quot;,
+&nbsp;    override val ver: Double? = null,
+&nbsp;    override val owner: String? = &quot;&quot;,
+&nbsp;    override val giftConditionDesc: String? = null,
+&nbsp;    override val descGift: VoucherDescription? = null,
+&nbsp;    override val startDate: Double? = null,
+&nbsp;    override val endDate: Double? = null,
+&nbsp;
+&nbsp;    override val localType: VoucherLocalType? = null,
+&nbsp;    override val generatedAt: Long? = null,
+&nbsp;
+&nbsp;    // voucher reward
+&nbsp;    override val extraGiftType: VoucherCoinExtraGiftType? = null,
+&nbsp;) : IVoucherBase
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > CheckoutInvoiceHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.repositoryImpl.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: CheckoutInvoiceHandler (vn.momo.compose.payment.payx.data.repositoryImpl.transaction)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">CheckoutInvoiceHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.repositoryImpl.transaction
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.combine
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.contentOrNull
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import org.koin.core.parameter.parametersOf
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.INavigator
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.GrafanaTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.PayXUserEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.CheckoutResponded
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.SofDTO
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.memory.CachedSuggestedSof
+&nbsp;import vn.momo.compose.payment.base.domain.entities.DisableType
+&nbsp;import vn.momo.compose.payment.base.domain.repository.LocalSofRepository
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.SofInformation
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionInvoiceHandler
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionSofHandler
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.mergeWithLocal
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.toModel
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.CheckoutResponseDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.TransactionResponseDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.PaymentSession
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.remote.CheckoutDataSource
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.InvoiceItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXTransaction
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.ICheckoutRepo
+&nbsp;
+&nbsp;class CheckoutSofHandler(
+&nbsp;    private val navigator: INavigator,
+&nbsp;    private val localSofRepo: LocalSofRepository,
+&nbsp;    private val checkoutData: TransactionResponseDTO?,
+&nbsp;    private val localSof: List&lt;SofDTO&gt;,
+&nbsp;    private val cachedSofList: CachedSuggestedSof,
+&nbsp;    private val logger: ILogger
+&nbsp;) : TransactionSofHandler {
+&nbsp;    override suspend fun buildSofList(): SofInformation {
+&nbsp;        val extraData = checkoutData?.extraConverted
+&nbsp;        val remoteSofList = extraData?.sofInfoList ?: emptyList()
+&nbsp;        logger.i(&quot;[PayX] remoteSofList: ${checkoutData?.extraConverted?.sofInfo}&quot;)
+&nbsp;        if (remoteSofList?.isEmpty() == true) {
+&nbsp;            GrafanaTrace.count(PayXUserEvent.CountSofListEmpty.event)
+&nbsp;        }
+&nbsp;        showToastDebugSof(checkoutData?.extraConverted?.sofInfoList)
+&nbsp;        val serviceCode =
+&nbsp;            checkoutData?.momoMsg?.purchaseInfo?.invoiceInfo?.firstOrNull()?.items?.firstOrNull()?.serviceId
+&nbsp;
+&nbsp;        return SofInformation(
+&nbsp;            list = remoteSofList
+&nbsp;                .map { it.mergeWithLocal(localSof) }
+&nbsp;                .ifEmpty { localSofRepo.filterService(localSof, serviceCode) }
+&nbsp;                .also { cachedSofList.list = it }
+&nbsp;                .map { dto -&gt; dto.toModel() }
+&nbsp;                .filter { sof -&gt; sof.canDisplay &amp;&amp; sof.isValidSourceToken() },
+&nbsp;            isRemoteEmpty = remoteSofList.isEmpty()
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun showToastDebugSof(
+&nbsp;        sofList: List&lt;SofDTO&gt;?
+&nbsp;    ) {
+&nbsp;        navigator.showToastDebugger(buildJsonObject {
+&nbsp;            put(&quot;title&quot;, &quot;SofInfo from BE - Carousel&quot;)
+&nbsp;            put(&quot;message&quot;, &quot;Take ${sofList?.size} money source from BE&quot;)
+&nbsp;            put(&quot;duration&quot;, 3000)
+&nbsp;        })
+&nbsp;    }
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;class CheckoutInvoiceHandler(</b>
+<b class="nc">&nbsp;    private val response: CheckoutResponseDTO,</b>
+<b class="nc">&nbsp;    private val logger: ILogger</b>
+&nbsp;) :
+&nbsp;    TransactionInvoiceHandler {
+&nbsp;    override fun buildInvoiceList(): List&lt;InvoiceItem&gt; {
+<b class="nc">&nbsp;        logger.i(&quot;[PayX] paymentInfo: ${response.paymentInfo}&quot;)</b>
+<b class="nc">&nbsp;        return response.checkoutData?.momoMsg?.purchaseInfo?.invoiceInfo.toModel(</b>
+<b class="nc">&nbsp;            response.paymentInfo</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;class CheckoutRepository(
+&nbsp;    private val remote: CheckoutDataSource,
+&nbsp;    private val localSof: LocalSofRepository,
+&nbsp;) : ICheckoutRepo {
+&nbsp;    override fun checkout(): Flow&lt;PayXTransaction&gt; {
+&nbsp;        return remote.checkout()
+&nbsp;            .take(1)
+&nbsp;            .combine(localSof.getLocalSofSdk()) { response, localSof -&gt;
+&nbsp;                val checkoutData = response.checkoutData
+&nbsp;                val koinScope = PaymentKoinScope.getScope()
+&nbsp;                val presentationInvoice =
+&nbsp;                    checkoutData?.momoMsg?.purchaseInfo?.invoiceInfo?.firstOrNull()?.items?.firstOrNull()
+&nbsp;                koinScope.get&lt;PaymentSession&gt;().update { data -&gt;
+&nbsp;                    data.copy(
+&nbsp;                        serviceCode = data.serviceCode?.takeIf { it.isNotEmpty() }
+&nbsp;                            ?: presentationInvoice?.serviceId ?: &quot;&quot;,
+&nbsp;                        serviceType = presentationInvoice?.serviceType ?: &quot;&quot;,
+&nbsp;                        purchaseId = checkoutData?.momoMsg?.purchaseId ?: &quot;&quot;,
+&nbsp;                        initialPurchaseId = checkoutData?.momoMsg?.purchaseId ?: &quot;&quot;,
+&nbsp;                        disableSof = response.serviceTransData?.disableSof?.filterNotNull()
+&nbsp;                    )
+&nbsp;                }
+&nbsp;                val handler = koinScope.get&lt;TransactionResponseHandler&gt; {
+&nbsp;                    parametersOf(
+&nbsp;                        koinScope.get&lt;CheckoutSofHandler&gt; {
+&nbsp;                            parametersOf(checkoutData, localSof)
+&nbsp;                        },
+&nbsp;                        koinScope.get&lt;CheckoutInvoiceHandler&gt; { parametersOf(response) }
+&nbsp;                    )
+&nbsp;                }
+&nbsp;                FirebaseTrace.track(
+&nbsp;                    CheckoutResponded(
+&nbsp;                        status = true,
+&nbsp;                        errorCode = checkoutData?.errorCode,
+&nbsp;                        bundleSof = checkoutData?.momoMsg?.purchaseInfo?.bundleSof?.firstOrNull()?.moneySource,
+&nbsp;                        result = checkoutData?.result == true,
+&nbsp;                        isSofEmpty = checkoutData?.extraConverted?.sofInfoList?.isEmpty() == true,
+&nbsp;                        availableSofs = checkoutData?.extraConverted?.sofInfoList?.filter { it.moneySource != null &amp;&amp; it.disableType == DisableType.Show.type }
+&nbsp;                            ?.joinToString(separator = &quot;,&quot;) { it.moneySource.toString() },
+&nbsp;                        errorCategory = checkoutData?.trackingMap?.failureReason?.contentOrNull
+&nbsp;                    )
+&nbsp;                )
+&nbsp;                return@combine handler.handleResponse(checkoutData).copy(
+&nbsp;                    serviceCartData = response.cartData
+&nbsp;                )
+&nbsp;            }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

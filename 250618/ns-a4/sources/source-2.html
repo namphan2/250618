@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PromotionApiPerfEvent</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.core.model</a>
+</div>
+
+<h1>Coverage Summary for Class: PromotionApiPerfEvent (vn.momo.compose.payment.promotion.core.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PromotionApiPerfEvent</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/191)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.core.model
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.GrafanaMetric
+&nbsp;
+<b class="nc">&nbsp;enum class PromotionApiPerfEvent(val event: GrafanaMetric) {</b>
+<b class="nc">&nbsp;    GetRecommendVouchersMultiBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_recommend_vouchers_multi_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetValidCollectVouchersMultiBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_valid_collect_vouchers_multi_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetInvalidCollectVouchersMultiBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_invalid_collect_vouchers_multi_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetInvalidVouchersMultiBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_invalid_vouchers_multi_bill&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    GetRecommendVouchersSingleBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_recommend_vouchers_single_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetValidCollectVouchersSingleBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_valid_collect_vouchers_single_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetInvalidCollectVouchersSingleBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_invalid_collect_vouchers_single_bill&quot;)),</b>
+<b class="nc">&nbsp;    GetInvalidVouchersSingleBill(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_invalid_vouchers_single_bill&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    GetRecommendVouchersPos(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_recommend_vouchers_pos&quot;)),</b>
+<b class="nc">&nbsp;    GetInvalidVouchersPos(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_invalid_vouchers_pos&quot;)),</b>
+<b class="nc">&nbsp;    GetSearchVouchersPos(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_search_vouchers_pos&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    GetVoucherDetail(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_voucher_detail&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    GetCoinVouchers(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;get_coin_vouchers&quot;)),</b>
+<b class="nc">&nbsp;    ClaimCoinVoucher(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;claim_coin_voucher&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    CheckPromoCode(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;check_promo_code&quot;)),</b>
+&nbsp;
+<b class="nc">&nbsp;    CollectVoucher(GrafanaMetric(flow = &quot;promotion_api&quot;, step = &quot;collect_voucher&quot;)),</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > RibbonBadge</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.components.xsale</a>
+</div>
+
+<h1>Coverage Summary for Class: RibbonBadge (vn.momo.compose.payment.payx.presentation.view.components.xsale)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">RibbonBadge</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/96)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/736)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.components.xsale
+&nbsp;
+&nbsp;import androidx.compose.foundation.Canvas
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.geometry.Offset
+&nbsp;import androidx.compose.ui.geometry.Size
+&nbsp;import androidx.compose.ui.text.style.TextOverflow
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.xsale.XSaleBadge
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.scaledPadding
+&nbsp;import vn.momo.core.features.annotation.Stable
+&nbsp;import vn.momo.kits.components.Text
+&nbsp;import vn.momo.kits.const.Colors
+&nbsp;import vn.momo.kits.const.Typography
+&nbsp;
+&nbsp;@Stable
+&nbsp;object RibbonBadge {
+&nbsp;    @Composable
+<b class="nc">&nbsp;    fun Text(data: XSaleBadge) {</b>
+<b class="nc">&nbsp;        Text(</b>
+<b class="nc">&nbsp;            text = if (data.label.length &lt; 20) data.label else data.label.substring(</b>
+<b class="nc">&nbsp;                0,</b>
+<b class="nc">&nbsp;                20</b>
+&nbsp;            ) + &quot;...&quot;,
+<b class="nc">&nbsp;            style = Typography.labelXsMedium,</b>
+<b class="nc">&nbsp;            color = Colors.black_01,</b>
+<b class="nc">&nbsp;            maxLines = 1,</b>
+<b class="nc">&nbsp;            overflow = TextOverflow.Ellipsis</b>
+&nbsp;        )
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Composable
+&nbsp;    fun Default(
+<b class="nc">&nbsp;        modifier: Modifier = Modifier,</b>
+&nbsp;        data: XSaleBadge
+<b class="nc">&nbsp;    ) {</b>
+<b class="nc">&nbsp;        Box(</b>
+&nbsp;            modifier = modifier
+&nbsp;        ) {
+<b class="nc">&nbsp;            Canvas(modifier = Modifier.matchParentSize()) {</b>
+<b class="nc">&nbsp;                val boxWidth = size.width</b>
+<b class="nc">&nbsp;                val boxHeight = size.height</b>
+<b class="nc">&nbsp;                drawCircle(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    radius = boxHeight / 2,</b>
+<b class="nc">&nbsp;                    center = Offset(boxHeight / 2, boxHeight / 2)</b>
+&nbsp;                )
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(boxHeight / 2, 0f),</b>
+<b class="nc">&nbsp;                    size = Size(</b>
+<b class="nc">&nbsp;                        boxWidth - boxHeight / 4 - boxHeight / 2,</b>
+<b class="nc">&nbsp;                        boxHeight</b>
+&nbsp;                    )
+&nbsp;                )
+<b class="nc">&nbsp;                drawCircle(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    radius = boxHeight / 4,</b>
+<b class="nc">&nbsp;                    center = Offset(boxWidth - boxHeight / 4, boxHeight / 4)</b>
+&nbsp;                )
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(boxWidth - boxHeight / 4, boxHeight / 4),</b>
+<b class="nc">&nbsp;                    size = Size(</b>
+<b class="nc">&nbsp;                        boxHeight / 4,</b>
+<b class="nc">&nbsp;                        boxHeight - boxHeight / 4</b>
+&nbsp;                    )
+&nbsp;                )
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(boxWidth - boxHeight / 8, boxHeight),</b>
+<b class="nc">&nbsp;                    size = Size(boxHeight / 8, boxHeight / 8)</b>
+&nbsp;                )
+<b class="nc">&nbsp;                drawArc(</b>
+<b class="nc">&nbsp;                    color = Colors.red_01,</b>
+<b class="nc">&nbsp;                    startAngle = -90f,</b>
+<b class="nc">&nbsp;                    sweepAngle = 180f,</b>
+<b class="nc">&nbsp;                    useCenter = true,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(boxWidth - boxHeight / 8, boxHeight),</b>
+<b class="nc">&nbsp;                    size = Size(boxHeight / 8, boxHeight / 8)</b>
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            Box(</b>
+<b class="nc">&nbsp;                modifier = Modifier.scaledPadding(start = 8f, end = 3f, bottom = 2f),</b>
+&nbsp;            ) {
+<b class="nc">&nbsp;                Text(data)</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Composable
+&nbsp;    fun Reverse(
+<b class="nc">&nbsp;        modifier: Modifier = Modifier,</b>
+&nbsp;        data: XSaleBadge
+<b class="nc">&nbsp;    ) {</b>
+<b class="nc">&nbsp;        Box(modifier = modifier) {</b>
+<b class="nc">&nbsp;            Canvas(modifier = Modifier.matchParentSize()) {</b>
+<b class="nc">&nbsp;                val boxWidth = size.width</b>
+<b class="nc">&nbsp;                val boxHeight = size.height</b>
+&nbsp;
+<b class="nc">&nbsp;                drawCircle(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    radius = boxHeight / 2,</b>
+<b class="nc">&nbsp;                    center = Offset(boxWidth - boxHeight / 2, boxHeight / 2)</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(boxHeight / 4, 0f),</b>
+<b class="nc">&nbsp;                    size = Size(</b>
+<b class="nc">&nbsp;                        boxWidth - boxHeight / 4 - boxHeight / 2,</b>
+<b class="nc">&nbsp;                        boxHeight</b>
+&nbsp;                    )
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                drawCircle(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    radius = boxHeight / 4,</b>
+<b class="nc">&nbsp;                    center = Offset(boxHeight / 4, boxHeight / 4)</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(0f, boxHeight / 4),</b>
+<b class="nc">&nbsp;                    size = Size(</b>
+<b class="nc">&nbsp;                        boxHeight / 4,</b>
+<b class="nc">&nbsp;                        boxHeight - boxHeight / 4</b>
+&nbsp;                    )
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                drawRect(</b>
+<b class="nc">&nbsp;                    color = Colors.orange_03,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(0f, boxHeight),</b>
+<b class="nc">&nbsp;                    size = Size(boxHeight / 8, boxHeight / 8)</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                drawArc(</b>
+<b class="nc">&nbsp;                    color = Colors.red_01,</b>
+<b class="nc">&nbsp;                    startAngle = -90f,</b>
+<b class="nc">&nbsp;                    sweepAngle = 180f,</b>
+<b class="nc">&nbsp;                    useCenter = true,</b>
+<b class="nc">&nbsp;                    topLeft = Offset(0f, boxHeight),</b>
+<b class="nc">&nbsp;                    size = Size(boxHeight / 8, boxHeight / 8)</b>
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            Box(</b>
+<b class="nc">&nbsp;                modifier = Modifier.scaledPadding(start = 3f, end = 8f, bottom = 2f, top = 2f),</b>
+&nbsp;            ) {
+<b class="nc">&nbsp;                Text(data)</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

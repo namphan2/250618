@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > CheckoutDataSource</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.remote</a>
+</div>
+
+<h1>Coverage Summary for Class: CheckoutDataSource (vn.momo.compose.payment.payx.data.dataSource.remote)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">CheckoutDataSource</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/38)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CheckoutDataSource$checkout$$inlined$transform$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CheckoutDataSource$checkout$$inlined$transform$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">CheckoutDataSource$checkout$$inlined$transform$1$1$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">CheckoutDataSource$Companion</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/56)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.remote
+&nbsp;
+&nbsp;import kotlinx.coroutines.FlowPreview
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.timeout
+&nbsp;import kotlinx.coroutines.flow.transform
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.observer.IObserverService
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.CheckoutObservedDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.CheckoutResponseDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.PaymentSession
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentError
+&nbsp;import kotlin.time.Duration.Companion.seconds
+&nbsp;
+<b class="nc">&nbsp;class CheckoutDataSource(</b>
+<b class="nc">&nbsp;    private val checkoutObserve: IObserverService,</b>
+<b class="nc">&nbsp;    private val logger: ILogger</b>
+&nbsp;) {
+&nbsp;    private val checkoutId
+<b class="nc">&nbsp;        get() = PaymentKoinScope.getScope().get&lt;PaymentSession&gt;().requestPayXData.checkoutId</b>
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        const val CHECKOUT_OBSERVE_KEY = &quot;vn.momo.payx.checkout&quot;
+&nbsp;    }
+&nbsp;
+&nbsp;    @OptIn(FlowPreview::class)
+&nbsp;    fun checkout(): Flow&lt;CheckoutResponseDTO&gt; {
+<b class="nc">&nbsp;        return checkoutObserve.behaviorObserve(</b>
+<b class="nc">&nbsp;            CHECKOUT_OBSERVE_KEY,</b>
+<b class="nc">&nbsp;            CheckoutObservedDTO.serializer(),</b>
+<b class="nc">&nbsp;            3.seconds // P95 API checkout</b>
+&nbsp;        )
+<b class="nc">&nbsp;            .transform { value -&gt;</b>
+&nbsp;                if (value?.cId == null || checkoutId == null || checkoutId != value.cId) {
+<b class="nc">&nbsp;                    logger.e(&quot;[PayX] CheckoutDataSource.checkout ${value?.cId} || $checkoutId&quot;)</b>
+&nbsp;                    return@transform
+&nbsp;                }
+&nbsp;                if (value.data == null) {
+&nbsp;                    logger.e(&quot;[PayX] CheckoutDataSource.checkout &gt;&gt; value.data == null&quot;)
+&nbsp;                    return@transform
+&nbsp;                }
+&nbsp;                val checkoutDto = value.data!!
+&nbsp;                when (value.state) {
+&nbsp;                    &quot;FINISHED&quot; -&gt; {
+&nbsp;                        emit(checkoutDto)
+&nbsp;                    }
+&nbsp;
+&nbsp;                    &quot;FOCUSING&quot;, &quot;NETWORK_ERROR&quot; -&gt; {}
+&nbsp;
+&nbsp;                    else -&gt; {
+&nbsp;                        throw PaymentError.UnknownError(
+&nbsp;                            code = checkoutDto.errorCode,
+&nbsp;                            message = checkoutDto.errorDesc,
+&nbsp;                            cause = null
+&nbsp;                        )
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            .timeout(20.seconds)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

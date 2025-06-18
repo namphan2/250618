@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > UiDialog</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler</a>
+</div>
+
+<h1>Coverage Summary for Class: UiDialog (vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UiDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/210)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UiDialog$handle$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/210)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.INavigator
+&nbsp;import vn.momo.compose.payment.base.core.model.NavigatorErrorPopup
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ErrorPopupDisplayed
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXAction
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.overlayData.PayXButton
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.overlayData.PayXDialog
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.overlayData.PayXTrackingParams
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.actionData.PayXActionCreator
+&nbsp;import vn.momo.core.features.authentication.localization.localized
+&nbsp;
+<b class="nc">&nbsp;class UiDialog(</b>
+<b class="nc">&nbsp;    private val navigator: INavigator,</b>
+<b class="nc">&nbsp;    private val data: PayXDialog,</b>
+<b class="nc">&nbsp;    override val actionCreator: PayXActionCreator</b>
+&nbsp;) : UiOverlay {
+&nbsp;    override suspend fun handle(): PayXAction? {
+<b class="nc">&nbsp;        val buttons = data.buttons?.takeIf { it.isNotEmpty() }</b>
+<b class="nc">&nbsp;            ?: listOf(PayXButton(title = &quot;btnClose&quot;.localized()))</b>
+<b class="nc">&nbsp;        val primaryButton = buttons.getOrNull(0)?.title</b>
+<b class="nc">&nbsp;        val secondaryButton = buttons.getOrNull(1)?.title</b>
+<b class="nc">&nbsp;        FirebaseTrace.track(ErrorPopupDisplayed(errorCode = data.errorCode, orderId = data.orderId))</b>
+<b class="nc">&nbsp;        return navigator.showErrorDialog(</b>
+<b class="nc">&nbsp;            NavigatorErrorPopup(</b>
+<b class="nc">&nbsp;                icon = data.image,</b>
+<b class="nc">&nbsp;                title = data.title,</b>
+<b class="nc">&nbsp;                bodyContent = data.content,</b>
+<b class="nc">&nbsp;                errorCode = data.errorCode.toString(),</b>
+<b class="nc">&nbsp;                primaryButton = primaryButton,</b>
+<b class="nc">&nbsp;                secondaryButton = secondaryButton,</b>
+<b class="nc">&nbsp;                buttonDirection = (data.buttonDirection ?: &quot;row&quot;),</b>
+<b class="nc">&nbsp;                cancelable = data.cancelable,</b>
+<b class="nc">&nbsp;                isShowErrorInfo = data.isShowErrorInfo</b>
+&nbsp;            )
+<b class="nc">&nbsp;        )?.let { btnIndex -&gt;</b>
+<b class="nc">&nbsp;            buttons.getOrNull(btnIndex)?.let {</b>
+<b class="nc">&nbsp;                actionCreator.createAction(</b>
+<b class="nc">&nbsp;                    it, btnIndex, PayXTrackingParams(</b>
+<b class="nc">&nbsp;                        errorCode = data.errorCode,</b>
+<b class="nc">&nbsp;                        orderId = data.orderId,</b>
+<b class="nc">&nbsp;                        flowType = data.flowType,</b>
+<b class="nc">&nbsp;                        tagName = data.tagName</b>
+&nbsp;                    )
+<b class="nc">&nbsp;                )</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

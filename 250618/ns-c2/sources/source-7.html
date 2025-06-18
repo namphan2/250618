@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > P2PMoMoConfirmDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm</a>
+</div>
+
+<h1>Coverage Summary for Class: P2PMoMoConfirmDTO (vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">P2PMoMoConfirmDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/210)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1242)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">P2PMoMoConfirmDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/210)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1244)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class DefaultMoMoConfirmDTO(
+&nbsp;    override val tranType: Int? = null,
+&nbsp;    override val amount: Double? = null,
+&nbsp;    override val moneySource: Int? = null,
+&nbsp;    override val originalAmount: Double? = null,
+&nbsp;    override val serviceId: String? = null,
+&nbsp;    override var extras: String? = &quot;&quot;, // JsonString
+&nbsp;    override val sourceToken: String? = null,
+&nbsp;    override val _class: String = &quot;mservice.backend.entity.msg.TranHisMsg&quot;,
+&nbsp;    override var otp: String? = null, // for confirm with fraud otp
+&nbsp;    override var otpBanknet: String? = null, // for confirm with bank otp
+&nbsp;    override val ID: String? = null,
+&nbsp;    override val tranId: Long? = null,
+&nbsp;    override val user: String? = &quot;&quot;,
+&nbsp;    val io: Int? = null,
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val status: Int? = null,
+&nbsp;    val ownerNumber: String? = null,
+&nbsp;    val quantity: Int? = null,
+&nbsp;    val share: String? = null,
+&nbsp;    val receiverType: Int? = null,
+&nbsp;    val otpType: String? = null,
+&nbsp;) : SBMoMoMsgConfirmDTO() {
+&nbsp;    override val extrasJsonObject: JsonObject
+&nbsp;        get() = ModelConvertUtils.decode&lt;JsonObject&gt;(extras ?: &quot;{}&quot;)
+&nbsp;            ?: emptyJsonObject()
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class P2PMoMoConfirmDTO(
+<b class="nc">&nbsp;    override val tranType: Int? = null,</b>
+<b class="nc">&nbsp;    override val amount: Double? = null,</b>
+<b class="nc">&nbsp;    override val moneySource: Int? = null,</b>
+<b class="nc">&nbsp;    override val originalAmount: Double? = null,</b>
+<b class="nc">&nbsp;    override val serviceId: String? = null,</b>
+<b class="nc">&nbsp;    override var extras: String? = &quot;&quot;, // JsonString</b>
+<b class="nc">&nbsp;    override val sourceToken: String? = null,</b>
+<b class="nc">&nbsp;    override val _class: String = &quot;mservice.backend.entity.msg.M2MUConfirmMsg&quot;,</b>
+<b class="nc">&nbsp;    override var otp: String? = &quot;&quot;, // for confirm with fraud otp</b>
+<b class="nc">&nbsp;    override var otpBanknet: String? = null, // for confirm with bank otp</b>
+<b class="nc">&nbsp;    override val ID: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    override val user: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    override val tranId: Long? = null,</b>
+<b class="nc">&nbsp;    val idFirstReplyMsg: String? = null,</b>
+<b class="nc">&nbsp;    val partnerId: String? = null,</b>
+<b class="nc">&nbsp;    val partnerCode: String? = null,</b>
+<b class="nc">&nbsp;    val partnerName: String? = null,</b>
+<b class="nc">&nbsp;    val ownerNumber: String? = null,</b>
+<b class="nc">&nbsp;    val quantity: Int? = null,</b>
+<b class="nc">&nbsp;    val share: String? = null,</b>
+<b class="nc">&nbsp;    val receiverType: Int? = null,</b>
+<b class="nc">&nbsp;    val isOtp: Boolean? = null,</b>
+<b class="nc">&nbsp;    val ids: List&lt;String&gt;? = null,</b>
+<b class="nc">&nbsp;    val fee: Double? = 0.0,</b>
+<b class="nc">&nbsp;    val otpType: String? = null,</b>
+<b class="nc">&nbsp;    val riskId: String? = null,</b>
+<b class="nc">&nbsp;    val bankInId: String? = null,</b>
+<b class="nc">&nbsp;) : SBMoMoMsgConfirmDTO() {</b>
+&nbsp;    override val extrasJsonObject: JsonObject
+<b class="nc">&nbsp;        get() = ModelConvertUtils.decode&lt;JsonObject&gt;(extras ?: &quot;{}&quot;)</b>
+<b class="nc">&nbsp;            ?: emptyJsonObject()</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

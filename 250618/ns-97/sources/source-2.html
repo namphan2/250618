@@ -1,0 +1,293 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > NapasConfirmVM</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel</a>
+</div>
+
+<h1>Coverage Summary for Class: NapasConfirmVM (vn.momo.compose.payment.payx.presentation.viewModel)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NapasConfirmVM</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/139)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NapasConfirmVM$cancelTransaction$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NapasConfirmVM$goBack$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/173)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel
+&nbsp;
+&nbsp;import dev.icerock.moko.mvvm.viewmodel.ViewModel
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.INavigator
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.IPaymentVM
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.state.PState
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.ICancelNapasCashInRepository
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.action.NapasCallBackType
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.action.NapasConfirmAction
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonElement
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonObject
+&nbsp;import vn.momo.compose.utils.tryGetLongNullable
+&nbsp;
+&nbsp;class NapasConfirmVM(
+<b class="nc">&nbsp;    private val cancelNapasCashInRepository: ICancelNapasCashInRepository,</b>
+<b class="nc">&nbsp;    private val navigator: INavigator,</b>
+<b class="nc">&nbsp;) : ViewModel(), IPaymentVM&lt;NapasConfirmAction&gt; {</b>
+<b class="nc">&nbsp;    private val canCancelTransaction = PState(viewModelScope, true)</b>
+&nbsp;
+&nbsp;    override fun dispatch(action: NapasConfirmAction) {
+<b class="nc">&nbsp;        when (action) {</b>
+<b class="nc">&nbsp;            is NapasConfirmAction.OnGoBack -&gt; goBack(action.url)</b>
+<b class="nc">&nbsp;            is NapasConfirmAction.OnMessage -&gt; onMessage(</b>
+<b class="nc">&nbsp;                action.message, action.shouldHandleOnDone</b>
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun goBack(url: String) {
+<b class="nc">&nbsp;        navigator.showDialog(</b>
+<b class="nc">&nbsp;            &quot;Huỷ giao dịch&quot;,</b>
+<b class="nc">&nbsp;            &quot;Bạn có chắc chắn muốn huỷ giao dịch này?&quot;,</b>
+<b class="nc">&nbsp;            listOf(&quot;TIẾP TỤC&quot;, &quot;HỦY NGAY&quot;)</b>
+<b class="nc">&nbsp;        ).onEach {</b>
+<b class="nc">&nbsp;            when (it) {</b>
+<b class="nc">&nbsp;                1 -&gt; {</b>
+<b class="nc">&nbsp;                    if (canCancelTransaction.value) {</b>
+<b class="nc">&nbsp;                        cancelTransaction(url)</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    navigator.dismiss(</b>
+<b class="nc">&nbsp;                        buildJsonObject { put(&quot;type&quot;, NapasCallBackType.ON_BACK_OTP.type.toJsonElement()) }</b>
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }.launchIn(viewModelScope)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun cancelTransaction(url: String) {
+<b class="nc">&nbsp;        cancelNapasCashInRepository.requestCancel(url).catch {</b>
+<b class="nc">&nbsp;            print(it.message)</b>
+<b class="nc">&nbsp;        }.launchIn(viewModelScope)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onMessage(message: String?, shouldHandleOnDone: Boolean) {
+<b class="nc">&nbsp;        println(&quot;PHUOC.NGO:::Napas.message $message&quot;)</b>
+<b class="nc">&nbsp;        val transaction = ModelConvertUtils.decode(message ?: &quot;&quot;)</b>
+<b class="nc">&nbsp;        val tranId = transaction.tryGetLongNullable(&quot;tranId&quot;)</b>
+<b class="nc">&nbsp;        if (tranId != null) {</b>
+<b class="nc">&nbsp;            canCancelTransaction.update(false)</b>
+<b class="nc">&nbsp;            onDoneOtp(transaction.toJsonObject(), shouldHandleOnDone)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onDoneOtp(transaction: JsonObject, shouldHandleOnDone: Boolean) {
+<b class="nc">&nbsp;        if (shouldHandleOnDone) {</b>
+<b class="nc">&nbsp;            val callbackData = buildJsonObject {</b>
+<b class="nc">&nbsp;                put(&quot;type&quot;, NapasCallBackType.ON_DONE_OTP.type.toJsonElement())</b>
+<b class="nc">&nbsp;                put(&quot;transaction&quot;, transaction)</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            navigator.dismiss(callbackData)</b>
+&nbsp;        } //TODO: handle request sync
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

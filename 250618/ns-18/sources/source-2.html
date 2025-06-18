@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IRemoteService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.composeApi.network</a>
+</div>
+
+<h1>Coverage Summary for Class: IRemoteService (vn.momo.compose.payment.base.core.composeApi.network)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">IRemoteService</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.composeApi.network
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import kotlinx.serialization.KSerializer
+&nbsp;import kotlinx.serialization.builtins.serializer
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestOneShot
+&nbsp;import vn.momo.api.requestWithFlow
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.model.VixResponse
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.model.PinKeySessionResponse
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.model.VixNetworkResponse
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.PaymentNetworkRequest
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.emptyJsonObject
+&nbsp;import vn.momo.koin.KoinHelper
+&nbsp;
+&nbsp;interface IRemoteService {
+&nbsp;    fun &lt;T&gt; post(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt;
+&nbsp;
+&nbsp;    suspend fun &lt;T&gt; sendMessage(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): VixNetworkResponse&lt;T&gt;?
+&nbsp;
+&nbsp;    fun &lt;T&gt; get(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt;
+&nbsp;
+&nbsp;    suspend fun &lt;T&gt; getMessage(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): VixNetworkResponse&lt;T&gt;?
+&nbsp;
+&nbsp;    fun requestPinKey(pinKey: String?, eventParams: JsonObject): Flow&lt;PinKeySessionResponse?&gt;
+&nbsp;
+&nbsp;    fun &lt;T&gt; sendMessage(
+&nbsp;        params: JsonObject,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt;
+&nbsp;}
+&nbsp;
+&nbsp;class PayXNetWork(private val service: IComposeApi) : IRemoteService {
+&nbsp;    override fun &lt;T&gt; post(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt; {
+&nbsp;        val logger by lazy { KoinHelper.getInjected&lt;ILogger&gt;() }
+&nbsp;        val jsonParam = params.toJson()
+&nbsp;        logger.i(&quot;[PayX] PayXNetWork.post.jsonParam: $jsonParam&quot;)
+&nbsp;        return service.requestWithFlow(
+&nbsp;            APIs.sendMessage.name,
+&nbsp;            listOf(jsonParam)
+&nbsp;        )
+&nbsp;            .take(1)
+&nbsp;            .map {
+&nbsp;                ModelConvertUtils.decode(
+&nbsp;                    VixResponse.serializer(
+&nbsp;                        VixNetworkResponse.serializer(
+&nbsp;                            responseSerializer
+&nbsp;                        )
+&nbsp;                    ), it
+&nbsp;                )?.response
+&nbsp;            }
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun &lt;T&gt; sendMessage(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): VixNetworkResponse&lt;T&gt;? {
+&nbsp;        val paramDecoded = params.toJson()
+&nbsp;        return paramDecoded?.let { jsonParam -&gt;
+&nbsp;            service.requestOneShot(APIs.sendMessage.name, listOf(jsonParam))
+&nbsp;                .let {
+&nbsp;                    ModelConvertUtils.decode(
+&nbsp;                        VixResponse.serializer(
+&nbsp;                            VixNetworkResponse.serializer(
+&nbsp;                                responseSerializer
+&nbsp;                            )
+&nbsp;                        ), it
+&nbsp;                    )?.response
+&nbsp;                }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    override fun &lt;T&gt; get(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt; =
+&nbsp;        service.requestWithFlow(
+&nbsp;            APIs.getMessage.name,
+&nbsp;            listOf(
+&nbsp;                params.toJson()
+&nbsp;            )
+&nbsp;        )
+&nbsp;            .take(1)
+&nbsp;            .map {
+&nbsp;                ModelConvertUtils.decode(
+&nbsp;                    VixResponse.serializer(
+&nbsp;                        VixNetworkResponse.serializer(
+&nbsp;                            responseSerializer
+&nbsp;                        )
+&nbsp;                    ), it
+&nbsp;                )?.response
+&nbsp;            }
+&nbsp;
+&nbsp;    override suspend fun &lt;T&gt; getMessage(
+&nbsp;        params: PaymentNetworkRequest,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): VixNetworkResponse&lt;T&gt;? {
+&nbsp;        return service.requestOneShot(
+&nbsp;            APIs.getMessage.name, listOf(
+&nbsp;                params.toJson() ?: emptyJsonObject()
+&nbsp;            )
+&nbsp;        ).let {
+&nbsp;            ModelConvertUtils.decode(
+&nbsp;                VixResponse.serializer(
+&nbsp;                    VixNetworkResponse.serializer(
+&nbsp;                        responseSerializer
+&nbsp;                    )
+&nbsp;                ), it
+&nbsp;            )?.response
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun requestPinKey(
+&nbsp;        pinKey: String?,
+&nbsp;        eventParams: JsonObject
+&nbsp;    ): Flow&lt;PinKeySessionResponse?&gt; {
+&nbsp;        return service.requestWithFlow(
+&nbsp;            APIs.requestPinKeySession.name, listOf(
+&nbsp;                ModelConvertUtils.encodeToJson(
+&nbsp;                    String.serializer(),
+&nbsp;                    pinKey ?: &quot;&quot;
+&nbsp;                ),
+&nbsp;                buildJsonObject {
+&nbsp;                    put(&quot;eventParams&quot;, eventParams)
+&nbsp;                }
+&nbsp;            )
+&nbsp;        ).map {
+&nbsp;            ModelConvertUtils.decode(
+&nbsp;                VixResponse.serializer(PinKeySessionResponse.serializer()),
+&nbsp;                it
+&nbsp;            )?.response
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun &lt;T&gt; sendMessage(
+&nbsp;        params: JsonObject,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;VixNetworkResponse&lt;T&gt;?&gt; {
+&nbsp;        return service.requestWithFlow(
+&nbsp;            APIs.sendMessage.name,
+&nbsp;            listOf(params)
+&nbsp;        )
+&nbsp;            .take(1)
+&nbsp;            .map {
+&nbsp;                ModelConvertUtils.decode(
+&nbsp;                    VixResponse.serializer(
+&nbsp;                        VixNetworkResponse.serializer(
+&nbsp;                            responseSerializer
+&nbsp;                        )
+&nbsp;                    ), it
+&nbsp;                )?.response
+&nbsp;            }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>
