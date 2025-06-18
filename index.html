@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách thư mục & Hướng dẫn</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
+    h1 { color: #2c3e50; }
+    ul.folder-list { list-style: none; padding: 0; margin-bottom: 40px; }
+    ul.folder-list li { margin: 8px 0; }
+    ul.folder-list li a { text-decoration: none; color: #2980b9; font-weight: bold; }
+    ul.folder-list li a:hover { text-decoration: underline; }
+    .readme-content { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+    .readme-content h1, .readme-content h2, .readme-content h3 { color: #34495e; }
+    .readme-content ul { margin-left: 24px; }
+    .readme-content blockquote { color: #888; border-left: 4px solid #eee; margin: 16px 0; padding-left: 16px; }
+    .readme-content hr { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <h1>Danh sách thư mục</h1>
+  <ul class="folder-list">
+    <li><a href="250618/index.html">250618</a></li>
+  </ul>
+  <div class="readme-content">
+    <h1>Hướng Dẫn Đọc Report HTML của Kover (Kotlin) 👓</h1>
+    <h2>1. Trang Tổng Quan (index.html)</h2>
+    <ul>
+      <li><b>Ngay khi mở báo cáo</b>, bạn sẽ thấy bảng tổng hợp các chỉ số bao phủ:
+        <ul>
+          <li><b>Class Coverage</b>: Tỷ lệ class đã được kiểm thử</li>
+          <li><b>Method Coverage</b>: Tỷ lệ method đã được kiểm thử</li>
+          <li><b>Line Coverage</b>: Tỷ lệ dòng lệnh đã được kiểm thử</li>
+          <li><b>Branch Coverage</b>: Tỷ lệ nhánh điều kiện đã được kiểm thử</li>
+          <li><b>Instruction Coverage</b>: Tỷ lệ lệnh thực thi đã được kiểm thử</li>
+        </ul>
+      </li>
+      <li><b>Mỗi chỉ số</b> đều có phần trăm rõ ràng, giúp bạn đánh giá nhanh mức độ kiểm thử của dự án.</li>
+    </ul>
+    <hr/>
+    <h2>2. Màu Sắc Thể Hiện Độ Bao Phủ</h2>
+    <ul>
+      <li><b>Xanh lá</b> 🍀: Đã kiểm thử đầy đủ (fully covered)</li>
+      <li><b>Vàng</b> 🌕: Được kiểm thử một phần (partially covered)</li>
+      <li><b>Đỏ</b> 🔴: Chưa kiểm thử (uncovered)</li>
+    </ul>
+    <blockquote>Nhìn vào màu sắc, bạn sẽ biết ngay phần nào của mã nguồn đã được kiểm thử kỹ lưỡng và phần nào còn thiếu sót.</blockquote>
+    <hr/>
+    <h2>3. Xem Chi Tiết Theo File/Class</h2>
+    <ul>
+      <li><b>Nhấp vào tên package, class hoặc file</b> để xem chi tiết.</li>
+      <li><b>Bảng chi tiết</b> sẽ hiện ra:
+        <ul>
+          <li>Danh sách các method và dòng lệnh</li>
+          <li>Số lượng và tỷ lệ dòng/method được kiểm thử</li>
+        </ul>
+      </li>
+      <li><b>Các dòng mã</b> sẽ được đánh dấu màu tương ứng:
+        <ul>
+          <li>Xanh: đã chạy qua khi test</li>
+          <li>Đỏ: chưa chạy qua khi test</li>
+          <li>Vàng: chỉ một phần được test (thường là các nhánh điều kiện)</li>
+        </ul>
+      </li>
+    </ul>
+    <hr/>
+    <h2>4. Điều Hướng Nhanh</h2>
+    <ul>
+      <li><b>Thanh bên trái</b> (hoặc trên cùng) giúp bạn chuyển nhanh giữa các package, class, file.</li>
+      <li><b>Nhấp vào từng mục</b> để soi kỹ từng phần của dự án.</li>
+    </ul>
+    <hr/>
+    <h2>5. Một Số Mẹo Đọc Báo Cáo Hiệu Quả</h2>
+    <ul>
+      <li><b>Tập trung vào các vùng màu đỏ/vàng</b> để bổ sung test.</li>
+      <li><b>So sánh các chỉ số coverage</b> giữa các class để xác định điểm yếu trong kiểm thử.</li>
+      <li><b>Kiểm tra các nhánh điều kiện</b> (if/else, when...) vì đây là nơi dễ bị bỏ sót test nhất.</li>
+    </ul>
+    <hr/>
+    <blockquote><b>Tóm lại:</b><br/>Chỉ cần mở báo cáo, nhìn màu sắc và các chỉ số phần trăm, sau đó nhấp vào từng file/class để xem chi tiết là bạn đã nắm được toàn bộ độ bao phủ kiểm thử của dự án mình!</blockquote>
+  </div>
+</body>
+</html> 
