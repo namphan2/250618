@@ -1,0 +1,256 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > UserConsentState</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.presentation.viewModel</a>
+</div>
+
+<h1>Coverage Summary for Class: UserConsentState (vn.momo.compose.payment.base.presentation.viewModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserConsentState</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.presentation.viewModel
+&nbsp;
+&nbsp;import dev.icerock.moko.mvvm.viewmodel.ViewModel
+&nbsp;import kotlinx.coroutines.flow.MutableStateFlow
+&nbsp;import kotlinx.coroutines.flow.asStateFlow
+&nbsp;import kotlinx.coroutines.flow.update
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.GrafanaTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.PayXUserEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.RiskConsentCheckboxTicked
+&nbsp;import vn.momo.compose.payment.base.data.repository.consent.RiskApiAttributes
+&nbsp;import vn.momo.compose.payment.base.domain.entities.ConsentType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.RiskConsentType
+&nbsp;import vn.momo.compose.payment.base.domain.repository.ConsentManager
+&nbsp;import vn.momo.core.features.annotation.Immutable
+&nbsp;
+&nbsp;class UserConsentVM(private val consentManager: ConsentManager) : ViewModel() {
+&nbsp;    private val _state = MutableStateFlow(UserConsentState())
+&nbsp;    val state = _state.asStateFlow()
+&nbsp;
+&nbsp;    val info
+&nbsp;        get() = consentManager.consentInfo.value
+&nbsp;
+&nbsp;    init {
+&nbsp;        _state.update { prev -&gt;
+&nbsp;            when (val consent = consentManager.consentInfo.value.type) {
+&nbsp;                is ConsentType.NFC -&gt; prev.copy(
+&nbsp;                    nfc = consent.bankInfo.mapValues { true },
+&nbsp;                    riskRequired = RiskConsentState(),
+&nbsp;                    riskOptional = RiskConsentState()
+&nbsp;                )
+&nbsp;
+&nbsp;                is ConsentType.Risk -&gt; if (consent.type == RiskConsentType.Required) prev.copy(
+&nbsp;                    nfc = emptyMap(),
+&nbsp;                    riskRequired = RiskConsentState(),
+&nbsp;                    riskOptional = RiskConsentState()
+&nbsp;                ) else prev.copy(
+&nbsp;                    nfc = emptyMap(),
+&nbsp;                    riskRequired = RiskConsentState(isDisable = true),
+&nbsp;                    riskOptional = RiskConsentState()
+&nbsp;                )
+&nbsp;
+&nbsp;
+&nbsp;                is ConsentType.Mixed -&gt; if (consent.riskType == RiskConsentType.Required) prev.copy(
+&nbsp;                    nfc = consent.bankInfo.mapValues { true },
+&nbsp;                    riskRequired = RiskConsentState(),
+&nbsp;                    riskOptional = RiskConsentState()
+&nbsp;                ) else prev.copy(
+&nbsp;                    nfc = consent.bankInfo.mapValues { true },
+&nbsp;                    riskRequired = RiskConsentState(isDisable = true),
+&nbsp;                    riskOptional = RiskConsentState()
+&nbsp;                )
+&nbsp;
+&nbsp;                else -&gt; prev
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun trackDisplayed() {
+&nbsp;        consentManager.trackDisplayed()
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onNfcToggle(key: String) {
+&nbsp;        _state.update { prev -&gt;
+&nbsp;            prev.copy(
+&nbsp;                nfc = prev.nfc.toMutableMap().apply {
+&nbsp;                    this[key] = this[key]?.not() ?: true
+&nbsp;                })
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onRiskRequiredToggle() {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            RiskConsentCheckboxTicked(
+&nbsp;                checkboxName = &quot;require&quot;,
+&nbsp;                value = !_state.value.riskRequired.value
+&nbsp;            )
+&nbsp;        )
+&nbsp;        _state.update {
+&nbsp;            val newRequired = !it.riskRequired.value
+&nbsp;            it.copy(
+&nbsp;                riskRequired = it.riskRequired.copy(value = newRequired),
+&nbsp;                riskOptional = RiskConsentState(
+&nbsp;                    value = newRequired,
+&nbsp;                    isDisable = !newRequired
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onRiskOptionalToggle() {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            RiskConsentCheckboxTicked(
+&nbsp;                checkboxName = &quot;optional&quot;,
+&nbsp;                value = !_state.value.riskOptional.value
+&nbsp;            )
+&nbsp;        )
+&nbsp;        _state.update { it.copy(riskOptional = it.riskOptional.copy(value = !it.riskOptional.value)) }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun checkStatus(userState: UserConsentState): Boolean {
+&nbsp;        val isForceOptional = when (val type = info.type) {
+&nbsp;            is ConsentType.NFC -&gt; false
+&nbsp;            is ConsentType.Risk -&gt; type.requiredAll
+&nbsp;            is ConsentType.Mixed -&gt; type.requiredAll
+&nbsp;            else -&gt; false
+&nbsp;        }
+&nbsp;        return (userState.nfc.values.any { it } || userState.nfc.values.isEmpty())
+&nbsp;                &amp;&amp; userState.riskRequired.value
+&nbsp;                &amp;&amp; (isForceOptional &amp;&amp; userState.riskOptional.value || !isForceOptional)
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    fun updateConsent(userState: UserConsentState) {
+&nbsp;        GrafanaTrace.count(PayXUserEvent.UserConfirmConsent.event)
+&nbsp;        val selectedNfcConsent = userState.nfc.filterValues { it }.keys.toList()
+&nbsp;        val selectedRiskConsent = listOfNotNull(
+&nbsp;            if (userState.riskRequired.value) RiskApiAttributes.RequiredConsent else null,
+&nbsp;            if (userState.riskOptional.value) RiskApiAttributes.OptionalConsent else null
+&nbsp;        )
+&nbsp;        consentManager.updateConsent(selectedNfcConsent, selectedRiskConsent)
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Immutable
+&nbsp;data class UserConsentState(
+<b class="nc">&nbsp;    val nfc: Map&lt;String, Boolean&gt; = emptyMap(),</b>
+<b class="nc">&nbsp;    val riskRequired: RiskConsentState = RiskConsentState(),</b>
+<b class="nc">&nbsp;    val riskOptional: RiskConsentState = RiskConsentState(),</b>
+&nbsp;)
+&nbsp;
+&nbsp;data class RiskConsentState(
+&nbsp;    val value: Boolean = true,
+&nbsp;    val isDisable: Boolean = false
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

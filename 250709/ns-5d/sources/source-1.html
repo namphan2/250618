@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > MissionDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.dto.response.orderExtra</a>
+</div>
+
+<h1>Coverage Summary for Class: MissionDTO (vn.momo.compose.payment.payx.data.dataSource.dto.response.orderExtra)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">MissionDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.9%
+  </span>
+  <span class="absValue">
+    (7/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    46.2%
+  </span>
+  <span class="absValue">
+    (55/119)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MissionDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.9%
+  </span>
+  <span class="absValue">
+    (7/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63.6%
+  </span>
+  <span class="absValue">
+    (7/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45.5%
+  </span>
+  <span class="absValue">
+    (55/121)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.dto.response.orderExtra
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonPrimitive
+&nbsp;import kotlinx.serialization.json.contentOrNull
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class RewardConfigDTO(
+&nbsp;    val rewardInfo: List&lt;RewardInfoDTO?&gt;? = null,
+&nbsp;    val voucherInfo: MissionDTO? = null
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class RewardInfoDTO(
+&nbsp;    val moneySource: Int? = null,
+&nbsp;    val totalRewardCoins: Int? = null
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class MissionVoucherDTO(
+&nbsp;    val giftTypeId: String? = null
+&nbsp;)
+&nbsp;
+<b class="pc">&nbsp;@Serializable</b>
+&nbsp;data class MissionDTO(
+<b class="nc">&nbsp;    @SerialName(&quot;voucherInlineMessage&quot;) private val rawVoucherInlineMessage: JsonElement? = null,</b>
+<b class="nc">&nbsp;    @SerialName(&quot;vouchers&quot;) val rawVouchers: JsonElement? = null</b>
+&nbsp;) {
+&nbsp;    val voucherInlineMessage: JsonElement?
+<b class="fc">&nbsp;        get() = when (rawVoucherInlineMessage) {</b>
+<b class="pc">&nbsp;            is JsonPrimitive -&gt; ModelConvertUtils.encodeToJson(</b>
+<b class="pc">&nbsp;                rawVoucherInlineMessage.contentOrNull ?: &quot;{}&quot;</b>
+&nbsp;            )
+&nbsp;
+<b class="nc">&nbsp;            else -&gt; rawVoucherInlineMessage</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    val vouchers
+<b class="fc">&nbsp;        get() = ModelConvertUtils.decodeToList(</b>
+<b class="fc">&nbsp;            MissionVoucherDTO.serializer(),</b>
+<b class="pc">&nbsp;            rawVouchers?.toString() ?: &quot;[]&quot;</b>
+&nbsp;        )
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

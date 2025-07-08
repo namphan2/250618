@@ -1,0 +1,413 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SingleBillTranHisMsg</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.entities.transactionresult</a>
+</div>
+
+<h1>Coverage Summary for Class: SingleBillTranHisMsg (vn.momo.compose.payment.payx.domain.entities.transactionresult)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SingleBillTranHisMsg</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/446)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/93)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2391)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SingleBillTranHisMsg$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/446)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2393)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.entities.transactionresult
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.JsonPrimitive
+&nbsp;import kotlinx.serialization.json.jsonObject
+&nbsp;import kotlinx.serialization.json.jsonPrimitive
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;import vn.momo.compose.utils.toJsonElement
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SingleBillResponse(
+&nbsp;    val errorCode: Double? = null,
+&nbsp;    val errorDesc: String? = null,
+&nbsp;    val momoMsg: SingleBillMoMoMsg? = null,
+&nbsp;    val extra: JsonObject? = null,
+&nbsp;    val result: Boolean? = null
+&nbsp;) {
+&nbsp;    companion object {
+&nbsp;        fun getMock(): SingleBillResponse {
+&nbsp;            return SingleBillResponse(
+&nbsp;                momoMsg = SingleBillMoMoMsg(
+&nbsp;                    tranHisMsg = SingleBillTranHisMsg(
+&nbsp;                        tranType = 7.0,
+&nbsp;                        partnerCode = &quot;MOMOXDNZ20180523&quot;,
+&nbsp;                        requestId = &quot;1730780634816&quot;,
+&nbsp;                        error = 0,
+&nbsp;                        errorDesc = &quot;Đã có lỗi xảy ra (lỗi: 0). Để biết thêm chi tiết lỗi, vui lòng chọn \&quot;Liên hệ hỗ trợ\&quot;.&quot;,
+&nbsp;                        moneySource = 1,
+&nbsp;                        moneySourceName = &quot;Ví MoMo&quot;,
+&nbsp;                        username = &quot;Nguyễn Thị Ánh&quot;,
+&nbsp;                        tranId = &quot;70629081112&quot;.toJsonElement().jsonPrimitive,
+&nbsp;                        barCode = &quot;70629081112&quot;,
+&nbsp;                        originalAmount = 1000.0,
+&nbsp;                        transCategory = &quot;th_m4b_merchantapp_cat2&quot;,
+&nbsp;                        serviceName = &quot;Bán hàng xuyên Quốc gia 2&quot;,
+&nbsp;                        serviceId = &quot;gongchatest&quot;,
+&nbsp;                        lastUpdate = 1730780635291.0,
+&nbsp;                        usePrepaid = 0.0,
+&nbsp;                        useVoucher = 0.0,
+&nbsp;                        discountCampaignAmount = 0.0,
+&nbsp;                        io = -1,
+&nbsp;                        displayAmount = 0.0
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun toJs(): JsonObject {
+&nbsp;        return ModelConvertUtils.encodeToJson(serializer(), this)?.jsonObject ?: emptyJsonObject()
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SingleBillMoMoMsg(
+&nbsp;    // POS + CICO
+&nbsp;    val tranHisMsg: SingleBillTranHisMsg? = null,
+&nbsp;    // P2P
+&nbsp;    val moneySource: Int? = null,
+&nbsp;    val replyMsgs: List&lt;SingleBillReplyMsg&gt;? = null,
+&nbsp;    val bankInReply: SingleBillBankInReply? = null,
+&nbsp;) {
+&nbsp;    fun toMoMoMsg(): MomoMsg {
+&nbsp;        val isP2PFlow = !replyMsgs.isNullOrEmpty()
+&nbsp;        if (isP2PFlow) {
+&nbsp;            val firstReplyMsg = this.replyMsgs?.firstOrNull()
+&nbsp;            return MomoMsg(
+&nbsp;                purchaseId = firstReplyMsg?.id ?: firstReplyMsg?.tranId?.toString() ?: firstReplyMsg?.purchaseId,
+&nbsp;                tranType = firstReplyMsg?.tranHisMsg?.tranType,
+&nbsp;                purchaseInfo = firstReplyMsg?.let {
+&nbsp;                    PurchaseInfo(
+&nbsp;                        purchaseId = it.id ?: it.tranId?.toString() ?: it.purchaseId
+&nbsp;                    )
+&nbsp;                },
+&nbsp;                replyMsgs = this.replyMsgs?.map { it.toReplyMsg() },
+&nbsp;                cartInfo = listOfNotNull(this.bankInReply?.tranHisMsg?.let {
+&nbsp;                    CartInfo(
+&nbsp;                        serviceEnableOptions = it.enableOptions, status = it.status
+&nbsp;                    )
+&nbsp;                })
+&nbsp;            )
+&nbsp;        }
+&nbsp;
+&nbsp;        return MomoMsg(
+&nbsp;            requestId = this.tranHisMsg?.requestId,
+&nbsp;            purchaseId = this.tranHisMsg?.id ?: this.tranHisMsg?.tranId?.content,
+&nbsp;            tranType = this.tranHisMsg?.tranType,
+&nbsp;            purchaseInfo = this.tranHisMsg?.let {
+&nbsp;                PurchaseInfo(
+&nbsp;                    purchaseId = it.id ?: it.tranId?.content,
+&nbsp;//                    totalAmount = this.tranHisMsg.amount,
+&nbsp;//                    subtotalAmount = this.tranHisMsg.originalAmount,
+&nbsp;//                    totalFee = this.tranHisMsg.fee
+&nbsp;                )
+&nbsp;            },
+&nbsp;            replyMsgs = listOfNotNull(this.tranHisMsg?.toReplyMsg()),
+&nbsp;            cartInfo = listOfNotNull(this.tranHisMsg?.let {
+&nbsp;                CartInfo(
+&nbsp;                    serviceEnableOptions = it.enableOptions, status = it.status
+&nbsp;                )
+&nbsp;            })
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class SingleBillTranHisMsg(
+<b class="nc">&nbsp;    val extras: String? = null,</b>
+<b class="nc">&nbsp;    val tranType: Double? = null,</b>
+<b class="nc">&nbsp;    val partnerCode: String? = null,</b>
+<b class="nc">&nbsp;    val requestId: String? = null,</b>
+<b class="nc">&nbsp;    val error: Int? = null,</b>
+<b class="nc">&nbsp;    val errorDesc: String? = null,</b>
+<b class="nc">&nbsp;    val moneySource: Int? = null,</b>
+<b class="nc">&nbsp;    val moneySourceName: String? = null,</b>
+<b class="nc">&nbsp;    val username: String? = null,</b>
+<b class="nc">&nbsp;    val tranId: JsonPrimitive? = null,</b>
+<b class="nc">&nbsp;    val barCode: String? = null,</b>
+<b class="nc">&nbsp;    val originalAmount: Double? = null,</b>
+<b class="nc">&nbsp;    val transCategory: String? = null,</b>
+<b class="nc">&nbsp;    val serviceName: String? = null,</b>
+<b class="nc">&nbsp;    val serviceId: String? = null,</b>
+<b class="nc">&nbsp;    var serviceType: String? = null,</b>
+<b class="nc">&nbsp;    val lastUpdate: Double? = null,</b>
+<b class="nc">&nbsp;    val usePrepaid: Double? = null,</b>
+<b class="nc">&nbsp;    val useVoucher: Double? = null,</b>
+<b class="nc">&nbsp;    val discountCampaignAmount: Double? = null,</b>
+<b class="nc">&nbsp;    val io: Int? = null,</b>
+<b class="nc">&nbsp;    val displayAmount: Double? = null,</b>
+<b class="nc">&nbsp;    val tranData: String? = null,</b>
+<b class="nc">&nbsp;    val billId: String? = null,</b>
+<b class="nc">&nbsp;    val amount: Double? = null,</b>
+<b class="nc">&nbsp;    val fee: Double? = null,</b>
+<b class="nc">&nbsp;    val disableTid: Boolean = false,</b>
+&nbsp;    // CICO
+<b class="nc">&nbsp;    val otpType: String? = null,</b>
+<b class="nc">&nbsp;    val defaultMoneySource: Int? = null,</b>
+<b class="nc">&nbsp;    val commandInd: String? = null,</b>
+<b class="nc">&nbsp;    val sourceToken: String? = null,</b>
+<b class="nc">&nbsp;    val quantity: Int? = null,</b>
+<b class="nc">&nbsp;    val desc: String? = null,</b>
+<b class="nc">&nbsp;    @SerialName(&quot;ID&quot;) val id: String? = null,</b>
+<b class="nc">&nbsp;    val user: String? = null,</b>
+<b class="nc">&nbsp;    val enableOptions: ServiceEnableOptions? = null,</b>
+<b class="nc">&nbsp;    val status: Double? = null,</b>
+&nbsp;    // P2P
+<b class="nc">&nbsp;    val ownerName: String? = null,</b>
+<b class="nc">&nbsp;    val tidShelled: Boolean? = null,</b>
+<b class="nc">&nbsp;    val partnerId: String? = null,</b>
+<b class="nc">&nbsp;    val ownerNumber: String? = null,</b>
+<b class="nc">&nbsp;    val finishTime: Double? = null,</b>
+<b class="nc">&nbsp;    val clientTime: Double? = null,</b>
+<b class="nc">&nbsp;    val ackTime: Double? = null,</b>
+<b class="nc">&nbsp;    val receiverType: Int? = null,</b>
+<b class="nc">&nbsp;    @SerialName(&quot;partnerAgentId&quot;)</b>
+<b class="nc">&nbsp;    val partnerAgentIdJson: JsonPrimitive? = null,</b>
+<b class="nc">&nbsp;    val partnerName: String? = null,</b>
+<b class="nc">&nbsp;    val parentId: Double? = null,</b>
+<b class="nc">&nbsp;    val agentId: String? = null,</b>
+<b class="nc">&nbsp;    val partnerAvatarUrl: String? = null,</b>
+<b class="nc">&nbsp;    val comment: String? = null,</b>
+<b class="nc">&nbsp;    val initAmount: Double? = null,</b>
+<b class="nc">&nbsp;    val refNumber: String? = null,</b>
+&nbsp;    ) {
+<b class="nc">&nbsp;    private val partnerAgentId: String? get() = partnerAgentIdJson?.content</b>
+&nbsp;    fun toReplyMsg(): ReplyMsg {
+<b class="nc">&nbsp;        return ReplyMsg(</b>
+<b class="nc">&nbsp;            transId = this.tranId?.content?.toDouble(), tranHisMsg = TransactionItem(</b>
+<b class="nc">&nbsp;                ID = this.id,</b>
+<b class="nc">&nbsp;                io = this.io,</b>
+<b class="nc">&nbsp;                tranId = this.tranId?.content?.toDouble(),</b>
+<b class="nc">&nbsp;                user = this.username,</b>
+<b class="nc">&nbsp;                amount = this.displayAmount ?: this.amount,</b>
+<b class="nc">&nbsp;                originalAmount = this.originalAmount,</b>
+<b class="nc">&nbsp;                error = this.error,</b>
+<b class="nc">&nbsp;                desc = this.errorDesc ?: this.desc,</b>
+<b class="nc">&nbsp;                moneySource = this.moneySource,</b>
+<b class="nc">&nbsp;                serviceId = this.serviceId,</b>
+<b class="nc">&nbsp;                serviceName = this.serviceName,</b>
+<b class="nc">&nbsp;                serviceType = this.serviceType,</b>
+<b class="nc">&nbsp;                discountCampaignAmount = this.discountCampaignAmount,</b>
+<b class="nc">&nbsp;                lastUpdate = this.lastUpdate,</b>
+<b class="nc">&nbsp;                transCategory = this.transCategory,</b>
+<b class="nc">&nbsp;                tranData = this.tranData,</b>
+<b class="nc">&nbsp;                purchaseId = this.id ?: this.tranId?.content,</b>
+<b class="nc">&nbsp;                tranType = this.tranType?.toInt(),</b>
+<b class="nc">&nbsp;                status = this.status?.toInt(),</b>
+<b class="nc">&nbsp;                disableTid = this.disableTid,</b>
+<b class="nc">&nbsp;                extras = this.extras,</b>
+<b class="nc">&nbsp;                agentId = this.agentId,</b>
+<b class="nc">&nbsp;                partnerAgentId = this.partnerAgentId,</b>
+<b class="nc">&nbsp;                partnerAvatarUrl = this.partnerAvatarUrl,</b>
+<b class="nc">&nbsp;                comment = this.comment,</b>
+<b class="nc">&nbsp;                receiverType = this.receiverType,</b>
+<b class="nc">&nbsp;                partnerId = this.partnerId,</b>
+<b class="nc">&nbsp;                partnerCode = this.partnerCode,</b>
+<b class="nc">&nbsp;                partnerName = this.partnerName,</b>
+<b class="nc">&nbsp;                initAmount = this.initAmount,</b>
+<b class="nc">&nbsp;                refNumber = this.refNumber,</b>
+<b class="nc">&nbsp;                commandInd = this.commandInd,</b>
+<b class="nc">&nbsp;                parentId = this.parentId,</b>
+<b class="nc">&nbsp;                ownerName = this.ownerName,</b>
+<b class="nc">&nbsp;                ownerNumber = this.ownerNumber,</b>
+&nbsp;            )
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;// P2P
+&nbsp;@Serializable
+&nbsp;data class SingleBillBankInReply(
+&nbsp;    val tranHisMsg: SingleBillTranHisMsg? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SingleBillReplyMsg(
+&nbsp;    val purchaseId: String? = null,
+&nbsp;    val transId: Double? = null,
+&nbsp;    val id: String? = null,
+&nbsp;    val tranHisMsg: SingleBillTranHisMsg? = SingleBillTranHisMsg(),
+&nbsp;    val tranId: Double? = null
+&nbsp;) {
+&nbsp;    fun toReplyMsg(): ReplyMsg {
+&nbsp;        return ReplyMsg(
+&nbsp;            ID = this.id,
+&nbsp;            id = this.id,
+&nbsp;            transId = this.tranId,
+&nbsp;            tranHisMsg = this.tranHisMsg?.toReplyMsg()?.tranHisMsg ?: TransactionItem(),
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > RiskConsentTag</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.data.repository.consent</a>
+</div>
+
+<h1>Coverage Summary for Class: RiskConsentTag (vn.momo.compose.payment.base.data.repository.consent)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">RiskConsentTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.data.repository.consent
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.route.IRouteApi
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.RiskButtonClicked
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.UpdateAttributeItemDTO
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.remote.ConsentRemoteDataSource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.ConsentType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.RiskConsentType
+&nbsp;import vn.momo.compose.payment.base.domain.repository.ConsentRepository
+&nbsp;
+&nbsp;class RiskConsentRepository(
+&nbsp;    private val routeApi: IRouteApi,
+&nbsp;    private val consentRemote: ConsentRemoteDataSource,
+&nbsp;    private val logger: ILogger
+&nbsp;) : ConsentRepository {
+&nbsp;    override suspend fun getConfig(): ConsentType {
+&nbsp;        val consentType = getAbRisk()
+&nbsp;        return if (consentType == null) ConsentType.None else {
+&nbsp;            consentRemote.getConsent(
+&nbsp;                miniAppId = DEFAULT_APP_ID,
+&nbsp;                fields = RiskApiAttributes.values().joinToString(&quot;,&quot;) { it.id },
+&nbsp;            )
+&nbsp;                ?.let {
+&nbsp;                    val resp = it.momoMsg ?: return@let ConsentType.None
+&nbsp;                    val hadConsent = resp.attributeList?.mapNotNull { item -&gt; item.attribute }
+&nbsp;                    when {
+&nbsp;                        hadConsent.isNullOrEmpty() -&gt; ConsentType.Risk(
+&nbsp;                            RiskConsentType.Required,
+&nbsp;                            requiredAll = consentType == RiskConsentTag.ForceOptional
+&nbsp;                        )
+&nbsp;
+&nbsp;                        !hadConsent.contains(RiskApiAttributes.RequiredConsent.id) -&gt; ConsentType.Risk(
+&nbsp;                            RiskConsentType.Required,
+&nbsp;                            requiredAll = consentType == RiskConsentTag.ForceOptional
+&nbsp;                        )
+&nbsp;
+&nbsp;                        !hadConsent.contains(RiskApiAttributes.OptionalConsent.id) -&gt; ConsentType.Risk(
+&nbsp;                            RiskConsentType.Optional,
+&nbsp;                            requiredAll = consentType == RiskConsentTag.ForceOptional
+&nbsp;                        )
+&nbsp;
+&nbsp;                        else -&gt; ConsentType.None
+&nbsp;                    }
+&nbsp;                } ?: ConsentType.None
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun updateConsent(attributes: List&lt;RiskApiAttributes&gt;) {
+&nbsp;        if (attributes.isEmpty()) {
+&nbsp;            logger.w(&quot;[Payment] RiskConsentRepository.updateConsent !!! attributes is empty&quot;)
+&nbsp;            return
+&nbsp;        }
+&nbsp;        CoroutineScope(Dispatchers.IO).launch {
+&nbsp;            FirebaseTrace.track(RiskButtonClicked())
+&nbsp;            consentRemote.updateConsent(
+&nbsp;                needAuthen = false,
+&nbsp;                miniAppId = DEFAULT_APP_ID,
+&nbsp;                attributeList = attributes.map { UpdateAttributeItemDTO(attribute = it.id) }
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private suspend fun getAbRisk(): RiskConsentTag? {
+&nbsp;        return routeApi.checkAbTest(
+&nbsp;            &quot;RISK_GET_CONSENT_POLICY_CURRENT_TTAT&quot;,
+&nbsp;            &quot;Control&quot;,
+&nbsp;            true
+&nbsp;        ).let {
+&nbsp;            logger.i(&quot;[Payment] RiskConsentRepository.getAbRisk $it&quot;)
+&nbsp;            when (it) {
+&nbsp;                in RiskConsentTag.Optional.attributes -&gt; RiskConsentTag.Optional
+&nbsp;                in RiskConsentTag.ForceOptional.attributes -&gt; RiskConsentTag.ForceOptional
+&nbsp;                else -&gt; null
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        const val DEFAULT_APP_ID = &quot;vn.momo.appx&quot;
+&nbsp;    }
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;enum class RiskConsentTag(val attributes: List&lt;String&gt;) {</b>
+<b class="nc">&nbsp;    Optional(listOf(&quot;exp_1&quot;, &quot;exp_2&quot;)),</b>
+<b class="nc">&nbsp;    ForceOptional(listOf(&quot;exp_3&quot;))</b>
+&nbsp;}
+&nbsp;
+&nbsp;enum class RiskApiAttributes(val id: String) {
+&nbsp;    RequiredConsent(&quot;privacy_ttat_require_v1&quot;),
+&nbsp;    OptionalConsent(&quot;privacy_ttat_optional_v1&quot;),
+&nbsp;    DoneInSomewhere(&quot;policy_1.0_0623&quot;)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBUpdateTransactionRemoteDSKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.remote</a>
+</div>
+
+<h1>Coverage Summary for Class: SBUpdateTransactionRemoteDSKt (vn.momo.compose.payment.singleBill.data.dataSource.remote)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBUpdateTransactionRemoteDSKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.remote
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.serialization.KSerializer
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.IRemoteService
+&nbsp;import vn.momo.compose.payment.base.core.model.SingleBillConfig
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.apiTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.SBApiPerformanceEvent
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.VoucherItemLocal
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dataMapper.toDefaultUpdateMoMoMsg
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dataMapper.toP2pUpdateMoMoMsg
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.request.SBUpdateTransactionRequest
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SBSavedTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SingleBillSession
+&nbsp;
+<b class="nc">&nbsp;val REMOVE_AMOUNT_TYPE = listOf(&quot;cash_back&quot;)</b>
+<b class="nc">&nbsp;val NOT_REMIND_AMOUNT_TYPE = listOf(&quot;prepaid_card&quot;)</b>
+&nbsp;
+&nbsp;class SBUpdateTransactionRemoteDS(
+&nbsp;    private val remoteApi: IRemoteService,
+&nbsp;    private val savedData: SBSavedTransaction,
+&nbsp;    private val requestData: SingleBillConfig,
+&nbsp;    private val session: SingleBillSession
+&nbsp;) {
+&nbsp;    fun &lt;T&gt; updateTransaction(sof: SOFItem, responseSerializer: KSerializer&lt;T&gt;): Flow&lt;T?&gt; {
+&nbsp;        return remoteApi.post(buildMessage(sof), responseSerializer)
+&nbsp;            .apiTrace(SBApiPerformanceEvent.ChangeSof.event)
+&nbsp;            .map { it?.response }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; updateTransaction(
+&nbsp;        sof: SOFItem,
+&nbsp;        newAmount: Double?,
+&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;? = emptyList(),
+&nbsp;        discountCode: String? = null,
+&nbsp;        responseSerializer: KSerializer&lt;T&gt;
+&nbsp;    ): Flow&lt;T?&gt; {
+&nbsp;        return remoteApi.post(buildMessage(sof, newAmount, vouchers, discountCode), responseSerializer)
+&nbsp;            .apiTrace(SBApiPerformanceEvent.ChangeSof.event)
+&nbsp;            .map { it?.response }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildMessage(
+&nbsp;        sof: SOFItem,
+&nbsp;        newAmount: Double? = null,
+&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;? = null,
+&nbsp;        discountCode: String? = null,
+&nbsp;    ): SBUpdateTransactionRequest {
+&nbsp;        val currentTransaction = savedData.data?.tranHisMsg
+&nbsp;        return SBUpdateTransactionRequest(
+&nbsp;            msgType = requestData.msgType ?: &quot;TRAN_HIS_INIT_MSG&quot;,
+&nbsp;            path = session.request.initApi?.path,
+&nbsp;            subPath = session.request.initApi?.subPath,
+&nbsp;            subDomain = session.request.initApi?.subDomain,
+&nbsp;            momoMsg = if (requestData.isP2P == true) currentTransaction.toP2pUpdateMoMoMsg(
+&nbsp;                sof,
+&nbsp;                requestData,
+&nbsp;                newAmount,
+&nbsp;                vouchers,
+&nbsp;                discountCode
+&nbsp;            ) else currentTransaction.toDefaultUpdateMoMoMsg(
+&nbsp;                sof,
+&nbsp;                requestData,
+&nbsp;                newAmount,
+&nbsp;                vouchers,
+&nbsp;                discountCode
+&nbsp;            )
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

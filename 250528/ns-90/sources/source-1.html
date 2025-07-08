@@ -1,0 +1,283 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > ButtonDirection</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.modals</a>
+</div>
+
+<h1>Coverage Summary for Class: ButtonDirection (vn.momo.compose.payment.payx.presentation.view.modals)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ButtonDirection</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.modals
+&nbsp;
+&nbsp;import androidx.compose.foundation.background
+&nbsp;import androidx.compose.foundation.clickable
+&nbsp;import androidx.compose.foundation.interaction.MutableInteractionSource
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.Spacer
+&nbsp;import androidx.compose.foundation.layout.fillMaxSize
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.height
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.width
+&nbsp;import androidx.compose.foundation.shape.RoundedCornerShape
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.draw.clip
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import androidx.compose.ui.layout.ContentScale
+&nbsp;import androidx.compose.ui.text.style.TextAlign
+&nbsp;import androidx.compose.ui.window.Dialog
+&nbsp;import androidx.compose.ui.window.DialogProperties
+&nbsp;import androidx.compose.ui.zIndex
+&nbsp;import vn.momo.ekyc.shared.components.core.image.MMImage
+&nbsp;import vn.momo.kits.components.Button
+&nbsp;import vn.momo.kits.components.ButtonType
+&nbsp;import vn.momo.kits.components.Size
+&nbsp;import vn.momo.kits.components.Text
+&nbsp;import vn.momo.kits.const.Colors
+&nbsp;import vn.momo.kits.const.Spacing
+&nbsp;import vn.momo.kits.const.Typography
+&nbsp;
+&nbsp;enum class ButtonDirection {
+<b class="nc">&nbsp;    COL, ROW</b>
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun PopupNotify(
+&nbsp;    show: Boolean,
+&nbsp;    hasBackground: Boolean = true,
+&nbsp;    image: String? = null,
+&nbsp;    title: String? = null,
+&nbsp;    content: String? = null,
+&nbsp;    primaryButton: String? = null,
+&nbsp;    secondaryButton: String? = null,
+&nbsp;    buttonDirection: ButtonDirection = ButtonDirection.ROW,
+&nbsp;    onPressPrimary: () -&gt; Unit = {},
+&nbsp;    onPressSecondary: () -&gt; Unit = {},
+&nbsp;    onDismissRequest: () -&gt; Unit = {}
+&nbsp;) {
+&nbsp;    if (!show) return
+&nbsp;
+&nbsp;    val contentComponent: @Composable () -&gt; Unit = {
+&nbsp;        Box(
+&nbsp;            contentAlignment = Alignment.Center,
+&nbsp;            modifier = Modifier.fillMaxSize().padding(horizontal = Spacing.L)
+&nbsp;                .background(Color.Transparent).clickable(onClick = {},
+&nbsp;                    indication = null,
+&nbsp;                    interactionSource = remember { MutableInteractionSource() }).zIndex(10f)
+&nbsp;        ) {
+&nbsp;            Box(
+&nbsp;                modifier = Modifier.clip(RoundedCornerShape(Spacing.L)).background(
+&nbsp;                    Colors.black_01, shape = RoundedCornerShape(
+&nbsp;                        Spacing.M
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            ) {
+&nbsp;                Column(modifier = Modifier.fillMaxWidth()) {
+&nbsp;                    image?.let {
+&nbsp;                        MMImage(
+&nbsp;                            it,
+&nbsp;                            modifier = Modifier.fillMaxWidth()
+&nbsp;                                .clip(RoundedCornerShape(topStart = Spacing.L, topEnd = Spacing.L)),
+&nbsp;                            contentDescription = &quot;Image&quot;,
+&nbsp;                            contentScale = ContentScale.FillWidth
+&nbsp;                        )
+&nbsp;                    }
+&nbsp;                    Column(
+&nbsp;                        horizontalAlignment = Alignment.Start,
+&nbsp;                        modifier = Modifier.fillMaxWidth()
+&nbsp;                            .padding(horizontal = Spacing.XL, vertical = Spacing.XL)
+&nbsp;                    ) {
+&nbsp;                        title?.let {
+&nbsp;                            Text(
+&nbsp;                                text = it,
+&nbsp;                                style = Typography.headerSSemibold,
+&nbsp;                                textAlign = TextAlign.Center
+&nbsp;                            )
+&nbsp;                        }
+&nbsp;                        content?.let {
+&nbsp;                            Text(
+&nbsp;                                text = it,
+&nbsp;                                style = Typography.bodyDefaultRegular,
+&nbsp;                                modifier = Modifier.padding(top = Spacing.S),
+&nbsp;                                textAlign = TextAlign.Start
+&nbsp;                            )
+&nbsp;                        }
+&nbsp;                        ButtonContainer(buttonDirection = buttonDirection, primary = {
+&nbsp;                            primaryButton?.let {
+&nbsp;                                Button(
+&nbsp;                                    title = it, onClick = onPressPrimary, size = Size.MEDIUM
+&nbsp;                                )
+&nbsp;                            }
+&nbsp;                        }, secondary = {
+&nbsp;                            secondaryButton?.let {
+&nbsp;                                Button(
+&nbsp;                                    title = it,
+&nbsp;                                    onClick = onPressSecondary,
+&nbsp;                                    type = ButtonType.TEXT,
+&nbsp;                                    size = Size.MEDIUM
+&nbsp;                                )
+&nbsp;                            }
+&nbsp;                        })
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    if (hasBackground) {
+&nbsp;        Dialog(
+&nbsp;            onDismissRequest = onDismissRequest, properties = DialogProperties(
+&nbsp;                dismissOnClickOutside = false,
+&nbsp;                dismissOnBackPress = false,
+&nbsp;                usePlatformDefaultWidth = false,
+&nbsp;            )
+&nbsp;        ) {
+&nbsp;            contentComponent()
+&nbsp;        }
+&nbsp;    } else {
+&nbsp;        contentComponent()
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun ButtonContainer(
+&nbsp;    buttonDirection: ButtonDirection,
+&nbsp;    primary: @Composable () -&gt; Unit,
+&nbsp;    secondary: @Composable () -&gt; Unit
+&nbsp;
+&nbsp;) {
+&nbsp;    if (buttonDirection == ButtonDirection.COL) {
+&nbsp;        Column(modifier = Modifier.fillMaxWidth().padding(top = Spacing.XL)) {
+&nbsp;            primary()
+&nbsp;            Spacer(modifier = Modifier.height(Spacing.S))
+&nbsp;            secondary()
+&nbsp;        }
+&nbsp;    } else {
+&nbsp;        Row(modifier = Modifier.fillMaxWidth().padding(top = Spacing.XL)) {
+&nbsp;            Box(modifier = Modifier.weight(1f)) {
+&nbsp;                primary()
+&nbsp;            }
+&nbsp;            Spacer(modifier = Modifier.width(Spacing.S))
+&nbsp;            Box(modifier = Modifier.weight(1f)) {
+&nbsp;                secondary()
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

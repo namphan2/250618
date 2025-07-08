@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > VoucherCoinDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.data.dto</a>
+</div>
+
+<h1>Coverage Summary for Class: VoucherCoinDTO (vn.momo.compose.payment.promotion.data.dto)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">VoucherCoinDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/192)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1151)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">VoucherCoinDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/192)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1153)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.data.dto
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VoucherDTO(
+&nbsp;    val ID: String? = null,
+&nbsp;    val id: String? = null,
+&nbsp;    val giftId: String? = null,
+&nbsp;    val modelId: String? = null,
+&nbsp;    val typeId: String? = null,
+&nbsp;    val giftType: String? = null,
+&nbsp;    val autoId: Double? = null,
+&nbsp;    val serviceId: String? = null,
+&nbsp;    val icon: String? = null,
+&nbsp;    val prefixName: String? = &quot;&quot;,
+&nbsp;    val suffixName: String? = &quot;&quot;,
+&nbsp;    val groups: List&lt;String?&gt;? = emptyList(),
+&nbsp;    val campaign: String? = null,
+&nbsp;    val type_: Int? = null,
+&nbsp;    val extra: String? = null,
+&nbsp;    val amount: Double? = null,
+&nbsp;    val amountGT: Double? = null,
+&nbsp;    val status: Int? = null,
+&nbsp;    val isLock: Boolean = false,
+&nbsp;    val note: String? = &quot;&quot;,
+&nbsp;    val name: String = &quot;&quot;,
+&nbsp;    val desc: String = &quot;&quot;,
+&nbsp;    val policy: String = &quot;&quot;,
+&nbsp;    val ver: Double? = null,
+&nbsp;    val owner: String? = &quot;&quot;,
+&nbsp;    val giftConditionDesc: String? = null,
+&nbsp;    val descGift: String? = null,
+&nbsp;    val startDate: Double? = null,
+&nbsp;    val endDate: Double? = null,
+&nbsp;
+&nbsp;    val isInValid: Boolean? = false,
+&nbsp;    val isDisabled: Boolean? = false,
+&nbsp;    val canCollect: Boolean? = false,
+&nbsp;    val selected: Boolean? = false,
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class VoucherCoinDTO(
+<b class="nc">&nbsp;    val ID: String? = null,</b>
+<b class="nc">&nbsp;    val id: String? = null,</b>
+<b class="nc">&nbsp;    val giftId: String? = null,</b>
+<b class="nc">&nbsp;    val modelId: String? = null,</b>
+<b class="nc">&nbsp;    val typeId: String? = null,</b>
+<b class="nc">&nbsp;    val giftType: String? = null,</b>
+<b class="nc">&nbsp;    val autoId: Double? = null,</b>
+<b class="nc">&nbsp;    val serviceId: String? = null,</b>
+<b class="nc">&nbsp;    val icon: String? = null,</b>
+<b class="nc">&nbsp;    val prefixName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val suffixName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val groups: List&lt;String?&gt;? = emptyList(),</b>
+<b class="nc">&nbsp;    val campaign: String? = null,</b>
+<b class="nc">&nbsp;    val type_: Int? = null,</b>
+<b class="nc">&nbsp;    val extra: String? = null,</b>
+<b class="nc">&nbsp;    val extraGiftType: String? = null,</b>
+<b class="nc">&nbsp;    val amount: Double? = null,</b>
+<b class="nc">&nbsp;    val amountGT: Double? = null,</b>
+<b class="nc">&nbsp;    val status: Int? = null,</b>
+<b class="nc">&nbsp;    val isLock: Boolean = false,</b>
+<b class="nc">&nbsp;    val note: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val name: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val desc: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val policy: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val ver: Double? = null,</b>
+<b class="nc">&nbsp;    val owner: String? = &quot;&quot;,</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,291 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > GrafanaTracerFormatter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.service.trace</a>
+</div>
+
+<h1>Coverage Summary for Class: GrafanaTracerFormatter (vn.momo.compose.payment.base.core.service.trace)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">GrafanaTracerFormatter</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.service.trace
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineExceptionHandler
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.Job
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.firstOrNull
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.IGrafanaTracer
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.CountTraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.StartTraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.TraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.model.VixNetworkResponse
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.TrackingErrorCode
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.GrafanaMetric
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.PaymentNetWorkResponse
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.koin.KoinHelper.getInjected
+&nbsp;
+&nbsp;interface GrafanaTracerFormatter {
+&nbsp;    fun applyServiceInfo(event: StartTraceParameter): StartTraceParameter
+&nbsp;    fun applyServiceInfo(event: CountTraceParameter): CountTraceParameter
+&nbsp;    fun applyServiceInfo(event: TraceParameter): TraceParameter
+&nbsp;}
+&nbsp;
+&nbsp;object GrafanaTrace {
+&nbsp;    private val trace: IGrafanaTracer = getInjected&lt;IGrafanaTracer&gt;()
+&nbsp;    private var buffer = mutableMapOf&lt;String, String?&gt;()
+&nbsp;    private val jobs = mutableMapOf&lt;String, Job&gt;()
+&nbsp;    private val logger by lazy { PaymentKoinScope.getScope().get&lt;ILogger&gt;() }
+&nbsp;    private val exceptionHandler = CoroutineExceptionHandler { _, throwable -&gt;
+&nbsp;        logger.e(&quot;[PayX] GrafanaTrace.exceptionHandler: ${throwable.message}&quot;)
+&nbsp;    }
+&nbsp;    private val scope = CoroutineScope(Dispatchers.IO + exceptionHandler)
+&nbsp;
+&nbsp;    fun start(event: GrafanaMetric) {
+&nbsp;        withFormatter(event.label, &quot;start&quot;) { formatter -&gt;
+&nbsp;            val parameter = createStartParameter(formatter, event)
+&nbsp;            jobs[event.label] = trace.start(parameter)
+&nbsp;                .onEach { buffer[event.label] = it.traceId }
+&nbsp;                .catch { logger.e(&quot;[PayX] GrafanaTrace.start error: ${it.message}&quot;) }
+&nbsp;                .launchIn(scope)
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    suspend fun startTrace(event: GrafanaMetric): String? {
+&nbsp;        val formatter = PaymentKoinScope.getScopeOrNull()?.getOrNull&lt;GrafanaTracerFormatter&gt;()
+&nbsp;        if (formatter == null) {
+&nbsp;            logger.e(&quot;[PayX] GrafanaTrace.start PaymentSession is null ${event.label}&quot;)
+&nbsp;            return null
+&nbsp;        }
+&nbsp;        val traceId = trace.start(
+&nbsp;            formatter.applyServiceInfo(
+&nbsp;                StartTraceParameter(
+&nbsp;                    event.flow,
+&nbsp;                    event.step,
+&nbsp;                )
+&nbsp;            )
+&nbsp;        ).firstOrNull()?.traceId
+&nbsp;        buffer[event.label] = traceId
+&nbsp;        return traceId
+&nbsp;    }
+&nbsp;
+&nbsp;    fun success(event: GrafanaMetric, params: TraceParameter = TraceParameter()) {
+&nbsp;        stop(event, true, params)
+&nbsp;    }
+&nbsp;
+&nbsp;    fun fail(event: GrafanaMetric, params: TraceParameter = TraceParameter()) {
+&nbsp;        stop(event, false, params)
+&nbsp;    }
+&nbsp;
+&nbsp;    fun count(event: GrafanaMetric) {
+&nbsp;        withFormatter(event.label, &quot;count&quot;) { formatter -&gt;
+&nbsp;            scope.launch {
+&nbsp;                trace.count(
+&nbsp;                    formatter.applyServiceInfo(
+&nbsp;                        CountTraceParameter(flow = event.flow, step = event.step)
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun stop(event: GrafanaMetric, status: Boolean, params: TraceParameter) {
+&nbsp;        withFormatter(event.label, &quot;stop&quot;) { formatter -&gt;
+&nbsp;            withTraceId(event, &quot;stop&quot;) { traceId -&gt;
+&nbsp;                val enrichedParams = enrichParams(formatter, event, params)
+&nbsp;                if (status) {
+&nbsp;                    trace.success(traceId, enrichedParams)
+&nbsp;                } else {
+&nbsp;                    trace.fail(traceId, enrichedParams)
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun stop(traceId: String, event: GrafanaMetric, status: Boolean, params: TraceParameter) {
+&nbsp;        if (traceId.isEmpty()) {
+&nbsp;            logger.e(&quot;[PayX] GrafanaTrace.stopWithTraceId:: no traceId $event $status $params&quot;)
+&nbsp;            return
+&nbsp;        }
+&nbsp;        withFormatter(event.label, &quot;stopWithTraceId&quot;) { formatter -&gt;
+&nbsp;            scope.launch {
+&nbsp;                val enrichedParams = enrichParams(formatter, event, params)
+&nbsp;                if (status) {
+&nbsp;                    trace.success(traceId, enrichedParams)
+&nbsp;                } else {
+&nbsp;                    trace.fail(traceId, enrichedParams)
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getTraceIds(events: List&lt;GrafanaMetric&gt;): List&lt;String?&gt; {
+&nbsp;        return events.map { buffer[it.label] }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun withFormatter(
+&nbsp;        label: String,
+&nbsp;        operation: String,
+&nbsp;        action: (GrafanaTracerFormatter) -&gt; Unit
+&nbsp;    ) {
+&nbsp;        val formatter = PaymentKoinScope.getScopeOrNull()?.getOrNull&lt;GrafanaTracerFormatter&gt;()
+&nbsp;        return formatter?.let {
+&nbsp;            action(it)
+&nbsp;        } ?: run {
+&nbsp;            logger.e(&quot;[PayX] GrafanaTrace.$operation PaymentSession is null $label&quot;)
+&nbsp;            null
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun withTraceId(
+&nbsp;        event: GrafanaMetric,
+&nbsp;        operation: String,
+&nbsp;        action: (String) -&gt; Unit
+&nbsp;    ) {
+&nbsp;        scope.launch {
+&nbsp;            jobs[event.label]?.join()
+&nbsp;            buffer[event.label]?.let { traceId -&gt;
+&nbsp;                action(traceId)
+&nbsp;                buffer.remove(event.label)
+&nbsp;                jobs.remove(event.label)
+&nbsp;            } ?: run {
+&nbsp;                logger.e(&quot;[PayX] GrafanaTrace.$operation:: no traceId $event&quot;)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createStartParameter(
+&nbsp;        formatter: GrafanaTracerFormatter,
+&nbsp;        event: GrafanaMetric
+&nbsp;    ): StartTraceParameter {
+&nbsp;        return formatter.applyServiceInfo(StartTraceParameter(event.flow, event.step))
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun enrichParams(
+&nbsp;        formatter: GrafanaTracerFormatter,
+&nbsp;        event: GrafanaMetric,
+&nbsp;        params: TraceParameter
+&nbsp;    ): TraceParameter {
+&nbsp;        return formatter.applyServiceInfo(params.copy(flow = event.flow, step = event.step))
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun &lt;T&gt; Flow&lt;T&gt;.apiTrace(
+&nbsp;    event: GrafanaMetric
+&nbsp;): Flow&lt;T&gt; {
+&nbsp;    GrafanaTrace.start(event)
+&nbsp;    return this.catch {
+&nbsp;        if (it.message.isNullOrEmpty()) {
+&nbsp;            GrafanaTrace.fail(event, TraceParameter())
+&nbsp;        } else {
+&nbsp;            val json = ModelConvertUtils.decodeToPureMap(it.message!!)
+&nbsp;            GrafanaTrace.fail(
+&nbsp;                event,
+&nbsp;                TraceParameter(
+&nbsp;                    errorCode = json[&quot;errorCode&quot;] as? Double,
+&nbsp;                    errorMessage = json[&quot;errorDesc&quot;]?.toString()
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;        throw it
+&nbsp;    }.map {
+&nbsp;        if (it is VixNetworkResponse&lt;*&gt;) {
+&nbsp;            if (it.status) {
+&nbsp;                val resp = it.response as? PaymentNetWorkResponse
+&nbsp;                GrafanaTrace.success(event, TraceParameter(errorCode = resp?.errorCode?.toDouble()))
+&nbsp;            } else {
+&nbsp;                val resp = it.response as? PaymentNetWorkResponse
+&nbsp;                GrafanaTrace.fail(event, TraceParameter(errorCode = resp?.errorCode?.toDouble()))
+&nbsp;            }
+&nbsp;        } else {
+&nbsp;            GrafanaTrace.fail(
+&nbsp;                event,
+&nbsp;                TraceParameter(errorCode = TrackingErrorCode.Serialize.code.toDouble())
+&nbsp;            )
+&nbsp;        }
+&nbsp;        return@map it
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun &lt;T&gt; Flow&lt;T&gt;.userMetricTrace(event: GrafanaMetric): Flow&lt;T&gt; {
+&nbsp;    return this.catch {
+&nbsp;        GrafanaTrace.fail(event)
+&nbsp;        throw it
+&nbsp;    }.map {
+&nbsp;        GrafanaTrace.success(event)
+&nbsp;        return@map it
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

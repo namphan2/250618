@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > FirebaseTrace</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.service.trace.journey</a>
+</div>
+
+<h1>Coverage Summary for Class: FirebaseTrace (vn.momo.compose.payment.base.core.service.trace.journey)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">FirebaseTrace</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    47.4%
+  </span>
+  <span class="absValue">
+    (18/38)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    55.8%
+  </span>
+  <span class="absValue">
+    (24/43)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    41.8%
+  </span>
+  <span class="absValue">
+    (128/306)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.service.trace.journey
+&nbsp;
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.firebaseEvent.IFirebaseTracer
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.CheckoutResponded
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ConfirmButtonClicked
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.JourneyEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PayXCheckoutRequested
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentScreenDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentScreenInteracted
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.TransactionResultScreenDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.TransactionResultScreenInteracted
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.copyWithParentProps
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope
+&nbsp;import vn.momo.compose.utils.TimeUtils
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.koin.KoinHelper.getInjected
+&nbsp;
+&nbsp;
+&nbsp;object FirebaseTrace {
+<b class="fc">&nbsp;    private val trace: IFirebaseTracer = getInjected&lt;IFirebaseTracer&gt;()</b>
+<b class="fc">&nbsp;    private var durationBuffer = mutableMapOf&lt;String, Long?&gt;()</b>
+&nbsp;
+&nbsp;    fun track(event: JourneyEvent) {
+<b class="fc">&nbsp;        val scope = PaymentKoinScope.getScopeOrNull()</b>
+<b class="pc">&nbsp;        val formatter = scope?.getOrNull&lt;FirebaseTraceFormatter&gt;()</b>
+<b class="fc">&nbsp;        traceDuration(traceBillType(event, formatter))</b>
+<b class="pc">&nbsp;            ?.let { formatter?.applyServiceInfo(it) }</b>
+<b class="pc">&nbsp;            ?.let { formatter?.getOrderId(it) }</b>
+<b class="pc">&nbsp;            ?.also { trackEvent(it) }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun traceBillType(
+&nbsp;        event: JourneyEvent,
+&nbsp;        formatter: FirebaseTraceFormatter?
+&nbsp;    ): JourneyEvent {
+<b class="fc">&nbsp;        return event.apply {</b>
+<b class="pc">&nbsp;            billType = formatter?.billType ?: &quot;&quot;</b>
+<b class="pc">&nbsp;            flow = formatter?.flow ?: &quot;&quot;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun traceDuration(event: JourneyEvent): JourneyEvent? {
+<b class="fc">&nbsp;        return when (event) {</b>
+&nbsp;            /**
+&nbsp;             * This event is tracked in the Vix system, so this code simply logs the current time
+&nbsp;             * to the `durationBuffer` map for later use in calculating the duration of the event.
+&nbsp;             */
+<b class="pc">&nbsp;            is PayXCheckoutRequested -&gt; {</b>
+<b class="nc">&nbsp;                durationBuffer[event.screenName] = TimeUtils.getCurrentTimeMillis()</b>
+<b class="nc">&nbsp;                null</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            is PaymentScreenDisplayed -&gt; {</b>
+<b class="nc">&nbsp;                durationBuffer[event.screenName] = TimeUtils.getCurrentTimeMillis()</b>
+<b class="nc">&nbsp;                durationBuffer[&quot;confirm_button&quot;] = TimeUtils.getCurrentTimeMillis()</b>
+<b class="nc">&nbsp;                event</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            is TransactionResultScreenDisplayed -&gt; {</b>
+<b class="nc">&nbsp;                durationBuffer[event.screenName] = TimeUtils.getCurrentTimeMillis()</b>
+<b class="nc">&nbsp;                event</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            is PaymentScreenInteracted -&gt; {</b>
+<b class="nc">&nbsp;                event.copyWithParentProps(</b>
+<b class="nc">&nbsp;                    event.copy(</b>
+<b class="nc">&nbsp;                        timeLoad = calculateTimeLoad(event.screenName),</b>
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            is TransactionResultScreenInteracted -&gt; event.copyWithParentProps(</b>
+<b class="nc">&nbsp;                event.copy(</b>
+<b class="nc">&nbsp;                    timeLoad = calculateTimeLoad(event.screenName),</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;
+<b class="pc">&nbsp;            is CheckoutResponded -&gt; {</b>
+<b class="nc">&nbsp;                event.copyWithParentProps(</b>
+<b class="nc">&nbsp;                    event.copy(</b>
+<b class="nc">&nbsp;                        duration = calculateTimeLoad(event.screenName),</b>
+&nbsp;                    )
+&nbsp;                )
+&nbsp;
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            is ConfirmButtonClicked -&gt; {</b>
+<b class="nc">&nbsp;                event.copyWithParentProps(event.copy(duration = calculateTimeLoad(&quot;confirm_button&quot;)))</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            else -&gt; event</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun calculateTimeLoad(screenName: String?): Long {
+<b class="nc">&nbsp;        return (durationBuffer[screenName]?.let { TimeUtils.getCurrentTimeMillis() - it }?.also {</b>
+<b class="nc">&nbsp;            durationBuffer.remove(screenName)</b>
+<b class="nc">&nbsp;        } ?: 0L)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun trackEvent(event: JourneyEvent) {
+<b class="fc">&nbsp;        trace.track(</b>
+<b class="fc">&nbsp;            event.eventName,</b>
+<b class="pc">&nbsp;            ModelConvertUtils.encodeToJson(JourneyEvent.serializer(), event) as? JsonObject</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;interface FirebaseTraceFormatter {
+&nbsp;    val flow: String
+&nbsp;    val billType: String
+&nbsp;    fun applyServiceInfo(event: JourneyEvent): JourneyEvent
+&nbsp;    fun getOrderId(event: JourneyEvent): JourneyEvent
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

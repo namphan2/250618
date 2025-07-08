@@ -1,0 +1,241 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBBodyGetPaymentStatusP2P</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm</a>
+</div>
+
+<h1>Coverage Summary for Class: SBBodyGetPaymentStatusP2P (vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBBodyGetPaymentStatusP2P</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SBBodyGetPaymentStatusP2P$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.PaymentNetworkRequest
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.RemoteAPIOption
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SBConfirmRequestDTO(
+&nbsp;    val momoMsg: SBMoMoMsgConfirmDTO,
+&nbsp;    val extra: JsonObject = emptyJsonObject(),
+&nbsp;    val pinKeys: List&lt;String&gt; = listOf(&quot;pass&quot;),
+&nbsp;    val pinKeySessionID: String = &quot;&quot;,
+&nbsp;    override val headers: JsonObject = emptyJsonObject(),
+&nbsp;    override val msgType: String = &quot;TRAN_HIS_CONFIRM_MSG&quot;,
+&nbsp;    override val options: RemoteAPIOption = RemoteAPIOption(),
+&nbsp;    override val subPath: String? = null,
+&nbsp;    override val subDomain: String? = null,
+&nbsp;    override val path: String? = null
+&nbsp;) : PaymentNetworkRequest {
+&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;sealed class SBMoMoMsgConfirmDTO {
+&nbsp;    abstract val ID: String?
+&nbsp;    abstract val user: String?
+&nbsp;    abstract val tranId: Long?
+&nbsp;    abstract val tranType: Int?
+&nbsp;    abstract val amount: Double?
+&nbsp;    abstract val moneySource: Int?
+&nbsp;    abstract val originalAmount: Double?
+&nbsp;    abstract val serviceId: String?
+&nbsp;    abstract var extras: String?
+&nbsp;    abstract val sourceToken: String?
+&nbsp;    abstract val _class: String?
+&nbsp;    abstract val otp: String?
+&nbsp;    abstract var otpBanknet: String?
+&nbsp;    abstract val extrasJsonObject: JsonObject
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;class SBGetPaymentStatusP2PRequest(
+&nbsp;    val body: SBBodyGetPaymentStatusP2P,
+&nbsp;    override val msgType: String = &quot;GET_SUMMARY&quot;,
+&nbsp;    override val options: RemoteAPIOption = RemoteAPIOption(timeout = 30000, handleError = false),
+&nbsp;    override val headers: JsonObject? = vn.momo.core.modules.common.utilities.emptyJsonObject(),
+&nbsp;    override val path: String? = null,
+&nbsp;    override val subPath: String? = &quot;p2p/gateway/trans-info/GET_SUMMARY&quot;,
+&nbsp;    override val subDomain: String? = &quot;api&quot;
+&nbsp;) : PaymentNetworkRequest {
+&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class SBBodyGetPaymentStatusP2P(
+<b class="nc">&nbsp;    val tid: String = &quot;&quot;</b>
+&nbsp;)
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,433 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PromotionInputKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.view.components</a>
+</div>
+
+<h1>Coverage Summary for Class: PromotionInputKt (vn.momo.compose.payment.promotion.presentation.view.components)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PromotionInputKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/114)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1422)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PromotionInputKt$PromotionInput$5$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/86)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/727)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/150)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/156)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2149)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.view.components
+&nbsp;
+&nbsp;import androidx.compose.foundation.background
+&nbsp;import androidx.compose.foundation.border
+&nbsp;import androidx.compose.foundation.clickable
+&nbsp;import androidx.compose.foundation.interaction.MutableInteractionSource
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.Spacer
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.height
+&nbsp;import androidx.compose.foundation.layout.offset
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.width
+&nbsp;import androidx.compose.foundation.layout.wrapContentSize
+&nbsp;import androidx.compose.foundation.shape.RoundedCornerShape
+&nbsp;import androidx.compose.foundation.text.BasicTextField
+&nbsp;import androidx.compose.foundation.text.KeyboardOptions
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.focus.onFocusChanged
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import androidx.compose.ui.text.TextStyle
+&nbsp;import androidx.compose.ui.text.input.KeyboardType
+&nbsp;import androidx.compose.ui.text.input.PasswordVisualTransformation
+&nbsp;import androidx.compose.ui.text.input.TextFieldValue
+&nbsp;import androidx.compose.ui.text.input.VisualTransformation
+&nbsp;import androidx.compose.ui.text.style.TextOverflow
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.sp
+&nbsp;import androidx.compose.ui.zIndex
+&nbsp;import vn.momo.kits.components.ErrorView
+&nbsp;import vn.momo.kits.components.Icon
+&nbsp;import vn.momo.kits.components.InputFontWeight
+&nbsp;import vn.momo.kits.components.InputSize
+&nbsp;import vn.momo.kits.components.RenderRightIcon
+&nbsp;import vn.momo.kits.components.Text
+&nbsp;import vn.momo.kits.components.getBorderColor
+&nbsp;import vn.momo.kits.const.AppTheme
+&nbsp;import vn.momo.kits.const.Spacing
+&nbsp;import vn.momo.kits.const.Typography
+&nbsp;import vn.momo.kits.modifier.setAutomationId
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun PromotionInput(
+<b class="nc">&nbsp;    textFieldValue: TextFieldValue = TextFieldValue(&quot;&quot;),</b>
+<b class="nc">&nbsp;    floatingValue: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    floatingValueColor: Color = AppTheme.current.colors.text.hint,</b>
+<b class="nc">&nbsp;    floatingIcon: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    floatingIconColor: Color = AppTheme.current.colors.text.default,</b>
+<b class="nc">&nbsp;    placeholder: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    size: InputSize = InputSize.SMALL,</b>
+<b class="nc">&nbsp;    onChangeText: (TextFieldValue) -&gt; Unit = {},</b>
+<b class="nc">&nbsp;    hintText: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    error: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    errorSpacing: Boolean = false,</b>
+<b class="nc">&nbsp;    disabled: Boolean = false,</b>
+<b class="nc">&nbsp;    readOnly: Boolean = false,</b>
+<b class="nc">&nbsp;    secureTextEntry: Boolean = false,</b>
+<b class="nc">&nbsp;    icon: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    iconColor: Color = AppTheme.current.colors.text.default,</b>
+<b class="nc">&nbsp;    onRightIconPressed: () -&gt; Unit = {},</b>
+<b class="nc">&nbsp;    leadingIcon: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    leadingIconColor: Color = AppTheme.current.colors.text.hint,</b>
+<b class="nc">&nbsp;    onFocus: () -&gt; Unit = {},</b>
+<b class="nc">&nbsp;    onBlur: () -&gt; Unit = {},</b>
+<b class="nc">&nbsp;    loading: Boolean = false,</b>
+<b class="nc">&nbsp;    required: Boolean = false,</b>
+<b class="nc">&nbsp;    fontWeight: InputFontWeight = InputFontWeight.REGULAR,</b>
+<b class="nc">&nbsp;    keyboardType: KeyboardType = KeyboardType.Text,</b>
+<b class="nc">&nbsp;    modifier: Modifier = Modifier,</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;    var isFocused by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var passHidden by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var isBlurred = false</b>
+<b class="nc">&nbsp;    val disabledColor = AppTheme.current.colors.text.disable</b>
+<b class="nc">&nbsp;    var textColor = AppTheme.current.colors.text.default</b>
+<b class="nc">&nbsp;    var placeholderColor = AppTheme.current.colors.text.hint</b>
+<b class="nc">&nbsp;    var iconTintColor = iconColor</b>
+<b class="nc">&nbsp;    val floatingTitleColor = when {</b>
+<b class="nc">&nbsp;        disabled -&gt; AppTheme.current.colors.text.disable</b>
+<b class="nc">&nbsp;        else -&gt; floatingValueColor</b>
+&nbsp;    }
+<b class="nc">&nbsp;    val floatingIconTintColor = when {</b>
+<b class="nc">&nbsp;        disabled -&gt; AppTheme.current.colors.text.disable</b>
+<b class="nc">&nbsp;        else -&gt; floatingIconColor</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    if (disabled) {</b>
+<b class="nc">&nbsp;        textColor = disabledColor</b>
+<b class="nc">&nbsp;        placeholderColor = disabledColor</b>
+<b class="nc">&nbsp;        iconTintColor = disabledColor</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    val testId = if (disabled) &quot;input_${floatingValue}_disabled&quot; else &quot;input_$floatingValue&quot;</b>
+&nbsp;
+<b class="nc">&nbsp;    Column(</b>
+<b class="nc">&nbsp;        modifier = modifier.setAutomationId(testId)</b>
+&nbsp;    ) {
+<b class="nc">&nbsp;        BasicTextField(</b>
+<b class="nc">&nbsp;            enabled = !disabled,</b>
+<b class="nc">&nbsp;            readOnly = readOnly,</b>
+<b class="nc">&nbsp;            singleLine = true,</b>
+<b class="nc">&nbsp;            value = textFieldValue,</b>
+<b class="nc">&nbsp;            textStyle = TextStyle(</b>
+<b class="nc">&nbsp;                color = textColor,</b>
+<b class="nc">&nbsp;                fontSize = 16.sp,</b>
+<b class="nc">&nbsp;                lineHeight = 24.sp,</b>
+<b class="nc">&nbsp;                fontWeight = fontWeight.value</b>
+&nbsp;            ),
+<b class="nc">&nbsp;            visualTransformation = if (secureTextEntry &amp;&amp; !passHidden) PasswordVisualTransformation() else VisualTransformation.None,</b>
+<b class="nc">&nbsp;            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = if (secureTextEntry) KeyboardType.Ascii else keyboardType),</b>
+<b class="nc">&nbsp;            modifier = Modifier.height(size.values.height).onFocusChanged {</b>
+<b class="nc">&nbsp;                isFocused = it.isFocused</b>
+<b class="nc">&nbsp;                if (it.isFocused) {</b>
+<b class="nc">&nbsp;                    onFocus()</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (!it.isFocused &amp;&amp; isBlurred) onBlur()</b>
+<b class="nc">&nbsp;                if (it.isFocused &amp;&amp; !isBlurred) isBlurred = true</b>
+&nbsp;            },
+<b class="nc">&nbsp;            onValueChange = onChangeText,</b>
+<b class="nc">&nbsp;            decorationBox = { innerTextField -&gt;</b>
+&nbsp;                // Floating Icon
+<b class="nc">&nbsp;                if (floatingValue.isNotEmpty() || floatingIcon.isNotEmpty()) {</b>
+<b class="nc">&nbsp;                    Box(</b>
+<b class="nc">&nbsp;                        modifier = Modifier.wrapContentSize()</b>
+<b class="nc">&nbsp;                            .offset(y = (-size.values.height / 2), x = (Spacing.S))</b>
+<b class="nc">&nbsp;                            .background(AppTheme.current.colors.background.surface)</b>
+<b class="nc">&nbsp;                            .zIndex(10f),</b>
+&nbsp;                    ) {
+<b class="nc">&nbsp;                        Row(</b>
+<b class="nc">&nbsp;                            modifier = Modifier</b>
+<b class="nc">&nbsp;                                .padding(horizontal = Spacing.S),</b>
+<b class="nc">&nbsp;                            verticalAlignment = Alignment.Bottom</b>
+&nbsp;                        ) {
+<b class="nc">&nbsp;                            Text(</b>
+<b class="nc">&nbsp;                                floatingValue,</b>
+<b class="nc">&nbsp;                                style = Typography.labelSMedium,</b>
+<b class="nc">&nbsp;                                color = floatingTitleColor</b>
+&nbsp;                            )
+<b class="nc">&nbsp;                            if (required) {</b>
+<b class="nc">&nbsp;                                Text(</b>
+<b class="nc">&nbsp;                                    &quot;*&quot;,</b>
+<b class="nc">&nbsp;                                    style = Typography.labelSMedium,</b>
+<b class="nc">&nbsp;                                    color = AppTheme.current.colors.error.primary,</b>
+&nbsp;                                )
+&nbsp;                            }
+<b class="nc">&nbsp;                            if (floatingIcon.isNotEmpty()) {</b>
+<b class="nc">&nbsp;                                Icon(</b>
+<b class="nc">&nbsp;                                    source = floatingIcon,</b>
+<b class="nc">&nbsp;                                    modifier = Modifier.padding(start = Spacing.XS),</b>
+<b class="nc">&nbsp;                                    size = 16.dp,</b>
+<b class="nc">&nbsp;                                    color = floatingIconTintColor</b>
+&nbsp;                                )
+&nbsp;                            }
+<b class="nc">&nbsp;                        }</b>
+<b class="nc">&nbsp;                    }</b>
+&nbsp;                }
+&nbsp;                //input box wrapper
+<b class="nc">&nbsp;                Box(</b>
+<b class="nc">&nbsp;                    modifier = Modifier.fillMaxWidth()</b>
+<b class="nc">&nbsp;                        .border(</b>
+<b class="nc">&nbsp;                            1.dp,</b>
+<b class="nc">&nbsp;                            getBorderColor(isFocused, error, disabled),</b>
+<b class="nc">&nbsp;                            RoundedCornerShape(size.values.borderRadius)</b>
+&nbsp;                        ),
+<b class="nc">&nbsp;                    contentAlignment = Alignment.CenterStart</b>
+&nbsp;                ) {
+<b class="nc">&nbsp;                    Row(</b>
+<b class="nc">&nbsp;                        modifier = Modifier.padding(horizontal = Spacing.M),</b>
+<b class="nc">&nbsp;                        verticalAlignment = Alignment.CenterVertically</b>
+&nbsp;                    ) {
+&nbsp;                        //leading icon
+<b class="nc">&nbsp;                        if (leadingIcon.isNotEmpty()) {</b>
+<b class="nc">&nbsp;                            Icon(</b>
+<b class="nc">&nbsp;                                source = leadingIcon,</b>
+<b class="nc">&nbsp;                                modifier = Modifier.padding(end = Spacing.M),</b>
+<b class="nc">&nbsp;                                size = if (size.name == InputSize.SMALL.name) 24.dp else 32.dp,</b>
+<b class="nc">&nbsp;                                color = leadingIconColor</b>
+&nbsp;                            )
+&nbsp;                        }
+<b class="nc">&nbsp;                        Box(Modifier.weight(1f)) {</b>
+<b class="nc">&nbsp;                            if (textFieldValue.text.isEmpty()) {</b>
+<b class="nc">&nbsp;                                Text(</b>
+<b class="nc">&nbsp;                                    text = placeholder,</b>
+<b class="nc">&nbsp;                                    style = TextStyle(</b>
+<b class="nc">&nbsp;                                        fontSize = 16.sp,</b>
+<b class="nc">&nbsp;                                        lineHeight = 24.sp,</b>
+<b class="nc">&nbsp;                                        fontWeight = fontWeight.value</b>
+&nbsp;                                    ),
+<b class="nc">&nbsp;                                    color = placeholderColor,</b>
+<b class="nc">&nbsp;                                    maxLines = 1,</b>
+<b class="nc">&nbsp;                                    overflow = TextOverflow.Ellipsis,</b>
+&nbsp;                                )
+&nbsp;                            }
+<b class="nc">&nbsp;                            innerTextField()</b>
+<b class="nc">&nbsp;                        }</b>
+<b class="nc">&nbsp;                        if (isFocused &amp;&amp; textFieldValue.text.isNotEmpty()) {</b>
+<b class="nc">&nbsp;                            Row {</b>
+<b class="nc">&nbsp;                                Spacer(Modifier.width(Spacing.XS))</b>
+<b class="nc">&nbsp;                                Icon(</b>
+<b class="nc">&nbsp;                                    source = &quot;24_navigation_close_circle_full&quot;,</b>
+<b class="nc">&nbsp;                                    size = 16.dp,</b>
+<b class="nc">&nbsp;                                    color = AppTheme.current.colors.text.hint,</b>
+<b class="nc">&nbsp;                                    modifier = Modifier.clickable(</b>
+<b class="nc">&nbsp;                                        onClick = {</b>
+<b class="nc">&nbsp;                                            onChangeText(TextFieldValue(&quot;&quot;))</b>
+<b class="nc">&nbsp;                                            onRightIconPressed()</b>
+&nbsp;                                        },
+<b class="nc">&nbsp;                                        interactionSource = remember { MutableInteractionSource() },</b>
+<b class="nc">&nbsp;                                        indication = null</b>
+&nbsp;                                    )
+&nbsp;                                )
+<b class="nc">&nbsp;                            }</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        if (secureTextEntry &amp;&amp; passHidden) {</b>
+<b class="nc">&nbsp;                            val hidePassword = { onRightIconPressed(); passHidden = !passHidden }</b>
+<b class="nc">&nbsp;                            RenderRightIcon(</b>
+<b class="nc">&nbsp;                                loading, &quot;24_security_eye_open&quot;, iconTintColor,</b>
+<b class="nc">&nbsp;                                hidePassword</b>
+&nbsp;                            )
+<b class="nc">&nbsp;                        } else if (secureTextEntry &amp;&amp; !passHidden) {</b>
+<b class="nc">&nbsp;                            val showPassword = { onRightIconPressed(); passHidden = !passHidden }</b>
+<b class="nc">&nbsp;                            RenderRightIcon(</b>
+<b class="nc">&nbsp;                                loading, &quot;24_security_eye_off&quot;, iconTintColor,</b>
+<b class="nc">&nbsp;                                showPassword</b>
+&nbsp;                            )
+<b class="nc">&nbsp;                        } else {</b>
+<b class="nc">&nbsp;                            RenderRightIcon(</b>
+<b class="nc">&nbsp;                                loading, icon, iconTintColor,</b>
+<b class="nc">&nbsp;                                onRightIconPressed</b>
+&nbsp;                            )
+&nbsp;                        }
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            },
+&nbsp;        )
+&nbsp;        // show error
+<b class="nc">&nbsp;        ErrorView(error, errorSpacing, hintText)</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

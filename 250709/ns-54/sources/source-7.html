@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > GetGamificationRemoteDataSource</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.remote</a>
+</div>
+
+<h1>Coverage Summary for Class: GetGamificationRemoteDataSource (vn.momo.compose.payment.payx.data.dataSource.remote)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">GetGamificationRemoteDataSource</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/52)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GetGamificationRemoteDataSource$get$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">GetGamificationRemoteDataSource$get$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">GetGamificationRemoteDataSource$get$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/52)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.remote
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestWithFlow
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.model.VixResponse
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.model.VixNetworkResponse
+&nbsp;import vn.momo.compose.payment.base.domain.entities.error.DevError
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentError
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.transactionresult.GamificationResponse
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonArray
+&nbsp;
+<b class="nc">&nbsp;class GetGamificationRemoteDataSource(</b>
+<b class="nc">&nbsp;    private val remoteApi: IComposeApi,</b>
+&nbsp;) {
+&nbsp;    fun get(requestId: String): Flow&lt;GamificationResponse&gt; {
+<b class="nc">&nbsp;        return remoteApi.requestWithFlow(</b>
+<b class="nc">&nbsp;            APIs.getMessage.name,</b>
+<b class="nc">&nbsp;            listOf(</b>
+<b class="nc">&nbsp;                buildJsonObject {</b>
+<b class="nc">&nbsp;                    put(</b>
+<b class="nc">&nbsp;                        &quot;path&quot;,</b>
+<b class="nc">&nbsp;                        &quot;anorok-mission-service/v1/transaction_history_request?request_id=${requestId}&quot;</b>
+&nbsp;                    )
+<b class="nc">&nbsp;                    put(&quot;subDomain&quot;, &quot;aws&quot;)</b>
+<b class="nc">&nbsp;                    put(&quot;options&quot;, buildJsonObject {</b>
+<b class="nc">&nbsp;                        put(&quot;timeout&quot;, 1500)</b>
+<b class="nc">&nbsp;                    })</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            )
+&nbsp;        )
+<b class="nc">&nbsp;            .take(1)</b>
+<b class="nc">&nbsp;            .map {</b>
+&nbsp;                ModelConvertUtils.decode(
+&nbsp;                    VixResponse.serializer(
+&nbsp;                        VixNetworkResponse.serializer(
+&nbsp;                            GamificationResponse.serializer()
+&nbsp;                        )
+&nbsp;                    ), it
+&nbsp;                )?.response?.response ?: throw PaymentError.DevError(
+&nbsp;                    DevError.ConvertFailed.code,
+&nbsp;                    &quot;Can not convert gamification response&quot;,
+&nbsp;                    emptyJsonObject(),
+&nbsp;                    cause = Exception(this::class.simpleName)
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

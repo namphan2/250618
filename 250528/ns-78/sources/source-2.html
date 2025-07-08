@@ -1,0 +1,336 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > UpdateTransactionUseCases</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.useCases.mbUpdate</a>
+</div>
+
+<h1>Coverage Summary for Class: UpdateTransactionUseCases (vn.momo.compose.payment.payx.domain.useCases.mbUpdate)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UpdateTransactionUseCases</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/308)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changePromotion$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changePromotion$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changePromotion$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changeSof$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changeSof$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changeSof$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$changeSof$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UpdateTransactionUseCases$formatTotal$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/308)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.useCases.mbUpdate
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import org.jetbrains.compose.resources.getString
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.InitRequested
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.InitResponded
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.TotalAmount
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.InvoiceItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXTransaction
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.base.domain.entities.VoucherItemLocal
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentError
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.transaction.UpdateTransactionManager
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.FormatCurrencyUseCase
+&nbsp;import vn.momo.compose.resources.Res
+&nbsp;import vn.momo.compose.resources.free
+&nbsp;
+<b class="nc">&nbsp;class UpdateTransactionUseCases(</b>
+<b class="nc">&nbsp;    private val formatCurrency: FormatCurrencyUseCase,</b>
+<b class="nc">&nbsp;    private val repository: UpdateTransactionManager</b>
+&nbsp;) {
+&nbsp;    suspend fun changeSof(
+&nbsp;        source: SOFItem, invoiceItem: List&lt;InvoiceItem&gt;, sofList: List&lt;SOFItem&gt;
+&nbsp;    ): Flow&lt;Response&lt;PayXTransaction&gt;&gt; {
+<b class="nc">&nbsp;        FirebaseTrace.track(</b>
+<b class="nc">&nbsp;            InitRequested(</b>
+<b class="nc">&nbsp;                source = &quot;init_sof&quot;,</b>
+<b class="nc">&nbsp;                moneySource = source.moneySource.id</b>
+&nbsp;            )
+&nbsp;        )
+<b class="nc">&nbsp;        return repository.changeSof(source, invoiceItem, sofList).map { result -&gt;</b>
+&nbsp;            val formattedTotalAmount = formatTotal(result.data.totalAmount)
+&nbsp;            val formatted = result.data.copy(totalAmount = formattedTotalAmount)
+&nbsp;            return@map if (result.isSuccess) {
+&nbsp;                FirebaseTrace.track(
+&nbsp;                    InitResponded(
+&nbsp;                        status = true,
+&nbsp;                        errorCode = 0,
+&nbsp;                        initType = &quot;init_sof&quot;,
+&nbsp;                        targetSof = source.moneySource.id,
+&nbsp;                        moneySource = source.moneySource.id
+&nbsp;                    )
+&nbsp;                )
+&nbsp;                Response.success(formatted)
+&nbsp;            } else {
+&nbsp;                val err = result.exception
+&nbsp;                if (err is PaymentError) {
+&nbsp;                    FirebaseTrace.track(
+&nbsp;                        InitResponded(
+&nbsp;                            status = false,
+&nbsp;                            errorCode = err.code,
+&nbsp;                            initType = &quot;init_sof&quot;,
+&nbsp;                            targetSof = source.moneySource.id,
+&nbsp;                            moneySource = source.moneySource.id
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;                Response.fail(formatted, err)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun changePromotion(
+&nbsp;        invoiceList: List&lt;InvoiceItem&gt;,
+&nbsp;        currentSource: SOFItem,
+&nbsp;        listSof: List&lt;SOFItem&gt;?,
+&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;?,
+&nbsp;        discountCodes: List&lt;String&gt;
+&nbsp;    ): Flow&lt;Response&lt;PayXTransaction&gt;&gt; {
+<b class="nc">&nbsp;        FirebaseTrace.track(</b>
+<b class="nc">&nbsp;            InitRequested(</b>
+<b class="nc">&nbsp;                source = &quot;init_voucher&quot;,</b>
+<b class="nc">&nbsp;                moneySource = currentSource.moneySource.id</b>
+&nbsp;            )
+&nbsp;        )
+<b class="nc">&nbsp;        return repository.changePromotion(</b>
+<b class="nc">&nbsp;            invoiceList, currentSource, listSof, vouchers, discountCodes</b>
+<b class="nc">&nbsp;        ).map { result -&gt;</b>
+&nbsp;            val formattedTotalAmount = formatTotal(result.data.totalAmount)
+&nbsp;            val formatted = result.data.copy(totalAmount = formattedTotalAmount)
+&nbsp;
+&nbsp;            return@map if (result.isSuccess) {
+&nbsp;                FirebaseTrace.track(
+&nbsp;                    InitResponded(
+&nbsp;                        status = true,
+&nbsp;                        errorCode = 0,
+&nbsp;                        initType = &quot;init_voucher&quot;,
+&nbsp;                        targetSof = currentSource.moneySource.id,
+&nbsp;                        moneySource = currentSource.moneySource.id
+&nbsp;                    )
+&nbsp;                )
+&nbsp;                Response.success(formatted)
+&nbsp;            } else {
+&nbsp;                val err = result.exception
+&nbsp;                if (err is PaymentError) {
+&nbsp;                    FirebaseTrace.track(
+&nbsp;                        InitResponded(
+&nbsp;                            status = false,
+&nbsp;                            errorCode = err.code,
+&nbsp;                            initType = &quot;init_voucher&quot;,
+&nbsp;                            targetSof = currentSource.moneySource.id,
+&nbsp;                            moneySource = currentSource.moneySource.id
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;                Response.fail(formatted, err)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private suspend fun formatTotal(data: TotalAmount): TotalAmount {
+<b class="nc">&nbsp;        return TotalAmount(</b>
+<b class="nc">&nbsp;            total = data.total.copy(format = formatCurrency(data.total.value.toDouble())),</b>
+<b class="nc">&nbsp;            totalBeforePromotion = data.totalBeforePromotion.copy(format = formatCurrency(data.totalBeforePromotion.value.toDouble())),</b>
+<b class="nc">&nbsp;            fee = data.fee.copy(</b>
+<b class="nc">&nbsp;                format = formatCurrency(</b>
+<b class="nc">&nbsp;                    data.fee.value.toDouble(), fallback = getString(Res.string.free)</b>
+&nbsp;                )
+&nbsp;            ),
+<b class="nc">&nbsp;            subTotalAmount = data.subTotalAmount.copy(</b>
+<b class="nc">&nbsp;                format = formatCurrency(</b>
+<b class="nc">&nbsp;                    data.subTotalAmount.value.toDouble(), fallback = getString(Res.string.free)</b>
+&nbsp;                )
+&nbsp;            ),
+<b class="nc">&nbsp;            conversionFee = data.conversionFee.copy(</b>
+<b class="nc">&nbsp;                format = formatCurrency(</b>
+<b class="nc">&nbsp;                    data.conversionFee.value.toDouble(), fallback = getString(Res.string.free)</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-06-18 18:24</div>
+</div>
+</body>
+</html>

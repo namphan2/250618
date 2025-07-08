@@ -1,0 +1,637 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IPromotionVMTracking</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.viewModel.delegate</a>
+</div>
+
+<h1>Coverage Summary for Class: IPromotionVMTracking (vn.momo.compose.payment.promotion.presentation.viewModel.delegate)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">IPromotionVMTracking</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.viewModel.delegate
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.EventName
+&nbsp;import vn.momo.compose.payment.promotion.core.model.PROMOTION_TRACER_SERVICE_MAPPING
+&nbsp;import vn.momo.compose.payment.promotion.core.model.PromotionSourceScreen
+&nbsp;import vn.momo.compose.payment.promotion.core.model.VoucherDetailTrackingParams
+&nbsp;import vn.momo.compose.payment.promotion.core.utils.PromotionFirebaseTrace
+&nbsp;import vn.momo.compose.payment.promotion.data.constants.TrackingConst
+&nbsp;
+&nbsp;interface IPromotionVMTracking {
+&nbsp;    fun trackVoucherScreenDisplayed(sourceScreen: PromotionSourceScreen)
+&nbsp;    fun trackVoucherScreenInteracted(sourceScreen: PromotionSourceScreen, duration: Long)
+&nbsp;    fun trackVoucherScreenViewed(sourceScreen: PromotionSourceScreen)
+&nbsp;    fun trackVoucherComponentDisplayed(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherComponentClicked(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherActionTriggered(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;        action: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherPromoCodeInputted(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        promoCode: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherPromoCodeErrorViewed(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        promoCode: String,
+&nbsp;        errorType: String,
+&nbsp;        errorMsg: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherApplyButtonClicked(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherPOSInputPromoButtonClicked()
+&nbsp;
+&nbsp;    fun trackVoucherPOSSearchButtonClicked()
+&nbsp;
+&nbsp;    fun trackVoucherPOSBackButtonClicked()
+&nbsp;
+&nbsp;    fun trackVoucherPOSViewMoreButtonClicked()
+&nbsp;
+&nbsp;    fun trackVoucherPOSSearchKeywordInputted(keyword: String)
+&nbsp;
+&nbsp;    fun trackVoucherPOSSearchCancelButtonClicked()
+&nbsp;
+&nbsp;    fun trackDetailScreenDisplayed(params: VoucherDetailTrackingParams)
+&nbsp;    fun trackDetailScreenInteracted(
+&nbsp;        params: VoucherDetailTrackingParams,
+&nbsp;        duration: Long,
+&nbsp;    )
+&nbsp;    fun trackDetailScreenViewed(params: VoucherDetailTrackingParams)
+&nbsp;
+&nbsp;    fun trackDetailButtonClicked(
+&nbsp;        params: VoucherDetailTrackingParams,
+&nbsp;        buttonName: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackDetailBackButtonClicked(params: VoucherDetailTrackingParams)
+&nbsp;
+&nbsp;    fun trackDetailSupportButtonClicked(params: VoucherDetailTrackingParams)
+&nbsp;
+&nbsp;    fun trackVoucherCoinBlockDisplayed(status: String)
+&nbsp;
+&nbsp;    fun trackVoucherCoinBlockClicked()
+&nbsp;
+&nbsp;    fun trackVoucherCoinItemSelected(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherCoinItemClicked(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        status: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherCoinListItemDisplayed(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        status: String,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherCoinExchangeNowClicked(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackVoucherCoinCloseBottomSheetClicked()
+&nbsp;}
+&nbsp;
+&nbsp;class PromotionVMTracking : IPromotionVMTracking {
+&nbsp;    override fun trackVoucherScreenDisplayed(sourceScreen: PromotionSourceScreen) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_DISPLAYED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherScreenInteracted(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        duration: Long
+&nbsp;    ) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(duration = duration)
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_INTERACTED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherScreenViewed(sourceScreen: PromotionSourceScreen) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(length = TrackingConst.SCREEN_VIEWED_LENGTH)
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_VIEWED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherComponentDisplayed(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            componentName = &quot;voucher&quot;,
+&nbsp;            componentType = &quot;list&quot;,
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            slot = slot,
+&nbsp;            status = status
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_DISPLAYED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherComponentClicked(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            componentName = &quot;voucher&quot;,
+&nbsp;            componentType = &quot;list&quot;,
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            slot = slot,
+&nbsp;            status = status
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherActionTriggered(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        slot: Int,
+&nbsp;        status: String,
+&nbsp;        action: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            productName = &quot;voucher&quot;,
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            slot = slot,
+&nbsp;            status = status,
+&nbsp;            action = action,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.PRODUCT_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPromoCodeInputted(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        promoCode: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            fieldName = &quot;promocode&quot;,
+&nbsp;            promoCode = promoCode,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.FIELD_INPUTTED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPromoCodeErrorViewed(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        promoCode: String,
+&nbsp;        errorType: String,
+&nbsp;        errorMsg: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            componentName = &quot;promocode&quot;,
+&nbsp;            componentType = &quot;input_field&quot;,
+&nbsp;            promoCode = promoCode,
+&nbsp;            errorType = errorType,
+&nbsp;            errorMsg = errorMsg,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.ERROR_COMPONENT_VIEWED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherApplyButtonClicked(
+&nbsp;        sourceScreen: PromotionSourceScreen,
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[sourceScreen]?.copy(
+&nbsp;            buttonName = &quot;apply&quot;,
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSInputPromoButtonClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS]?.copy(
+&nbsp;            buttonName = &quot;promocode&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSSearchButtonClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS]?.copy(
+&nbsp;            buttonName = &quot;search&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSBackButtonClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS]?.copy(
+&nbsp;            iconName = &quot;back&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.ICON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSViewMoreButtonClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS]?.copy(
+&nbsp;            buttonName = &quot;view_more&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSSearchKeywordInputted(keyword: String) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS_SEARCH]?.copy(
+&nbsp;            keyword = keyword,
+&nbsp;            fieldName = &quot;search&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.FIELD_INPUTTED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherPOSSearchCancelButtonClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.POS_SEARCH]?.copy(
+&nbsp;            buttonName = &quot;close&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailScreenDisplayed(params: VoucherDetailTrackingParams) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;            giftType = params.giftType,
+&nbsp;            campaignId = params.campaignId,
+&nbsp;            status = params.status,
+&nbsp;            source = params.source,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_DISPLAYED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailScreenInteracted(
+&nbsp;        params: VoucherDetailTrackingParams,
+&nbsp;        duration: Long,
+&nbsp;    ) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;                giftType = params.giftType,
+&nbsp;                campaignId = params.campaignId,
+&nbsp;                status = params.status,
+&nbsp;                source = params.source,
+&nbsp;                duration = duration,
+&nbsp;            )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_INTERACTED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailScreenViewed(params: VoucherDetailTrackingParams) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;                giftType = params.giftType,
+&nbsp;                campaignId = params.campaignId,
+&nbsp;                status = params.status,
+&nbsp;                source = params.source,
+&nbsp;                length = TrackingConst.SCREEN_VIEWED_LENGTH,
+&nbsp;            )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.SCREEN_VIEWED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailButtonClicked(
+&nbsp;        params: VoucherDetailTrackingParams,
+&nbsp;        buttonName: String,
+&nbsp;    ) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;                giftType = params.giftType,
+&nbsp;                campaignId = params.campaignId,
+&nbsp;                status = params.status,
+&nbsp;                source = params.source,
+&nbsp;                buttonName = buttonName,
+&nbsp;            )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailBackButtonClicked(params: VoucherDetailTrackingParams) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;                giftType = params.giftType,
+&nbsp;                campaignId = params.campaignId,
+&nbsp;                status = params.status,
+&nbsp;                source = params.source,
+&nbsp;                iconName = &quot;back&quot;,
+&nbsp;            )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.ICON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackDetailSupportButtonClicked(params: VoucherDetailTrackingParams) {
+&nbsp;        val eventParams =
+&nbsp;            PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.DETAIL]?.copy(
+&nbsp;                giftType = params.giftType,
+&nbsp;                campaignId = params.campaignId,
+&nbsp;                status = params.status,
+&nbsp;                source = params.source,
+&nbsp;                buttonName = &quot;support&quot;,
+&nbsp;            )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinBlockDisplayed(status: String) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            componentName = &quot;momo_rewards&quot;,
+&nbsp;            componentType = &quot;block&quot;,
+&nbsp;            status = status,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_DISPLAYED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinBlockClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            componentName = &quot;momo_rewards&quot;,
+&nbsp;            componentType = &quot;block&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinItemSelected(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            listName = &quot;voucher_rewards&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.LIST_SELECTED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinItemClicked(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        status: String,
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            status = status,
+&nbsp;            componentName = &quot;voucher_rewards&quot;,
+&nbsp;            componentType = &quot;list&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinListItemDisplayed(
+&nbsp;        giftType: String,
+&nbsp;        campaignId: String?,
+&nbsp;        status: String
+&nbsp;    ) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            status = status,
+&nbsp;            componentName = &quot;voucher_rewards&quot;,
+&nbsp;            componentType = &quot;block&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.COMPONENT_DISPLAYED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinExchangeNowClicked(giftType: String, campaignId: String?) {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            giftType = giftType,
+&nbsp;            campaignId = campaignId,
+&nbsp;            buttonName = &quot;exchange&quot;,
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.BUTTON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackVoucherCoinCloseBottomSheetClicked() {
+&nbsp;        val eventParams = PROMOTION_TRACER_SERVICE_MAPPING[PromotionSourceScreen.MULTI_BILL]?.copy(
+&nbsp;            iconName = &quot;close&quot;,
+&nbsp;            bottomSheetName = &quot;momo_rewards&quot;
+&nbsp;        )
+&nbsp;        if (eventParams != null) {
+&nbsp;            PromotionFirebaseTrace.trackEvent(
+&nbsp;                eventName = EventName.ICON_CLICKED,
+&nbsp;                params = eventParams
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

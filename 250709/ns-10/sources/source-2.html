@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PayXUserConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.composeApi.balanceConfig</a>
+</div>
+
+<h1>Coverage Summary for Class: PayXUserConfig (vn.momo.compose.payment.base.core.composeApi.balanceConfig)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PayXUserConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/54)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PayXUserConfig$get$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/54)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.composeApi.balanceConfig
+&nbsp;
+&nbsp;import kotlinx.serialization.KSerializer
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestOneShot
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.model.VixResponse
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;
+&nbsp;interface UserConfig {
+&nbsp;    suspend fun &lt;T&gt; get(key: String, serializer: KSerializer&lt;T&gt;): T?
+&nbsp;    fun set(key: String, value: JsonElement)
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;class PayXUserConfig(private val composeApi: IComposeApi) : UserConfig {</b>
+&nbsp;    override suspend fun &lt;T&gt; get(key: String, responseSerializer: KSerializer&lt;T&gt;): T? {
+&nbsp;        return try {
+<b class="nc">&nbsp;            val result = composeApi.requestOneShot(APIs.getItem.name, listOf(key))</b>
+<b class="nc">&nbsp;            return ModelConvertUtils.decode(</b>
+<b class="nc">&nbsp;                VixResponse.serializer(responseSerializer),</b>
+<b class="nc">&nbsp;                result</b>
+<b class="nc">&nbsp;            )?.response</b>
+&nbsp;        } catch (e: Exception) {
+<b class="nc">&nbsp;            null</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun set(key: String, value: JsonElement) {
+<b class="nc">&nbsp;        composeApi.request(APIs.setItem.name, listOf(key, value))</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

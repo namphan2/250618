@@ -1,0 +1,330 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IconSuggest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.repositoryImpl</a>
+</div>
+
+<h1>Coverage Summary for Class: IconSuggest (vn.momo.compose.payment.payx.data.repositoryImpl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">IconSuggest</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.repositoryImpl
+&nbsp;
+&nbsp;import kotlinx.collections.immutable.toPersistentMap
+&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.firstOrNull
+&nbsp;import kotlinx.coroutines.flow.flatMapLatest
+&nbsp;import kotlinx.coroutines.flow.flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.mapNotNull
+&nbsp;import kotlinx.coroutines.flow.merge
+&nbsp;import kotlinx.coroutines.flow.transformWhile
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.intOrNull
+&nbsp;import kotlinx.serialization.json.jsonPrimitive
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.INavigator
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.appFeatureConfig.IAppFeatureConfig
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.SofDTO
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.memory.CachedSuggestedSof
+&nbsp;import vn.momo.compose.payment.base.domain.entities.DisableType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.EnumMoneySource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SofAction
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SofActionType
+&nbsp;import vn.momo.compose.payment.base.domain.repository.LocalSofRepository
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.convertMoneySource
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.throwableVerifyResponse
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.toModel
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.GetSuggestedSofMoMoMsg
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.MBGetSuggestedSofRequest
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.MoMoMessageDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.PaymentSession
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.SavedPaymentData
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.remote.SuggestedSofRemoteDataSource
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.SofCTAItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.SuggestedSof
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.ISuggestedSofRepository
+&nbsp;import vn.momo.compose.payment.payx.utils.constant.ServiceFeatureCode
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonObject
+&nbsp;import vn.momo.compose.utils.datamapping.tryToGetObject
+&nbsp;import vn.momo.compose.utils.datamapping.tryToGetString
+&nbsp;
+&nbsp;val defaultPriority = mapOf(
+&nbsp;    &quot;12345&quot; to 1, //VIETCOMBANK
+&nbsp;    &quot;102&quot; to 2, //VIETINBANK
+&nbsp;    &quot;110&quot; to 3, //BIDV
+&nbsp;    &quot;111&quot; to 4, //AGRIBANK
+&nbsp;    &quot;2000&quot; to 5, //SACOMBANK
+&nbsp;    &quot;304&quot; to 6, //TECHCOMBANK
+&nbsp;    &quot;301&quot; to 7, //MBBANK
+&nbsp;    &quot;106&quot; to 8, //ACB
+&nbsp;    &quot;103&quot; to 9, //VPBANK
+&nbsp;    &quot;105&quot; to 10, //TPBANK
+&nbsp;).toJsonObject()
+&nbsp;
+<b class="nc">&nbsp;data class IconSuggest(</b>
+<b class="nc">&nbsp;    val serviceCode: String,</b>
+<b class="nc">&nbsp;    val icon: String</b>
+&nbsp;)
+&nbsp;
+&nbsp;class SuggestedSofRepository(
+&nbsp;    private val remoteDataSource: SuggestedSofRemoteDataSource,
+&nbsp;    private val savedPaymentData: SavedPaymentData,
+&nbsp;    private val localSof: LocalSofRepository,
+&nbsp;    private val cacheSuggestedSof: CachedSuggestedSof,
+&nbsp;    private val paymentSessionCenter: PaymentSession,
+&nbsp;    private val appFeatureRepository: IAppFeatureConfig,
+&nbsp;    private val navigator: INavigator
+&nbsp;) : ISuggestedSofRepository {
+&nbsp;
+&nbsp;    private val remoteFlow = {
+&nbsp;        remoteDataSource.get(generateGetSuggestedSofMessage()).throwableVerifyResponse().map {
+&nbsp;            navigator.showToastDebugger(buildJsonObject {
+&nbsp;                put(&quot;title&quot;, &quot;SofInfo from BE - BottomSheet&quot;)
+&nbsp;                put(&quot;message&quot;, &quot;Take ${it.momoMsg?.sofInfo?.size} money source from BE&quot;)
+&nbsp;                put(&quot;duration&quot;, 3000)
+&nbsp;            })
+&nbsp;            Pair(&quot;remote&quot;, it.momoMsg?.sofInfo)
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getSuggestedSof(): Flow&lt;SuggestedSof&gt; {
+&nbsp;        val serviceCode =
+&nbsp;            cloneTransaction()?.purchaseInfo?.invoiceInfo?.firstOrNull()?.items?.firstOrNull()?.serviceId
+&nbsp;        val localFlow: Flow&lt;Pair&lt;String, List&lt;SofDTO?&gt;?&gt;&gt; =
+&nbsp;            if (cacheSuggestedSof.list.isNullOrEmpty())
+&nbsp;                localSof.getLocalSofSdk()
+&nbsp;                    .map { Pair(&quot;local&quot;, localSof.filterService(it, serviceCode)) }
+&nbsp;            else flow {
+&nbsp;                emit(
+&nbsp;                    Pair(&quot;local&quot;, cacheSuggestedSof.list)
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+&nbsp;        return merge(localFlow, remoteFlow()).transformWhile { (tag, sofList) -&gt;
+&nbsp;            emit(sofList)
+&nbsp;            if (tag == &quot;remote&quot;) {
+&nbsp;                cacheSuggestedSof.list = sofList
+&nbsp;            }
+&nbsp;            tag != &quot;remote&quot;
+&nbsp;        }.mapNotNull {
+&nbsp;            val sofList = it?.mapNotNull { dto -&gt; dto?.toModel() }
+&nbsp;                ?.filter { sof -&gt; sof.disableType != DisableType.Hidden } ?: emptyList()
+&nbsp;            val ctaList = it.generateCTA()
+&nbsp;            SuggestedSof(sofList, ctaList)
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun List&lt;SofDTO?&gt;?.generateCTA(): List&lt;SofCTAItem&gt; =
+&nbsp;        if (this.isNullOrEmpty()) emptyList()
+&nbsp;        else this.fold(emptyList()) { result, dto -&gt;
+&nbsp;            if (dto?.detail == null || dto.detail!!.refId.isNullOrEmpty() || dto.detail!!.enableCTAHeader != true) return@fold result
+&nbsp;            val isValidSource =
+&nbsp;                dto.sourceToken?.isNotEmpty() == true &amp;&amp; dto.sourceToken != &quot;N/A&quot; &amp;&amp; dto.disableType == DisableType.Show.type
+&nbsp;            if (isValidSource) return@fold result
+&nbsp;            val currentCtaList = result.toMutableList()
+&nbsp;            listOf(
+&nbsp;                dto.detail!!.noticeCashIn, dto.detail!!.noticeCashOut, dto.detail!!.noticeActive
+&nbsp;            ).forEach { notice -&gt;
+&nbsp;                notice?.let {
+&nbsp;                    currentCtaList.add(
+&nbsp;                        SofCTAItem(
+&nbsp;                            action = SofAction(
+&nbsp;                                action = if (dto.detail!!.refId == ServiceFeatureCode.CashIn.code) SofActionType.CashIn(
+&nbsp;                                    dto.detail!!.amountCashIn?.toLong() ?: 0,
+&nbsp;                                    EnumMoneySource.MoMo
+&nbsp;                                )
+&nbsp;                                else SofActionType.HaveNextStep,
+&nbsp;                                refId = dto.detail!!.refId,
+&nbsp;                                logo = it.img,
+&nbsp;                                title = it.title ?: &quot;&quot;,
+&nbsp;                                description = it.description ?: &quot;&quot;,
+&nbsp;                                isShow = true,
+&nbsp;                                params = ModelConvertUtils.decodeToPureMap(
+&nbsp;                                    dto.detail?.refParams ?: &quot;&quot;
+&nbsp;                                ).toPersistentMap()
+&nbsp;                            ),
+&nbsp;                            relatedSourceToken = dto.sourceToken ?: dto.ID ?: &quot;N/A&quot;,
+&nbsp;                            relatedSource = dto.convertMoneySource(),
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;            return@fold currentCtaList
+&nbsp;        }
+&nbsp;
+&nbsp;    private fun generateGetSuggestedSofMessage(): MBGetSuggestedSofRequest {
+&nbsp;        return MBGetSuggestedSofRequest(
+&nbsp;            momoMsg = GetSuggestedSofMoMoMsg(
+&nbsp;                purchaseInfo = cloneTransaction()?.purchaseInfo,
+&nbsp;                purchaseId = cloneTransaction()?.purchaseId,
+&nbsp;                cartId = cloneTransaction()?.cartId,
+&nbsp;                bundleCode = &quot;&quot;,
+&nbsp;                disableMoney = paymentSessionCenter.requestPayXData.disableMoney
+&nbsp;            )
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun cloneTransaction(): MoMoMessageDTO? {
+&nbsp;        return savedPaymentData.cloneTransaction()
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun getListIconSuggest(): List&lt;String&gt; {
+&nbsp;        val priority = getConfigSuggestPriority() ?: defaultPriority
+&nbsp;        val bankNotLinked = getBankNotLinked()
+&nbsp;
+&nbsp;        return bankNotLinked.sortedWith(compareBy {
+&nbsp;            priority[it.serviceCode]?.jsonPrimitive?.intOrNull ?: Int.MAX_VALUE
+&nbsp;        }).map { it.icon }
+&nbsp;    }
+&nbsp;
+&nbsp;    private suspend fun getConfigSuggestPriority(): JsonObject? {
+&nbsp;        return appFeatureRepository.getByServiceCodes(listOf(&quot;map_bank_flow&quot;)).map {
+&nbsp;            it.getOrNull(0)?.tryToGetObject(&quot;param&quot;)?.tryToGetObject(&quot;suggestPriority&quot;)
+&nbsp;        }.firstOrNull()
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun getBankLinkedDict(): Flow&lt;Map&lt;String?, SofDTO&gt;&gt; {
+&nbsp;        return localSof.getLocalSofSdk().map { list -&gt;
+&nbsp;            list.filter { sof -&gt;
+&nbsp;                sof.moneySource == EnumMoneySource.Bank.id
+&nbsp;            }.associateBy { it.bankCode }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OptIn(ExperimentalCoroutinesApi::class)
+&nbsp;    private suspend fun getBankNotLinked(): List&lt;IconSuggest&gt; {
+&nbsp;        val bankLinkedDictFlow = getBankLinkedDict()
+&nbsp;        val bankFeaturesFlow = appFeatureRepository.getFeaturesWittType(listOf(&quot;BANK&quot;))
+&nbsp;
+&nbsp;        return bankLinkedDictFlow.flatMapLatest { bankLinkedDict -&gt;
+&nbsp;            bankFeaturesFlow.map { features -&gt;
+&nbsp;                features.filter { feature -&gt;
+&nbsp;                    val serviceCode = feature?.tryToGetString(&quot;serviceCode&quot;)
+&nbsp;                    bankLinkedDict[serviceCode] == null
+&nbsp;                }.mapNotNull {
+&nbsp;                    it?.let {
+&nbsp;                        IconSuggest(
+&nbsp;                            serviceCode = it.tryToGetString(&quot;serviceCode&quot;),
+&nbsp;                            icon = it.tryToGetString(&quot;icon&quot;)
+&nbsp;                        )
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }.firstOrNull() ?: emptyList()
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

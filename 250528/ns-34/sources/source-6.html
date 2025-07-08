@@ -1,0 +1,93 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > Payment3dsStrategy</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.domain.useCases</a>
+</div>
+
+<h1>Coverage Summary for Class: Payment3dsStrategy (vn.momo.compose.payment.base.domain.useCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">Payment3dsStrategy</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.domain.useCases
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import org.koin.core.scope.Scope
+&nbsp;import vn.momo.compose.payment.base.domain.entities.Payment3dsAction
+&nbsp;
+&nbsp;interface Payment3dsStrategy {
+&nbsp;    fun onSetupComplete(sessionId: String): Flow&lt;Payment3dsAction&gt;
+&nbsp;    fun onPayment(referenceKey: String)
+&nbsp;}
+&nbsp;
+&nbsp;class Payment3dsHandler(
+&nbsp;    koinScope: Scope,
+&nbsp;) {
+&nbsp;    val strategy = koinScope.get&lt;Payment3dsStrategy&gt;()
+&nbsp;
+&nbsp;    fun onSetupComplete(sessionId: String) = strategy.onSetupComplete(sessionId)
+&nbsp;
+&nbsp;    fun onPayment(referenceKey: String) = strategy.onPayment(referenceKey)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

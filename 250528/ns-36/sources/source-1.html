@@ -1,0 +1,289 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SplitBillBottomSheetController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.presentation.screenController</a>
+</div>
+
+<h1>Coverage Summary for Class: SplitBillBottomSheetController (vn.momo.compose.payment.base.presentation.screenController)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SplitBillBottomSheetController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/251)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SplitBillBottomSheetController$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/55)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/255)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.presentation.screenController
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.presentation.model.SplitBillItem
+&nbsp;import vn.momo.compose.payment.base.presentation.model.SplitBillSelectionItem
+&nbsp;import vn.momo.compose.payment.base.presentation.model.SplitBillSelectionType
+&nbsp;import vn.momo.compose.payment.base.presentation.model.SplitBillType
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.SplitBillViewModel
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.tryGetMap
+&nbsp;import vn.momo.core.features.authentication.localization.Localization.getLocalized
+&nbsp;import vn.momo.core.features.payment.model.singleBill.errorData.SplitBillData
+&nbsp;import vn.momo.core.utils.payment.extensions.formatCurrency
+&nbsp;
+<b class="nc">&nbsp;class SplitBillBottomSheetController(</b>
+<b class="nc">&nbsp;    private val params: Map&lt;String, Any?&gt;?,</b>
+<b class="nc">&nbsp;    private val viewModel: SplitBillViewModel</b>
+&nbsp;) {
+&nbsp;    private companion object {
+&nbsp;        const val FACE_AUTH_ICON = &quot;https://static.momocdn.net/app/img/payment/ic-fast-money.png&quot;
+&nbsp;        const val SPLIT_ICON = &quot;https://static.momocdn.net/app/img/payment/split-coin.png&quot;
+<b class="nc">&nbsp;        val FACE_AUTH_TITLE = getLocalized(&quot;faceAuthTitle&quot;)</b>
+<b class="nc">&nbsp;        val FACE_AUTH_DESC = getLocalized(&quot;faceAuthDesc&quot;)</b>
+<b class="nc">&nbsp;        val ALTERNATIVE_OPTION_TITLE = getLocalized(&quot;altOptionTitle&quot;)</b>
+<b class="nc">&nbsp;        val ALTERNATIVE_OPTION_DESC = getLocalized(&quot;altOptionDesc&quot;)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun generateProps(callbackWithAnimation: (Map&lt;String, Any&gt;) -&gt; Unit): List&lt;SplitBillItem&gt; {
+<b class="nc">&nbsp;        viewModel.onCreate(callbackWithAnimation)</b>
+<b class="nc">&nbsp;        val data = decodeSplitBillData()</b>
+<b class="nc">&nbsp;        return if (data != null) {</b>
+<b class="nc">&nbsp;            listOf(</b>
+<b class="nc">&nbsp;                createRemainTransactionItem(data),</b>
+<b class="nc">&nbsp;                createSplitTransactionItem(data)</b>
+&nbsp;            )
+&nbsp;        } else {
+<b class="nc">&nbsp;            listOf(createDefaultFaceAuthItem())</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun decodeSplitBillData(): SplitBillData? {
+<b class="nc">&nbsp;        return ModelConvertUtils.decode(</b>
+<b class="nc">&nbsp;            SplitBillData.serializer(),</b>
+<b class="nc">&nbsp;            params?.tryGetMap(&quot;data&quot;) ?: emptyMap()</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createDefaultFaceAuthItem(): SplitBillItem {
+<b class="nc">&nbsp;        return SplitBillItem(</b>
+<b class="nc">&nbsp;            icon = FACE_AUTH_ICON,</b>
+<b class="nc">&nbsp;            title = FACE_AUTH_TITLE,</b>
+<b class="nc">&nbsp;            desc = FACE_AUTH_DESC,</b>
+<b class="nc">&nbsp;            items = emptyList()</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createRemainTransactionItem(data: SplitBillData): SplitBillItem {
+<b class="nc">&nbsp;        return SplitBillItem(</b>
+<b class="nc">&nbsp;            icon = FACE_AUTH_ICON,</b>
+<b class="nc">&nbsp;            title = FACE_AUTH_TITLE,</b>
+<b class="nc">&nbsp;            desc = FACE_AUTH_DESC,</b>
+<b class="nc">&nbsp;            items = listOf(createTransactionItem(SplitBillSelectionType.Remain, getLocalized(&quot;splitTrans1&quot;), data.totalAmount, getLocalized(&quot;continueBtn&quot;)))</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createSplitTransactionItem(data: SplitBillData): SplitBillItem {
+<b class="nc">&nbsp;        return SplitBillItem(</b>
+<b class="nc">&nbsp;            icon = SPLIT_ICON,</b>
+<b class="nc">&nbsp;            title = ALTERNATIVE_OPTION_TITLE,</b>
+<b class="nc">&nbsp;            desc = ALTERNATIVE_OPTION_DESC,</b>
+<b class="nc">&nbsp;            items = createSplitTransactionActions(data)</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createSplitTransactionActions(data: SplitBillData): List&lt;SplitBillSelectionItem&gt; {
+<b class="nc">&nbsp;        if (data.type == SplitBillType.CanNotSplit.type) return emptyList()</b>
+&nbsp;
+<b class="nc">&nbsp;        return buildList {</b>
+<b class="nc">&nbsp;            data.firstAmount?.let {</b>
+<b class="nc">&nbsp;                add(createTransactionItem(SplitBillSelectionType.Available, getLocalized(&quot;splitTrans1&quot;), it))</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            data.secondAmount?.let {</b>
+<b class="nc">&nbsp;                val actionText = when (data.type) {</b>
+<b class="nc">&nbsp;                    SplitBillType.SplitAndDoNextStepTomorrow.type -&gt; getLocalized(&quot;willDoTomorrow&quot;)</b>
+<b class="nc">&nbsp;                    else -&gt; getLocalized(&quot;willDoAfterTrans1&quot;)</b>
+&nbsp;                }
+<b class="nc">&nbsp;                add(createTransactionItem(SplitBillSelectionType.Unavailable, getLocalized(&quot;splitTrans2&quot;), it, actionText))</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (data.thirdAmount != null &amp;&amp; data.type == SplitBillType.SplitAndDoAPart.type) {</b>
+<b class="nc">&nbsp;                add(createTransactionItem(SplitBillSelectionType.Unavailable, getLocalized(&quot;splitTrans3&quot;), data.thirdAmount, getLocalized(&quot;willDoTomorrow&quot;)))</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun createTransactionItem(
+&nbsp;        type: SplitBillSelectionType,
+&nbsp;        title: String,
+&nbsp;        amount: Double?,
+<b class="nc">&nbsp;        actionText: String = getLocalized(&quot;process&quot;)</b>
+&nbsp;    ): SplitBillSelectionItem {
+<b class="nc">&nbsp;        return SplitBillSelectionItem(</b>
+<b class="nc">&nbsp;            type = type,</b>
+<b class="nc">&nbsp;            title = title,</b>
+<b class="nc">&nbsp;            desc = amount?.formatCurrency() ?: &quot;&quot;,</b>
+<b class="nc">&nbsp;            rightCtaName = actionText,</b>
+<b class="nc">&nbsp;            amount = amount</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

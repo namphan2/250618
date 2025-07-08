@@ -1,0 +1,134 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > OrderExtraRemote</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.remote.extraTransaction</a>
+</div>
+
+<h1>Coverage Summary for Class: OrderExtraRemote (vn.momo.compose.payment.payx.data.dataSource.remote.extraTransaction)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">OrderExtraRemote</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.remote.extraTransaction
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.IRemoteService
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.OrderExtraCartInfoDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.OrderExtraConfigRequestData
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.OrderExtraGetConfigRequestDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.orderExtra.OrderExtraConfigResponseDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.SavedPaymentData
+&nbsp;
+&nbsp;interface OrderExtraRemote {
+&nbsp;    fun getConfig(): Flow&lt;OrderExtraConfigResponseDTO?&gt;
+&nbsp;    fun updateConfig(): Flow&lt;OrderExtraConfigResponseDTO?&gt;
+&nbsp;}
+&nbsp;
+&nbsp;class DefaultOrderExtraRemote(
+&nbsp;    private val remoteApi: IRemoteService,
+&nbsp;    private val savedPaymentData: SavedPaymentData,
+&nbsp;    private val logger: ILogger
+&nbsp;) : OrderExtraRemote {
+&nbsp;    override fun getConfig(): Flow&lt;OrderExtraConfigResponseDTO?&gt; {
+&nbsp;        return remoteApi.post(
+&nbsp;            OrderExtraGetConfigRequestDTO(momoMsg = buildMessage()),
+&nbsp;            OrderExtraConfigResponseDTO.serializer()
+&nbsp;        )
+&nbsp;            .map { it?.response }
+&nbsp;            .catch { err -&gt;
+&nbsp;                logger.w(&quot;[PayX] OrderExtraRemote.getConfig $err&quot;)
+&nbsp;            }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun updateConfig(): Flow&lt;OrderExtraConfigResponseDTO?&gt; {
+&nbsp;        return remoteApi.post(
+&nbsp;            OrderExtraGetConfigRequestDTO(
+&nbsp;                momoMsg = buildMessage(),
+&nbsp;                msgType = &quot;INIT&quot;
+&nbsp;            ),
+&nbsp;            OrderExtraConfigResponseDTO.serializer()
+&nbsp;        )
+&nbsp;            .map { it?.response }
+&nbsp;            .catch { err -&gt;
+&nbsp;                logger.w(&quot;[PayX] OrderExtraRemote.updateConfig $err&quot;)
+&nbsp;            }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildMessage(): OrderExtraConfigRequestData {
+&nbsp;        val momoMsg = savedPaymentData.cloneTransaction()
+&nbsp;        val cartData = momoMsg?.purchaseInfo?.invoiceInfo?.firstOrNull()?.items?.map {
+&nbsp;            OrderExtraCartInfoDTO(
+&nbsp;                serviceType = it.serviceType,
+&nbsp;                serviceId = it.serviceId,
+&nbsp;                serviceCode = it.serviceCode
+&nbsp;            )
+&nbsp;        }
+&nbsp;        val purchaseId = momoMsg?.purchaseId ?: momoMsg?.purchaseInfo?.purchaseId
+&nbsp;        return OrderExtraConfigRequestData(cartInfo = cartData, purchaseId = purchaseId)
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

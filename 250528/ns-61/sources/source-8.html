@@ -1,0 +1,257 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > TransactionResponseHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.repositoryImpl.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionResponseHandler (vn.momo.compose.payment.payx.data.repositoryImpl.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionResponseHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/138)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/57)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/565)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TransactionResponseHandler$handleResponse$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/138)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/57)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/565)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.repositoryImpl.transaction
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.PaymentAmount
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.TotalAmount
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionInvoiceHandler
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionSofHandler
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.PayXCustomBottomSheetDataFactory
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.PayXDialogDataFactory
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.PayXSofBottomSheetDataFactory
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.PayXToastMessageDataFactory
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.getDirectDebitDialog
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.BundleSofDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.InformType
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.TransactionResponseDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.SavedPaymentData
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.storage.VoucherDataSource
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXTransaction
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PromotionData
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.overlayData.UiOverlayData
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.overlayData.UiOverlayDataFactory
+&nbsp;
+<b class="nc">&nbsp;class TransactionResponseHandler(</b>
+<b class="nc">&nbsp;    private val savedPaymentData: SavedPaymentData,</b>
+<b class="nc">&nbsp;    private val voucherDataSource: VoucherDataSource,</b>
+<b class="nc">&nbsp;    private val sofHandler: TransactionSofHandler,</b>
+<b class="nc">&nbsp;    private val invoiceHandler: TransactionInvoiceHandler</b>
+&nbsp;) {
+&nbsp;    suspend fun handleResponse(
+&nbsp;        response: TransactionResponseDTO?,
+<b class="nc">&nbsp;        expectedSof: SOFItem? = null</b>
+&nbsp;    ): PayXTransaction {
+<b class="nc">&nbsp;        savedPaymentData.updateTransaction(response?.momoMsg, response?.extra)</b>
+<b class="nc">&nbsp;        val purchaseInfo = response?.momoMsg?.purchaseInfo</b>
+<b class="nc">&nbsp;        val promoDisplay = voucherDataSource.getPromotionDisplay(purchaseInfo?.promotionInfoMsg)</b>
+<b class="nc">&nbsp;        voucherDataSource.handleRemoveVoucherErrors(</b>
+<b class="nc">&nbsp;            purchaseInfo?.promotionInfoMsg?.voucherInfos ?: emptyList()</b>
+&nbsp;        )
+<b class="nc">&nbsp;        val sofList = sofHandler.buildSofList()</b>
+<b class="nc">&nbsp;        return PayXTransaction(</b>
+<b class="nc">&nbsp;            enableConfirm = response?.result ?: false,</b>
+<b class="nc">&nbsp;            purchaseId = response?.momoMsg?.purchaseId ?: &quot;&quot;,</b>
+<b class="nc">&nbsp;            totalAmount = TotalAmount(</b>
+<b class="nc">&nbsp;                total = PaymentAmount(purchaseInfo?.totalAmount ?: 0),</b>
+<b class="nc">&nbsp;                totalBeforePromotion = PaymentAmount(</b>
+<b class="nc">&nbsp;                    purchaseInfo?.subtotalAmount ?: 0,</b>
+<b class="nc">&nbsp;                    isShow = (purchaseInfo?.totalAmount</b>
+<b class="nc">&nbsp;                        ?: 0) != (purchaseInfo?.subtotalAmount ?: 0)</b>
+&nbsp;                ),
+<b class="nc">&nbsp;                fee = PaymentAmount(</b>
+<b class="nc">&nbsp;                    purchaseInfo?.totalFeeSoF?.toLong() ?: 0,</b>
+<b class="nc">&nbsp;                    isShow = (purchaseInfo?.totalFeeSoF ?: 0) &gt; 0</b>
+&nbsp;                ),
+<b class="nc">&nbsp;                subTotalAmount = PaymentAmount(</b>
+<b class="nc">&nbsp;                    purchaseInfo?.subtotalAmount ?: 0,</b>
+<b class="nc">&nbsp;                    isShow = purchaseInfo?.subtotalAmount != null</b>
+&nbsp;                ),
+<b class="nc">&nbsp;                conversionFee = PaymentAmount(</b>
+<b class="nc">&nbsp;                    purchaseInfo?.conversionFee?.toLong() ?: 0,</b>
+<b class="nc">&nbsp;                    isShow = (purchaseInfo?.conversionFee ?: 0) &gt; 0</b>
+&nbsp;                ),
+&nbsp;            ),
+<b class="nc">&nbsp;            promotion = PromotionData(</b>
+<b class="nc">&nbsp;                isDisplay = response?.momoMsg?.enableOptions?.promotion ?: true,</b>
+<b class="nc">&nbsp;                promoDisplay = promoDisplay,</b>
+&nbsp;            ),
+<b class="nc">&nbsp;            fraudInfo = response?.momoMsg?.fraudInfo?.toModel(),</b>
+<b class="nc">&nbsp;            skipLoading = response?.momoMsg?.skipLoading ?: false,</b>
+<b class="nc">&nbsp;            sourceMessage = response?.extraConverted?.sourceMessage ?: &quot;&quot;,</b>
+<b class="nc">&nbsp;            sofList = sofList,</b>
+<b class="nc">&nbsp;            invoiceList = invoiceHandler.buildInvoiceList(),</b>
+<b class="nc">&nbsp;            selectedSof = selectedSofFromDTO(purchaseInfo?.bundleSof?.firstOrNull(), sofList)</b>
+<b class="nc">&nbsp;                ?: expectedSof,</b>
+<b class="nc">&nbsp;            overlayData = response?.generateOverlay(),</b>
+<b class="nc">&nbsp;            inlineMessage = response?.inlineMessage,</b>
+<b class="nc">&nbsp;            checkoutRedirectScreen = response?.screenShowMessage,</b>
+<b class="nc">&nbsp;            hideAmount = response?.momoMsg?.enableOptions?.amount == false,</b>
+<b class="nc">&nbsp;            errorCode = response?.errorCode</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun selectedSofFromDTO(
+&nbsp;        bundleSof: BundleSofDTO?,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+<b class="nc">&nbsp;    ): SOFItem? = if (bundleSof == null || sofList.isEmpty()) null</b>
+<b class="nc">&nbsp;    else sofList.find { it.sourceToken == bundleSof.sourceToken }</b>
+&nbsp;
+&nbsp;    private fun TransactionResponseDTO.generateOverlay(): UiOverlayData? {
+<b class="nc">&nbsp;        val popupDirectDebit = getDirectDebitDialog(extra, errorCode)</b>
+<b class="nc">&nbsp;        if (popupDirectDebit != null) {</b>
+<b class="nc">&nbsp;            return popupDirectDebit</b>
+&nbsp;        }
+<b class="nc">&nbsp;        val factory: UiOverlayDataFactory? = when (informType) {</b>
+<b class="nc">&nbsp;            InformType.Dialog.type -&gt; PayXDialogDataFactory(popup, errorDesc, errorCode)</b>
+<b class="nc">&nbsp;            InformType.ToastMessage.type -&gt; PayXToastMessageDataFactory(informMessage)</b>
+<b class="nc">&nbsp;            InformType.SofBottomSheet.type -&gt; PayXSofBottomSheetDataFactory()</b>
+<b class="nc">&nbsp;            InformType.CustomBottomSheet.type -&gt; PayXCustomBottomSheetDataFactory(informMessage)</b>
+<b class="nc">&nbsp;            else -&gt; null</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return factory?.create()</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

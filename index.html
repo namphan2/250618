@@ -3,81 +3,485 @@
 <head>
   <meta charset="UTF-8">
   <title>Danh sách thư mục & Hướng dẫn</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
-    h1 { color: #2c3e50; }
-    ul.folder-list { list-style: none; padding: 0; margin-bottom: 40px; }
-    ul.folder-list li { margin: 8px 0; }
-    ul.folder-list li a { text-decoration: none; color: #2980b9; font-weight: bold; }
-    ul.folder-list li a:hover { text-decoration: underline; }
-    .readme-content { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px; }
-    .readme-content h1, .readme-content h2, .readme-content h3 { color: #34495e; }
-    .readme-content ul { margin-left: 24px; }
-    .readme-content blockquote { color: #888; border-left: 4px solid #eee; margin: 16px 0; padding-left: 16px; }
-    .readme-content hr { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      background: #f9f9f9; 
+    }
+    
+    /* Navigation Bar */
+    .navbar {
+      background: #2c3e50;
+      padding: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 20px 25px;
+      display: block;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-link:hover {
+      background-color: #34495e;
+    }
+    
+    .nav-link.active {
+      background-color: #3498db;
+    }
+    
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-content a {
+      color: #333;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #3498db;
+      color: white;
+    }
+    
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+    
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Charts Tab */
+    .charts-content {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #0001;
+      padding: 32px;
+    }
+    
+    .chart-container {
+      margin-bottom: 40px;
+    }
+    
+    .chart-title {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .chart-wrapper {
+      position: relative;
+      height: 400px;
+      margin-bottom: 30px;
+    }
+    
+    /* Folder List */
+    ul.folder-list { 
+      list-style: none; 
+      padding: 0; 
+      margin-bottom: 40px; 
+    }
+    
+    ul.folder-list li { 
+      margin: 8px 0; 
+    }
+    
+    ul.folder-list li a { 
+      text-decoration: none; 
+      color: #2980b9; 
+      font-weight: bold; 
+    }
+    
+    ul.folder-list li a:hover { 
+      text-decoration: underline; 
+    }
+    
+    /* Readme Content */
+    .readme-content { 
+      background: #fff; 
+      border-radius: 8px; 
+      box-shadow: 0 2px 8px #0001; 
+      padding: 32px; 
+    }
+    
+    .readme-content h1, .readme-content h2, .readme-content h3 { 
+      color: #34495e; 
+    }
+    
+    .readme-content ul { 
+      margin-left: 24px; 
+    }
+    
+    .readme-content blockquote { 
+      color: #888; 
+      border-left: 4px solid #eee; 
+      margin: 16px 0; 
+      padding-left: 16px; 
+    }
+    
+    .readme-content hr { 
+      border: none; 
+      border-top: 1px solid #eee; 
+      margin: 24px 0; 
+    }
   </style>
 </head>
 <body>
-  <h1>Danh sách thư mục</h1>
-  <ul class="folder-list">
-    <li><a href="250618/index.html">250618</a></li>
-  </ul>
-  <div class="readme-content">
-    <h1>Hướng Dẫn Đọc Report HTML của Kover (Kotlin) 👓</h1>
-    <h2>1. Trang Tổng Quan (index.html)</h2>
-    <ul>
-      <li><b>Ngay khi mở báo cáo</b>, bạn sẽ thấy bảng tổng hợp các chỉ số bao phủ:
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-item">
+        <a href="#" class="nav-link active" onclick="showTab('charts')">Biểu đồ</a>
+      </div>
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link">Thư mục</a>
+        <div class="dropdown-content" id="folderDropdown">
+          <!-- Folders will be loaded dynamically -->
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link" onclick="showTab('guide')">Hướng dẫn</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Charts Tab -->
+    <div id="charts" class="tab-content active">
+      <div class="charts-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h1>Biểu Đồ So Sánh Coverage 📊</h1>
+          <button onclick="refreshData()" style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+            🔄 Làm mới dữ liệu
+          </button>
+        </div>
+        <p>Biểu đồ dưới đây hiển thị sự thay đổi các chỉ số coverage giữa các thư mục:</p>
+        
+        <div class="chart-container">
+          <div class="chart-title">Class Coverage (%)</div>
+          <div class="chart-wrapper">
+            <canvas id="classChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <div class="chart-title">Method Coverage (%)</div>
+          <div class="chart-wrapper">
+            <canvas id="methodChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <div class="chart-title">Branch Coverage (%)</div>
+          <div class="chart-wrapper">
+            <canvas id="branchChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <div class="chart-title">Line Coverage (%)</div>
+          <div class="chart-wrapper">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <div class="chart-title">Instruction Coverage (%)</div>
+          <div class="chart-wrapper">
+            <canvas id="instructionChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guide Tab -->
+    <div id="guide" class="tab-content">
+      <div class="readme-content">
+        <h1>Hướng Dẫn Đọc Report HTML của Kover (Kotlin) 👓</h1>
+        <h2>1. Trang Tổng Quan (index.html)</h2>
         <ul>
-          <li><b>Class Coverage</b>: Tỷ lệ class đã được kiểm thử</li>
-          <li><b>Method Coverage</b>: Tỷ lệ method đã được kiểm thử</li>
-          <li><b>Line Coverage</b>: Tỷ lệ dòng lệnh đã được kiểm thử</li>
-          <li><b>Branch Coverage</b>: Tỷ lệ nhánh điều kiện đã được kiểm thử</li>
-          <li><b>Instruction Coverage</b>: Tỷ lệ lệnh thực thi đã được kiểm thử</li>
+          <li><b>Ngay khi mở báo cáo</b>, bạn sẽ thấy bảng tổng hợp các chỉ số bao phủ:
+            <ul>
+              <li><b>Class Coverage</b>: Tỷ lệ class đã được kiểm thử</li>
+              <li><b>Method Coverage</b>: Tỷ lệ method đã được kiểm thử</li>
+              <li><b>Line Coverage</b>: Tỷ lệ dòng lệnh đã được kiểm thử</li>
+              <li><b>Branch Coverage</b>: Tỷ lệ nhánh điều kiện đã được kiểm thử</li>
+              <li><b>Instruction Coverage</b>: Tỷ lệ lệnh thực thi đã được kiểm thử</li>
+            </ul>
+          </li>
+          <li><b>Mỗi chỉ số</b> đều có phần trăm rõ ràng, giúp bạn đánh giá nhanh mức độ kiểm thử của dự án.</li>
         </ul>
-      </li>
-      <li><b>Mỗi chỉ số</b> đều có phần trăm rõ ràng, giúp bạn đánh giá nhanh mức độ kiểm thử của dự án.</li>
-    </ul>
-    <hr/>
-    <h2>2. Màu Sắc Thể Hiện Độ Bao Phủ</h2>
-    <ul>
-      <li><b>Xanh lá</b> 🍀: Đã kiểm thử đầy đủ (fully covered)</li>
-      <li><b>Vàng</b> 🌕: Được kiểm thử một phần (partially covered)</li>
-      <li><b>Đỏ</b> 🔴: Chưa kiểm thử (uncovered)</li>
-    </ul>
-    <blockquote>Nhìn vào màu sắc, bạn sẽ biết ngay phần nào của mã nguồn đã được kiểm thử kỹ lưỡng và phần nào còn thiếu sót.</blockquote>
-    <hr/>
-    <h2>3. Xem Chi Tiết Theo File/Class</h2>
-    <ul>
-      <li><b>Nhấp vào tên package, class hoặc file</b> để xem chi tiết.</li>
-      <li><b>Bảng chi tiết</b> sẽ hiện ra:
+        <hr/>
+        <h2>2. Màu Sắc Thể Hiện Độ Bao Phủ</h2>
         <ul>
-          <li>Danh sách các method và dòng lệnh</li>
-          <li>Số lượng và tỷ lệ dòng/method được kiểm thử</li>
+          <li><b>Xanh lá</b> 🍀: Đã kiểm thử đầy đủ (fully covered)</li>
+          <li><b>Vàng</b> 🌕: Được kiểm thử một phần (partially covered)</li>
+          <li><b>Đỏ</b> 🔴: Chưa kiểm thử (uncovered)</li>
         </ul>
-      </li>
-      <li><b>Các dòng mã</b> sẽ được đánh dấu màu tương ứng:
+        <blockquote>Nhìn vào màu sắc, bạn sẽ biết ngay phần nào của mã nguồn đã được kiểm thử kỹ lưỡng và phần nào còn thiếu sót.</blockquote>
+        <hr/>
+        <h2>3. Xem Chi Tiết Theo File/Class</h2>
         <ul>
-          <li>Xanh: đã chạy qua khi test</li>
-          <li>Đỏ: chưa chạy qua khi test</li>
-          <li>Vàng: chỉ một phần được test (thường là các nhánh điều kiện)</li>
+          <li><b>Nhấp vào tên package, class hoặc file</b> để xem chi tiết.</li>
+          <li><b>Bảng chi tiết</b> sẽ hiện ra:
+            <ul>
+              <li>Danh sách các method và dòng lệnh</li>
+              <li>Số lượng và tỷ lệ dòng/method được kiểm thử</li>
+            </ul>
+          </li>
+          <li><b>Các dòng mã</b> sẽ được đánh dấu màu tương ứng:
+            <ul>
+              <li>Xanh: đã chạy qua khi test</li>
+              <li>Đỏ: chưa chạy qua khi test</li>
+              <li>Vàng: chỉ một phần được test (thường là các nhánh điều kiện)</li>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
-    <hr/>
-    <h2>4. Điều Hướng Nhanh</h2>
-    <ul>
-      <li><b>Thanh bên trái</b> (hoặc trên cùng) giúp bạn chuyển nhanh giữa các package, class, file.</li>
-      <li><b>Nhấp vào từng mục</b> để soi kỹ từng phần của dự án.</li>
-    </ul>
-    <hr/>
-    <h2>5. Một Số Mẹo Đọc Báo Cáo Hiệu Quả</h2>
-    <ul>
-      <li><b>Tập trung vào các vùng màu đỏ/vàng</b> để bổ sung test.</li>
-      <li><b>So sánh các chỉ số coverage</b> giữa các class để xác định điểm yếu trong kiểm thử.</li>
-      <li><b>Kiểm tra các nhánh điều kiện</b> (if/else, when...) vì đây là nơi dễ bị bỏ sót test nhất.</li>
-    </ul>
-    <hr/>
-    <blockquote><b>Tóm lại:</b><br/>Chỉ cần mở báo cáo, nhìn màu sắc và các chỉ số phần trăm, sau đó nhấp vào từng file/class để xem chi tiết là bạn đã nắm được toàn bộ độ bao phủ kiểm thử của dự án mình!</blockquote>
+        <hr/>
+        <h2>4. Điều Hướng Nhanh</h2>
+        <ul>
+          <li><b>Thanh bên trái</b> (hoặc trên cùng) giúp bạn chuyển nhanh giữa các package, class, file.</li>
+          <li><b>Nhấp vào từng mục</b> để soi kỹ từng phần của dự án.</li>
+        </ul>
+        <hr/>
+        <h2>5. Một Số Mẹo Đọc Báo Cáo Hiệu Quả</h2>
+        <ul>
+          <li><b>Tập trung vào các vùng màu đỏ/vàng</b> để bổ sung test.</li>
+          <li><b>So sánh các chỉ số coverage</b> giữa các class để xác định điểm yếu trong kiểm thử.</li>
+          <li><b>Kiểm tra các nhánh điều kiện</b> (if/else, when...) vì đây là nơi dễ bị bỏ sót test nhất.</li>
+        </ul>
+        <hr/>
+        <blockquote><b>Tóm lại:</b><br/>Chỉ cần mở báo cáo, nhìn màu sắc và các chỉ số phần trăm, sau đó nhấp vào từng file/class để xem chi tiết là bạn đã nắm được toàn bộ độ bao phủ kiểm thử của dự án mình!</blockquote>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // Function to show/hide tabs
+    function showTab(tabName) {
+      // Ẩn tất cả tab content
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Bỏ active tất cả nav links
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Hiện tab được chọn
+      document.getElementById(tabName).classList.add('active');
+      
+      // Active nav link tương ứng
+      event.target.classList.add('active');
+      
+      // Nếu là tab charts, load charts
+      if (tabName === 'charts') {
+        loadCharts();
+      }
+    }
+
+    // Function to load folders dynamically
+    async function loadFolders() {
+      try {
+        // Thử lấy danh sách thư mục từ server với cache busting
+        const response = await fetch('./folders.json?t=' + Date.now());
+        const folders = await response.json();
+        
+        // Tạo dropdown menu
+        const dropdown = document.getElementById('folderDropdown');
+        dropdown.innerHTML = '';
+        
+        folders.forEach(folder => {
+          const link = document.createElement('a');
+          link.href = `${folder}/index.html`;
+          link.textContent = folder;
+          dropdown.appendChild(link);
+        });
+        
+        console.log('Loaded folders:', folders);
+        
+      } catch (error) {
+        console.log('Không thể tải folders.json, sử dụng fallback...');
+        
+        // Fallback: sử dụng danh sách cứng nhưng có thể cập nhật dễ dàng
+        const fallbackFolders = ['250528', '250618', '250709'];
+        const dropdown = document.getElementById('folderDropdown');
+        dropdown.innerHTML = '';
+        
+        fallbackFolders.forEach(folder => {
+          const link = document.createElement('a');
+          link.href = `${folder}/index.html`;
+          link.textContent = folder;
+          dropdown.appendChild(link);
+        });
+      }
+    }
+
+    // Function to load and create charts
+    async function loadCharts() {
+      try {
+        // Thêm cache busting để force reload
+        const response = await fetch('./coverage_data.json?t=' + Date.now());
+        const coverageData = await response.json();
+        
+        console.log('Loaded coverage data:', coverageData);
+        
+        const folders = Object.keys(coverageData);
+        const metrics = ['Class', 'Method', 'Branch', 'Line', 'Instruction'];
+        const colors = ['#3498db', '#e74c3c', '#f39c12', '#27ae60', '#9b59b6'];
+        
+        // Clear existing charts if any
+        metrics.forEach((metric, index) => {
+          const ctx = document.getElementById(`${metric.toLowerCase()}Chart`);
+          if (ctx) {
+            // Destroy existing chart if it exists
+            if (ctx.chart) {
+              ctx.chart.destroy();
+            }
+            
+            const data = folders.map(folder => coverageData[folder][metric] || 0);
+            
+            ctx.chart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: folders,
+                datasets: [{
+                  label: `${metric} Coverage (%)`,
+                  data: data,
+                  backgroundColor: colors[index] + '20',
+                  borderColor: colors[index],
+                  borderWidth: 3,
+                  fill: true,
+                  tension: 0.4,
+                  pointBackgroundColor: colors[index],
+                  pointBorderColor: '#fff',
+                  pointBorderWidth: 2,
+                  pointRadius: 6,
+                  pointHoverRadius: 8
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                      display: true,
+                      text: 'Coverage (%)'
+                    },
+                    grid: {
+                      color: '#f0f0f0'
+                    }
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Thư mục'
+                    },
+                    grid: {
+                      color: '#f0f0f0'
+                    }
+                  }
+                },
+                plugins: {
+                  legend: {
+                    display: false
+                  },
+                  tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    callbacks: {
+                      label: function(context) {
+                        return `${context.dataset.label}: ${context.parsed.y}%`;
+                      }
+                    }
+                  }
+                },
+                elements: {
+                  point: {
+                    hoverBackgroundColor: colors[index]
+                  }
+                }
+              }
+            });
+          }
+        });
+        
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu coverage:', error);
+        document.getElementById('charts').innerHTML = '<div class="charts-content"><h1>Lỗi</h1><p>Không thể tải dữ liệu coverage. Vui lòng chạy script parse_coverage.py trước.</p></div>';
+      }
+    }
+
+    // Function to refresh data (force reload)
+    async function refreshData() {
+      console.log('Refreshing data...');
+      await loadFolders();
+      await loadCharts();
+      console.log('Data refreshed successfully!');
+    }
+
+    // Load folders and charts when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      loadFolders();
+      loadCharts(); // Load charts immediately since it's the default tab
+    });
+  </script>
 </body>
 </html> 

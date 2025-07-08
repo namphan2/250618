@@ -1,0 +1,288 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > HtmlTextWriter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal</a>
+</div>
+
+<h1>Coverage Summary for Class: HtmlTextWriter (vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">HtmlTextWriter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/59)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/279)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">HtmlTextWriter$Callbacks</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">HtmlTextWriter$Companion</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/59)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/279)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal
+&nbsp;
+&nbsp;internal class HtmlTextWriter(
+<b class="nc">&nbsp;    private val output: Appendable,</b>
+<b class="nc">&nbsp;    private val callbacks: Callbacks? = null</b>
+&nbsp;) {
+&nbsp;    interface Callbacks {
+&nbsp;        /**
+&nbsp;         * Called when new lines are about to be written before content at a block boundary.
+&nbsp;         * Allows to override the number of written new lines.
+&nbsp;         */
+&nbsp;        fun onWriteNewLines(newLineCount: Int): Int
+&nbsp;
+&nbsp;        /**
+&nbsp;         * Called when non-empty content is about to be written.
+&nbsp;         */
+&nbsp;        fun onWriteContentStart()
+&nbsp;    }
+&nbsp;
+&nbsp;    private var currentState = STATE_BEGIN_TEXT
+&nbsp;    // A negative value indicates new lines should be skipped for the next paragraph
+<b class="nc">&nbsp;    private var pendingNewLineCount = -1</b>
+&nbsp;    private var pendingIndentCount = 0
+&nbsp;
+&nbsp;    fun markBlockBoundary(newLineCount: Int, indentCount: Int) {
+<b class="nc">&nbsp;        require(newLineCount &gt; 0) { &quot;newLineCount must be positive&quot; }</b>
+<b class="nc">&nbsp;        pendingNewLineCount.let {</b>
+<b class="nc">&nbsp;            if (it &gt;= 0) {</b>
+<b class="nc">&nbsp;                pendingNewLineCount = maxOf(it, newLineCount)</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        pendingIndentCount = indentCount</b>
+<b class="nc">&nbsp;        currentState = STATE_BEGIN_TEXT</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Skip leading whitespaces, and turn series of whitespaces into a single space.
+&nbsp;     */
+&nbsp;    fun write(text: String) {
+<b class="nc">&nbsp;        if (text.isEmpty()) {</b>
+&nbsp;            return
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        var state = currentState</b>
+<b class="nc">&nbsp;        var contentStart = true</b>
+<b class="nc">&nbsp;        var index = 0</b>
+<b class="nc">&nbsp;        while (true) {</b>
+<b class="nc">&nbsp;            val contentStartIndex = text.indexOfFirst(index) { !it.isWhitespace() }</b>
+&nbsp;            // Add a single space after content if at least one leading whitespace is detected
+<b class="nc">&nbsp;            if (state == STATE_CONTENT_IN_PROGRESS &amp;&amp; contentStartIndex != index) {</b>
+<b class="nc">&nbsp;                contentStart = false</b>
+<b class="nc">&nbsp;                callbacks?.onWriteContentStart()</b>
+<b class="nc">&nbsp;                output.append(&#39; &#39;)</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (contentStartIndex == -1) {</b>
+&nbsp;                // No content left, only spaces
+<b class="nc">&nbsp;                currentState = STATE_SPACE_IN_PROGRESS</b>
+&nbsp;                break
+&nbsp;            }
+<b class="nc">&nbsp;            if (contentStart) {</b>
+<b class="nc">&nbsp;                writePendingNewLines(0)</b>
+<b class="nc">&nbsp;                contentStart = false</b>
+<b class="nc">&nbsp;                callbacks?.onWriteContentStart()</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            index = text.indexOfFirst(contentStartIndex + 1) { it.isWhitespace() }</b>
+<b class="nc">&nbsp;            if (index == -1) {</b>
+&nbsp;                // No spaces left, write remaining content
+<b class="nc">&nbsp;                output.append(text, contentStartIndex, text.length)</b>
+<b class="nc">&nbsp;                currentState = STATE_CONTENT_IN_PROGRESS</b>
+&nbsp;                break
+&nbsp;            }
+<b class="nc">&nbsp;            output.append(text, contentStartIndex, index)</b>
+<b class="nc">&nbsp;            output.append(&#39; &#39;)</b>
+<b class="nc">&nbsp;            state = STATE_SPACE_IN_PROGRESS</b>
+<b class="nc">&nbsp;            index++</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun writePreformatted(text: String) {
+<b class="nc">&nbsp;        if (text.isNotEmpty()) {</b>
+<b class="nc">&nbsp;            writePendingNewLines(0)</b>
+<b class="nc">&nbsp;            callbacks?.onWriteContentStart()</b>
+<b class="nc">&nbsp;            output.append(text)</b>
+<b class="nc">&nbsp;            currentState = STATE_BEGIN_TEXT</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun writeLineBreak() {
+<b class="nc">&nbsp;        writePendingNewLines(1)</b>
+<b class="nc">&nbsp;        currentState = STATE_BEGIN_TEXT</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private inline fun CharSequence.indexOfFirst(startIndex: Int, predicate: (Char) -&gt; Boolean): Int {
+<b class="nc">&nbsp;        for (index in startIndex until length) {</b>
+<b class="nc">&nbsp;            if (predicate(this[index])) {</b>
+<b class="nc">&nbsp;                return index</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return -1</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun writePendingNewLines(resetNewLineCount: Int) {
+<b class="nc">&nbsp;        pendingNewLineCount.let { newLineCount -&gt;</b>
+<b class="nc">&nbsp;            if (newLineCount != resetNewLineCount) {</b>
+<b class="nc">&nbsp;                pendingNewLineCount = resetNewLineCount</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (newLineCount &gt; 0) {</b>
+<b class="nc">&nbsp;                repeat(callbacks?.onWriteNewLines(newLineCount) ?: newLineCount) {</b>
+<b class="nc">&nbsp;                    output.append(&#39;\n&#39;)</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        pendingIndentCount.let { indentCount -&gt;</b>
+<b class="nc">&nbsp;            if (indentCount &gt; 0) {</b>
+<b class="nc">&nbsp;                for (i in 1..indentCount) {</b>
+<b class="nc">&nbsp;                    output.append(&quot;    &quot;)</b>
+&nbsp;                }
+<b class="nc">&nbsp;                pendingIndentCount = 0</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        private const val STATE_BEGIN_TEXT = 0              // Don&#39;t write the first detected space
+&nbsp;        private const val STATE_SPACE_IN_PROGRESS = 1       // Ignore new spaces
+&nbsp;        private const val STATE_CONTENT_IN_PROGRESS = 2     // Write the first detected space
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

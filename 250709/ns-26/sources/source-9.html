@@ -1,0 +1,349 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > Cta</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.data.dataSource.dto.response</a>
+</div>
+
+<h1>Coverage Summary for Class: Cta (vn.momo.compose.payment.base.data.dataSource.dto.response)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cta</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Cta$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.data.dataSource.dto.response
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SofDTO(
+&nbsp;    val type: Int? = null,
+&nbsp;    val moneySource: Int? = null,
+&nbsp;    val logo: String? = null,
+&nbsp;    val shortName: String? = null,
+&nbsp;    val sourceName: String? = null,
+&nbsp;    val displayName: String? = &quot;&quot;,
+&nbsp;    val balance: Long? = null,
+&nbsp;    val description: String? = null,
+&nbsp;    val bankCode: String? = null,
+&nbsp;    var sourceToken: String? = null,
+&nbsp;    var shortDesc: String? = &quot;&quot;,
+&nbsp;    val active: Boolean? = false,
+&nbsp;    var disableType: Int? = null,
+&nbsp;    val rowCardId: String? = null,
+&nbsp;    var detail: SofDetailDTO? = null,
+&nbsp;    val isInstallment: Boolean? = false,
+&nbsp;    val disableDesc: String? = null,
+&nbsp;    val refId: String? = null,
+&nbsp;
+&nbsp;    //use for source napas without soureToken
+&nbsp;    val sofState: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val ID: String? = null,
+&nbsp;    val transLock: String? = null,
+&nbsp;) {
+&nbsp;    fun mergeWithLocal(sofLocal: SofDTO?): SofDTO {
+&nbsp;        return SofDTO(
+&nbsp;            type = type ?: sofLocal?.type,
+&nbsp;            moneySource = moneySource ?: sofLocal?.moneySource,
+&nbsp;            logo = logo ?: sofLocal?.logo,
+&nbsp;            shortName = shortName?.takeIf { it.isNotBlank() } ?: sofLocal?.shortName,
+&nbsp;            sourceName = sourceName?.takeIf { it.isNotBlank() } ?: sofLocal?.sourceName,
+&nbsp;            displayName = displayName?.takeIf { it.isNotBlank() } ?: sofLocal?.displayName,
+&nbsp;            balance = balance ?: sofLocal?.balance,
+&nbsp;            description = description?.takeIf { it.isNotBlank() } ?: sofLocal?.description,
+&nbsp;            bankCode = bankCode ?: sofLocal?.bankCode,
+&nbsp;            sourceToken = sourceToken ?: sofLocal?.sourceToken,
+&nbsp;            shortDesc = shortDesc?.takeIf { it.isNotBlank() } ?: sofLocal?.shortDesc,
+&nbsp;            active = active ?: sofLocal?.active,
+&nbsp;            disableType = disableType ?: sofLocal?.disableType,
+&nbsp;            rowCardId = rowCardId ?: sofLocal?.rowCardId,
+&nbsp;            detail = detail?.mergeWithLocal(sofLocal?.detail),
+&nbsp;            isInstallment = detail?.installmentKey?.let { it == &quot;flowPaylaterInstallment&quot; }
+&nbsp;                ?: sofLocal?.isInstallment
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SofDetailDTO(
+&nbsp;    val createdAt: Double? = null,
+&nbsp;    val tagline: String? = null,
+&nbsp;    val bankCustomerId: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val cyberCardType: String? = null,
+&nbsp;    val cardNumber: String? = null,
+&nbsp;    val bankName: String? = null,
+&nbsp;    @SerialName(&quot;card_scheme&quot;)
+&nbsp;    val cardScheme: String? = null,
+&nbsp;    val installmentKey: String? = null,
+&nbsp;    val allowAutoPick: Boolean? = null,
+&nbsp;    val limitPerTrans: LimitPerTrans? = null,
+&nbsp;    val enableCashOut: Boolean? = null,
+&nbsp;    val enableCashIn: Boolean? = null,
+&nbsp;    val enableActive: Boolean? = null,
+&nbsp;    val noticeCashIn: Notice? = null,
+&nbsp;    val noticeCashOut: Notice? = null,
+&nbsp;    val noticeActive: Notice? = null,
+&nbsp;    val amountCashIn: Long? = null,
+&nbsp;    val bankAccountNo: String? = null,
+&nbsp;    val favorite: Int? = null,
+&nbsp;    var additionalText: AdditionalText? = null,
+&nbsp;    val refId: String? = null,
+&nbsp;    val enableCTAHeader: Boolean? = false,
+&nbsp;    val activationInfo: JsonObject? = null,
+&nbsp;    val installmentToken: String? = null,
+&nbsp;    val refParams: String? = &quot;&quot;,
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val lockPayment: Boolean? = null,
+&nbsp;    val paylaterStatus: Int? = null
+&nbsp;) {
+&nbsp;    fun mergeWithLocal(sofDetailLocal: SofDetailDTO?): SofDetailDTO {
+&nbsp;        return SofDetailDTO(
+&nbsp;            additionalText = additionalText ?: sofDetailLocal?.additionalText,
+&nbsp;            createdAt = createdAt ?: sofDetailLocal?.createdAt,
+&nbsp;            bankCustomerId = bankCustomerId ?: sofDetailLocal?.bankCustomerId,
+&nbsp;            cardType = cardType ?: sofDetailLocal?.cardType,
+&nbsp;            tagline = tagline ?: sofDetailLocal?.tagline,
+&nbsp;            cyberCardType = cyberCardType ?: sofDetailLocal?.cyberCardType,
+&nbsp;            cardNumber = cardNumber ?: sofDetailLocal?.cardNumber,
+&nbsp;            bankName = bankName ?: sofDetailLocal?.bankName,
+&nbsp;            cardScheme = cardScheme ?: sofDetailLocal?.cardScheme,
+&nbsp;            installmentKey = installmentKey ?: sofDetailLocal?.installmentKey,
+&nbsp;            allowAutoPick = allowAutoPick ?: sofDetailLocal?.allowAutoPick,
+&nbsp;            limitPerTrans = limitPerTrans ?: sofDetailLocal?.limitPerTrans,
+&nbsp;            enableCashIn = enableCashIn ?: sofDetailLocal?.enableCashIn,
+&nbsp;            enableCashOut = enableCashOut ?: sofDetailLocal?.enableCashOut,
+&nbsp;            enableActive = enableActive ?: sofDetailLocal?.enableActive,
+&nbsp;            noticeCashIn = noticeCashIn ?: sofDetailLocal?.noticeCashIn,
+&nbsp;            noticeCashOut = noticeCashOut ?: sofDetailLocal?.noticeCashOut,
+&nbsp;            noticeActive = noticeActive ?: sofDetailLocal?.noticeCashIn,
+&nbsp;            amountCashIn = amountCashIn ?: sofDetailLocal?.amountCashIn,
+&nbsp;            bankAccountNo = bankAccountNo ?: sofDetailLocal?.bankAccountNo,
+&nbsp;            favorite = favorite ?: sofDetailLocal?.favorite,
+&nbsp;            refId = refId ?: sofDetailLocal?.refId,
+&nbsp;            enableCTAHeader = enableCTAHeader ?: sofDetailLocal?.enableCTAHeader,
+&nbsp;            activationInfo = activationInfo ?: sofDetailLocal?.activationInfo,
+&nbsp;            refParams = refParams ?: sofDetailLocal?.refParams,
+&nbsp;            installmentToken = installmentToken ?: sofDetailLocal?.installmentToken,
+&nbsp;            lockPayment = lockPayment ?: sofDetailLocal?.lockPayment,
+&nbsp;            paylaterStatus = paylaterStatus ?: sofDetailLocal?.paylaterStatus,
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AdditionalText(
+&nbsp;    val active: Int? = null,
+&nbsp;    val type: Int? = null,
+&nbsp;    val shortDesc: String? = &quot;&quot;,
+&nbsp;    val maxDesc: String? = &quot;&quot;,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LimitPerTrans(
+&nbsp;    val cashIn: CashIn? = null,
+&nbsp;    val cashOut: CashOut? = null,
+&nbsp;    val payment: Payment? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CashIn(
+&nbsp;    val min: Int? = null,
+&nbsp;    val max: Int? = null,
+&nbsp;    val otp: Int? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CashOut(
+&nbsp;    val min: Int? = null,
+&nbsp;    val max: Int? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class Payment(
+&nbsp;    val min: Int? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class Notice(
+&nbsp;    val showAlert: Boolean? = null,
+&nbsp;    val type: Int? = null,
+&nbsp;    val img: String? = null,
+&nbsp;    val title: String? = null,
+&nbsp;    val description: String? = null,
+&nbsp;    val cta: Cta? = null,
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class Cta(
+<b class="nc">&nbsp;    val main: String? = null,</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

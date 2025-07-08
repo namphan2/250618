@@ -1,0 +1,260 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > NextBestActionItem</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.entities.transactionresult</a>
+</div>
+
+<h1>Coverage Summary for Class: NextBestActionItem (vn.momo.compose.payment.payx.domain.entities.transactionresult)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NextBestActionItem</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (6/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54.5%
+  </span>
+  <span class="absValue">
+    (6/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    41.9%
+  </span>
+  <span class="absValue">
+    (101/241)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NextBestActionItem$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (6/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (6/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    41.6%
+  </span>
+  <span class="absValue">
+    (101/243)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.entities.transactionresult
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultTicketRevampConfig(
+&nbsp;    val serviceName: String? = null,
+&nbsp;    val nextBestAction: List&lt;NextBestActionItem&gt;? = null,
+&nbsp;    val extraInfo: List&lt;ExtraInfoItem&gt;? = null,
+&nbsp;    val disableDetailMode: Boolean = false,
+&nbsp;    val primaryButton: ActionButton? = null,
+&nbsp;    val secondaryButton: ActionButton? = null,
+&nbsp;    val message: String? = null,
+&nbsp;)
+&nbsp;
+<b class="pc">&nbsp;@Serializable</b>
+&nbsp;data class NextBestActionItem(
+<b class="fc">&nbsp;    val icon: String? = null,</b>
+<b class="fc">&nbsp;    val title: String? = null,</b>
+<b class="fc">&nbsp;    val body: String? = null,</b>
+<b class="fc">&nbsp;    val code: String? = null,</b>
+<b class="fc">&nbsp;    val params: JsonObject? = null,</b>
+&nbsp;) {
+<b class="nc">&nbsp;    val isValid get() = run {</b>
+<b class="nc">&nbsp;        val _valid = this.code?.isNotBlank() == true</b>
+<b class="nc">&nbsp;        if(!_valid) {</b>
+<b class="nc">&nbsp;            println(&quot;Invalid NextBestActionItem: $this&quot;)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        _valid</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ExtraInfoItem(
+&nbsp;    val id: String? = null,
+&nbsp;    val title: String? = null,
+&nbsp;    val value: String? = null,
+&nbsp;    val iconLeft: String? = null,
+&nbsp;) {
+&nbsp;    val isValid get() = run {
+&nbsp;        val _valid = this.title?.isNotBlank() == true &amp;&amp; this.value?.isNotBlank() == true
+&nbsp;        if(!_valid) {
+&nbsp;            println(&quot;Invalid ExtraInfoItem: $this&quot;)
+&nbsp;        }
+&nbsp;        _valid
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ActionButton(
+&nbsp;    val title: String? = null,
+&nbsp;    val action: TRServiceAction? = null,
+&nbsp;){
+&nbsp;    val isValid get() = run {
+&nbsp;        this.title?.isNotBlank() == true &amp;&amp; this.action?.isValid == true
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TRServiceAction(
+&nbsp;    val code: String? = null,
+&nbsp;    val params: JsonObject? = null,
+&nbsp;    val type: String? = null,
+&nbsp;    val iconLeft: String? = null,
+&nbsp;    val iconRight: String? = null,
+&nbsp;    val eventName: String? = null,
+&nbsp;    val eventParams: JsonObject? = null,
+&nbsp;) {
+&nbsp;    val isValid get() = run {
+&nbsp;        this.code?.isNotBlank() == true
+&nbsp;                &amp;&amp; (this.type == TRServiceActionType.FEATURE_CODE.type || this.type == TRServiceActionType.FEEDBACK.type)
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;enum class TRServiceActionType(val type: String) {
+&nbsp;    FEATURE_CODE(&quot;feature_code&quot;),
+&nbsp;    FEEDBACK(&quot;feedback&quot;)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

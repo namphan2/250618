@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBUserEvent</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.service.trace.model.grafana</a>
+</div>
+
+<h1>Coverage Summary for Class: SBUserEvent (vn.momo.compose.payment.base.core.service.trace.model.grafana)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBUserEvent</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/224)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.service.trace.model.grafana
+&nbsp;
+<b class="nc">&nbsp;enum class SBUserEvent(val event: GrafanaMetric) {</b>
+<b class="nc">&nbsp;    ScreenInteracted(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;screen_interacted&quot;)),</b>
+<b class="nc">&nbsp;    SubmitCheckout(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;checkout&quot;)),</b>
+<b class="nc">&nbsp;    CheckoutSuccessCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;checkout_success_count&quot;)),</b>
+<b class="nc">&nbsp;    StartAuthenticationCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;stat_authentication_count&quot;)),</b>
+<b class="nc">&nbsp;    DisplaySplitBillCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;display_split_bill_count&quot;)),</b>
+<b class="nc">&nbsp;    AuthenticationSuccessCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;authentication_success&quot;)),</b>
+<b class="nc">&nbsp;    AuthenticationFailCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;authentication_fail&quot;)),</b>
+<b class="nc">&nbsp;    ChangeSof(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;change_sof&quot;)),</b>
+<b class="nc">&nbsp;    PickPromotion(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;pick_promotion&quot;)),</b>
+<b class="nc">&nbsp;    ChangePromotion(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;change_promotion&quot;)),</b>
+<b class="nc">&nbsp;    RedirectPaymentResult(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;redirect_payment_result&quot;)),</b>
+<b class="nc">&nbsp;    RedirectBankOtp(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;redirect_bank_otp&quot;)),</b>
+<b class="nc">&nbsp;    RedirectApp2App(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;redirect_app_2_app&quot;)),</b>
+<b class="nc">&nbsp;    RedirectWebViewOtp(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;redirect_webview_otp&quot;)),</b>
+<b class="nc">&nbsp;    E2ECheckoutToResult(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;e2e_checkout_to_result&quot;)),</b>
+<b class="nc">&nbsp;    SofListEmptyCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;sof_list_empty&quot;)),</b>
+<b class="nc">&nbsp;    SkipPaymentResultCount(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;skip_payment_result_count&quot;)),</b>
+<b class="nc">&nbsp;    PopBackToFeature(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;pop_back_to_feature_count&quot;)),</b>
+<b class="nc">&nbsp;    SuggestFirstSofBts(GrafanaMetric(flow = &quot;sb_payx&quot;, step = &quot;suggest_first_sof_bts&quot;)),</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

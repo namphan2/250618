@@ -1,0 +1,183 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > XSaleConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.entities.xsale</a>
+</div>
+
+<h1>Coverage Summary for Class: XSaleConfig (vn.momo.compose.payment.payx.domain.entities.xsale)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">XSaleConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/107)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.entities.xsale
+&nbsp;
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import vn.momo.compose.components.core.aliases.Colors as ColorUtil
+&nbsp;import vn.momo.kits.const.Colors as KitColor
+&nbsp;
+&nbsp;data class XSaleConfig(
+<b class="nc">&nbsp;    val title: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val subTitle: String? = null,</b>
+<b class="nc">&nbsp;    val logo: String? = null,</b>
+<b class="nc">&nbsp;    val badge: XSaleBadge? = null,</b>
+<b class="nc">&nbsp;    val style: XSaleViewStyle = XSaleViewStyle(),</b>
+<b class="nc">&nbsp;    val subLabel: String? = null,</b>
+<b class="nc">&nbsp;    val subLabelIcon: String? = null,</b>
+<b class="nc">&nbsp;    val subLabelStyle: XSaleViewStyle = XSaleViewStyle(),</b>
+<b class="nc">&nbsp;    val layout: XSaleLayoutType = XSaleLayoutType.Carousel,</b>
+<b class="nc">&nbsp;    val data: List&lt;XSaleItem&gt; = emptyList(),</b>
+<b class="nc">&nbsp;    val serviceId: String? = null</b>
+&nbsp;) {
+&nbsp;    val trackingLayout
+<b class="nc">&nbsp;        get() = when (layout) {</b>
+<b class="nc">&nbsp;            is XSaleLayoutType.List -&gt; &quot;scroll&quot;</b>
+<b class="nc">&nbsp;            is XSaleLayoutType.Carousel -&gt; &quot;carousel&quot;</b>
+&nbsp;        }
+&nbsp;}
+&nbsp;
+&nbsp;sealed class XSaleLayoutType {
+&nbsp;    //    data class Grid(val size: Int = 3) : XSaleLayoutType()
+&nbsp;    object List : XSaleLayoutType()
+&nbsp;    object Carousel : XSaleLayoutType()
+&nbsp;}
+&nbsp;
+&nbsp;data class XSaleViewStyle(
+&nbsp;    val backgroundColor: Color = KitColor.black_01,
+&nbsp;    val borderColor: Color = KitColor.black_04,
+&nbsp;    val backgroundImage: String? = null,
+&nbsp;) {
+&nbsp;    constructor(
+&nbsp;        backgroundColor: String?,
+&nbsp;        borderColor: String?,
+&nbsp;        defaultBackgroundColor: Color = KitColor.black_01,
+&nbsp;        defaultBorderColor: Color = KitColor.black_04,
+&nbsp;        backgroundImage: String? = null
+&nbsp;    ) : this(
+&nbsp;        backgroundColor = backgroundColor?.let {
+&nbsp;            ColorUtil.fromHex(
+&nbsp;                backgroundColor,
+&nbsp;                defaultBackgroundColor
+&nbsp;            )
+&nbsp;        } ?: defaultBackgroundColor,
+&nbsp;        borderColor = borderColor?.let { ColorUtil.fromHex(borderColor, defaultBorderColor) }
+&nbsp;            ?: defaultBorderColor,
+&nbsp;        backgroundImage = backgroundImage
+&nbsp;    )
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

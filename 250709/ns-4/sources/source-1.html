@@ -1,0 +1,525 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PaymentBankOtpRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.bankOtp.data.repositoryImpl</a>
+</div>
+
+<h1>Coverage Summary for Class: PaymentBankOtpRepository (vn.momo.compose.payment.bankOtp.data.repositoryImpl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PaymentBankOtpRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/76)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/37)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/455)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PaymentBankOtpRepository$getBankDataByBankCode$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PaymentBankOtpRepository$getFeatureCodeContainer$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/76)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/37)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/455)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.bankOtp.data.repositoryImpl
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.first
+&nbsp;import kotlinx.coroutines.flow.firstOrNull
+&nbsp;import vn.momo.compose.payment.bankOtp.data.model.PaymentBankOtpFeatureConfig
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.entities.OtpConfig
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.entities.OtpRegex
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.entities.PaymentBankData
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.entities.PaymentBankOtpConfig
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.appFeatureConfig.IAppFeatureConfig
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.entities.PaymentBankOtpConfirmExtras
+&nbsp;import vn.momo.compose.payment.bankOtp.domain.repositories.IPaymentBankOtpRepository
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ComposeDeviceApi
+&nbsp;import vn.momo.compose.utils.datamapping.tryToGetString
+&nbsp;
+&nbsp;val otpConfigByBankCode = listOf(
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_vib&quot;,
+&nbsp;        name = &quot;VIB&quot;,
+&nbsp;        bankCode = &quot;113&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            errorMessage = &quot;Mã OTP không chính xác. Quý khách vui lòng kiểm tra lại tin nhắn Ngân hàng cung cấp và nhập lại.&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_hd&quot;,
+&nbsp;        name = &quot;HDBank&quot;,
+&nbsp;        bankCode = &quot;208&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            errorMessage = &quot;Mã OTP không chính xác. Quý khách vui lòng kiểm tra lại tin nhắn Ngân hàng cung cấp và nhập lại.&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            headerText = &quot;Vui lòng nhập mật khẩu OTP bạn nhận được từ phương thức xác thực đã đăng ký với HDBank (tin nhắn ngân hàng, HDBank OTP hoặc Hard Token)&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_IVB&quot;,
+&nbsp;        name = &quot;Indovina&quot;,
+&nbsp;        bankCode = &quot;211&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_bvb&quot;,
+&nbsp;        name = &quot;Bảo Việt&quot;,
+&nbsp;        bankCode = &quot;201&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 8,
+&nbsp;            errorMessage = &quot;Định dạng OTP không chính xác, vui lòng kiểm tra lại&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            otpRegex = listOf(
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]+&quot;,
+&nbsp;                    error = &quot;Quý khách chưa nhập mã xác thực OTP&quot;,
+&nbsp;                    order = 1
+&nbsp;                ),
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]{8}&quot;,
+&nbsp;                    error = &quot;Quý khách vui lòng kiểm tra định dạng mã xác thực OTP&quot;,
+&nbsp;                    order = 2
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_vietbank&quot;,
+&nbsp;        name = &quot;VietBank&quot;,
+&nbsp;        bankCode = &quot;210&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            maxLength = 7,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            otpRegex = listOf(
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]{7}&quot;,
+&nbsp;                    error = &quot;Vui lòng nhập mã xác thực OTP&quot;
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_saigonbank&quot;,
+&nbsp;        name = &quot;Saigonbank&quot;,
+&nbsp;        bankCode = &quot;209&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_ocb&quot;,
+&nbsp;        name = &quot;OCB&quot;,
+&nbsp;        bankCode = &quot;104&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            headerText = &quot;Vui lòng nhập mật khẩu OTP bạn nhận được từ phương thức xác thực đã đăng ký với OCB (Tin nhắn ngân hàng, FaceOTP hoặc iOTP)&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_shinhan&quot;,
+&nbsp;        name = &quot;Shinhan&quot;,
+&nbsp;        bankCode = &quot;115&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_eximbank&quot;,
+&nbsp;        name = &quot;Eximbank&quot;,
+&nbsp;        bankCode = &quot;107&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_Seab&quot;,
+&nbsp;        name = &quot;SeABank&quot;,
+&nbsp;        bankCode = &quot;212&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_vietcapital&quot;,
+&nbsp;        name = &quot;BVBank&quot;,
+&nbsp;        bankCode = &quot;303&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_baca&quot;,
+&nbsp;        name = &quot;Bắc Á&quot;,
+&nbsp;        bankCode = &quot;305&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_vietin&quot;,
+&nbsp;        name = &quot;VietinBank&quot;,
+&nbsp;        bankCode = &quot;102&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            maxLength = 6
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_MB&quot;,
+&nbsp;        name = &quot;MBBank&quot;,
+&nbsp;        bankCode = &quot;301&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 8,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            otpRegex = listOf(
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]{8}&quot;,
+&nbsp;                    error = &quot;Quý khách chưa nhập mã xác thực OTP&quot;,
+&nbsp;                    order = 1
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_vrb&quot;,
+&nbsp;        name = &quot;Việt - Nga&quot;,
+&nbsp;        bankCode = &quot;116&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 8,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            otpRegex = listOf(
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]+&quot;,
+&nbsp;                    error = &quot;Quý khách chưa nhập mã xác thực OTP&quot;,
+&nbsp;                    order = 1
+&nbsp;                ),
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]{8}&quot;,
+&nbsp;                    error = &quot;Quý khách vui lòng kiểm tra định dạng mã xác thực OTP&quot;,
+&nbsp;                    order = 2
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_sacom&quot;,
+&nbsp;        name = &quot;Sacombank&quot;,
+&nbsp;        bankCode = &quot;2000&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_bidv&quot;,
+&nbsp;        name = &quot;BIDV&quot;,
+&nbsp;        bankCode = &quot;110&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            errorMessage = &quot;Định dạng OTP không chính xác, vui lòng kiểm tra lại&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_ocean&quot;,
+&nbsp;        name = &quot;OceanBank&quot;,
+&nbsp;        bankCode = &quot;203&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            placeholder = &quot;Nhập mã otp&quot;,
+&nbsp;            keyboardType = &quot;number&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_ab&quot;,
+&nbsp;        name = &quot;ABBank&quot;,
+&nbsp;        bankCode = &quot;202&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 8,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            otpRegex = listOf(
+&nbsp;                OtpRegex(
+&nbsp;                    regex = &quot;^[a-zA-Z0-9]{8}&quot;,
+&nbsp;                    error = &quot;Quý khách chưa nhập mã xác thực OTP&quot;,
+&nbsp;                    order = 1
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_shb&quot;,
+&nbsp;        name = &quot;SHB&quot;,
+&nbsp;        bankCode = &quot;206&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            maxLength = 6,
+&nbsp;            errorMessage = &quot;Định dạng OTP không chính xác, vui lòng kiểm tra lại&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            placeholder = &quot;Nhập OTP&quot;
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    PaymentBankOtpConfig(
+&nbsp;        code = &quot;bank_nab&quot;,
+&nbsp;        name = &quot;Nam A Bank&quot;,
+&nbsp;        bankCode = &quot;204&quot;,
+&nbsp;        config = OtpConfig(
+&nbsp;            placeholder = &quot;Nhập OTP&quot;,
+&nbsp;            keyboardType = &quot;number&quot;,
+&nbsp;            maxLength = 6
+&nbsp;        )
+&nbsp;    )
+&nbsp;)
+&nbsp;
+&nbsp;
+&nbsp;val defaultConfigBankOtp = OtpConfig(
+&nbsp;    headerText = &quot;Bạn vui lòng nhập mã xác thực SMS OTP được gửi đến số điện thoại bạn đã đăng ký với Ngân hàng {bank}.&quot;,
+&nbsp;    floatingValue = &quot;Mã xác thực (OTP)&quot;,
+&nbsp;    otpRegex = listOf(
+&nbsp;        OtpRegex(
+&nbsp;            regex = &quot;^[a-zA-Z0-9]+&quot;,
+&nbsp;            error = &quot;Vui lòng nhập mã xác thực OTP&quot;,
+&nbsp;            order = 1
+&nbsp;        ),
+&nbsp;        OtpRegex(
+&nbsp;            regex = &quot;^[a-zA-Z0-9]{6,8}$&quot;,
+&nbsp;            error = &quot;Quý khách vui lòng kiểm tra định dạng mã xác thực OTP&quot;,
+&nbsp;            order = 2
+&nbsp;        )
+&nbsp;    ),
+&nbsp;    placeholder = &quot;Mã xác thực (OTP)&quot;,
+&nbsp;    keyboardType = &quot;default&quot;,
+&nbsp;    maxLength = 6
+&nbsp;)
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;class PaymentBankOtpRepository(</b>
+<b class="nc">&nbsp;    val appFeatureConfig: IAppFeatureConfig,</b>
+<b class="nc">&nbsp;    private val deviceInfoApi: ComposeDeviceApi</b>
+&nbsp;) : IPaymentBankOtpRepository {
+&nbsp;    override fun getConfig(
+&nbsp;        bankCode: String?,
+&nbsp;        otpConfigFromExtra: PaymentBankOtpConfirmExtras?
+&nbsp;    ): OtpConfig {
+<b class="nc">&nbsp;        val defaultConfig = getDefaultConfig()</b>
+<b class="nc">&nbsp;        val localConfigByBankCode = bankCode?.let {</b>
+<b class="nc">&nbsp;            getLocalConfigByBankCode(bankCode)</b>
+<b class="nc">&nbsp;        } ?: OtpConfig()</b>
+<b class="nc">&nbsp;        val backendConfig = otpConfigFromExtra?.let { getBackendConfigFromExtra(it) } ?: OtpConfig()</b>
+<b class="nc">&nbsp;        return mergeConfigs(listOf(backendConfig, localConfigByBankCode, defaultConfig))</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun getFeatureCodeContainer(): String {
+<b class="nc">&nbsp;        val defaultFeatureCode = &quot;payx_bank_otp&quot;</b>
+<b class="nc">&nbsp;        val currentVersion = deviceInfoApi.getDeviceInfo()?.buildVersion ?: 0</b>
+<b class="nc">&nbsp;        val config = appFeatureConfig.getById(&quot;bank_otp_adapter&quot;, PaymentBankOtpFeatureConfig.serializer()).firstOrNull()</b>
+<b class="nc">&nbsp;        val appCodeVersionConfig = config?.param?.appCodeBankOtpNative ?: 0</b>
+<b class="nc">&nbsp;        val featureCodeConfig = config?.param?.featureCodeBankOtp ?: defaultFeatureCode</b>
+<b class="nc">&nbsp;        return if (currentVersion &gt;= appCodeVersionConfig) featureCodeConfig else defaultFeatureCode</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun getBankDataByBankCode(bankCode: String): PaymentBankData {
+<b class="nc">&nbsp;        val resultConfig = appFeatureConfig.getByServiceCodes(listOf(bankCode))</b>
+<b class="nc">&nbsp;        val fistConfig = resultConfig.first().firstOrNull()</b>
+<b class="nc">&nbsp;        val paymentBankData = PaymentBankData(</b>
+<b class="nc">&nbsp;            bankName = fistConfig?.tryToGetString(&quot;name&quot;),</b>
+<b class="nc">&nbsp;            bankCode = fistConfig?.tryToGetString(&quot;serviceCode&quot;),</b>
+<b class="nc">&nbsp;            logo = fistConfig?.tryToGetString(&quot;icon&quot;)</b>
+&nbsp;        )
+<b class="nc">&nbsp;        return paymentBankData</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun getDefaultConfig(): OtpConfig {
+<b class="nc">&nbsp;        return defaultConfigBankOtp</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun mergeConfigs(configs: List&lt;OtpConfig&gt;): OtpConfig {
+<b class="nc">&nbsp;        return OtpConfig(</b>
+<b class="nc">&nbsp;            maxLength = configs.firstNotNullOfOrNull { it.maxLength },</b>
+<b class="nc">&nbsp;            placeholder = configs.firstNotNullOfOrNull { it.placeholder },</b>
+<b class="nc">&nbsp;            errorMessage = configs.firstNotNullOfOrNull { it.errorMessage },</b>
+<b class="nc">&nbsp;            keyboardType = configs.firstNotNullOfOrNull { it.keyboardType },</b>
+<b class="nc">&nbsp;            otpRegex = configs.firstNotNullOfOrNull { it.otpRegex },</b>
+<b class="nc">&nbsp;            headerText = configs.firstNotNullOfOrNull { it.headerText },</b>
+<b class="nc">&nbsp;            caption = configs.firstNotNullOfOrNull { it.caption }</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun getBackendConfigFromExtra(extra: PaymentBankOtpConfirmExtras): OtpConfig {
+<b class="nc">&nbsp;        return OtpConfig(</b>
+<b class="nc">&nbsp;            caption = extra.otpConfig?.flyLabelText,</b>
+<b class="nc">&nbsp;            maxLength = extra.otpConfig?.otpMaxLength,</b>
+<b class="nc">&nbsp;            placeholder = extra.otpConfig?.placeholder,</b>
+<b class="nc">&nbsp;            headerText = extra.otpConfig?.titleContent,</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun getLocalConfigByBankCode(bankCode: String): OtpConfig {
+<b class="nc">&nbsp;        return otpConfigByBankCode.find { it.bankCode == bankCode }?.config ?: OtpConfig()</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > RadioButtonKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.components.radio</a>
+</div>
+
+<h1>Coverage Summary for Class: RadioButtonKt (vn.momo.compose.payment.payx.presentation.view.components.radio)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">RadioButtonKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/284)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.components.radio
+&nbsp;
+&nbsp;import androidx.compose.animation.animateColorAsState
+&nbsp;import androidx.compose.animation.core.animateDpAsState
+&nbsp;import androidx.compose.animation.core.tween
+&nbsp;import androidx.compose.foundation.border
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.size
+&nbsp;import androidx.compose.foundation.shape.RoundedCornerShape
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.draw.clip
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.times
+&nbsp;import vn.momo.kits.const.AppTheme
+&nbsp;import vn.momo.kits.const.Radius
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun RadioButton(
+&nbsp;    selected: Boolean,
+<b class="nc">&nbsp;    modifier: Modifier = Modifier,</b>
+<b class="nc">&nbsp;    enabled: Boolean = true,</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;    val borderWidth = animateDpAsState(</b>
+<b class="nc">&nbsp;        targetValue = if (selected) 0.3 * RadioIconSize else 0.1 * RadioIconSize,</b>
+<b class="nc">&nbsp;        animationSpec = tween(durationMillis = RadioAnimationDuration)</b>
+&nbsp;    )
+&nbsp;
+<b class="nc">&nbsp;    val borderColor = animateColorAsState(</b>
+<b class="nc">&nbsp;        targetValue = when {</b>
+<b class="nc">&nbsp;            !enabled &amp;&amp; selected -&gt; AppTheme.current.colors.background.tonal</b>
+<b class="nc">&nbsp;            !enabled -&gt; AppTheme.current.colors.text.disable</b>
+<b class="nc">&nbsp;            selected -&gt; AppTheme.current.colors.primary</b>
+<b class="nc">&nbsp;            else -&gt; AppTheme.current.colors.text.default</b>
+&nbsp;        },
+<b class="nc">&nbsp;        animationSpec = tween(durationMillis = RadioAnimationDuration)</b>
+&nbsp;    )
+&nbsp;
+<b class="nc">&nbsp;    Box(</b>
+<b class="nc">&nbsp;        modifier = modifier</b>
+<b class="nc">&nbsp;            .border(borderWidth.value, borderColor.value, RoundedCornerShape(Radius.M))</b>
+<b class="nc">&nbsp;            .clip(RoundedCornerShape(Radius.M))</b>
+<b class="nc">&nbsp;            .size(RadioIconSize)</b>
+&nbsp;    )
+<b class="nc">&nbsp;}</b>
+&nbsp;
+<b class="nc">&nbsp;private val RadioIconSize = 20.dp</b>
+&nbsp;private const val RadioAnimationDuration = 200
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

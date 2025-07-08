@@ -1,0 +1,233 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > DisableSof</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.dto.response</a>
+</div>
+
+<h1>Coverage Summary for Class: DisableSof (vn.momo.compose.payment.payx.data.dataSource.dto.response)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">DisableSof</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DisableSof$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.dto.response
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.JsonPrimitive
+&nbsp;import vn.momo.compose.payment.base.domain.entities.TextCustomStyle
+&nbsp;import vn.momo.compose.payment.base.domain.entities.CartData
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;
+&nbsp;typealias PaymentInfoFromCheckout = Map&lt;String, List&lt;JsonObject&gt;?&gt;?
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CheckoutObservedDTO(
+&nbsp;    val state: String? = null,
+&nbsp;    @SerialName(&quot;data&quot;) val dataJson: JsonObject? = null,
+&nbsp;    val cId: String? = null
+&nbsp;) {
+&nbsp;    val data: CheckoutResponseDTO?
+&nbsp;        get() = ModelConvertUtils.decodeFromJson(
+&nbsp;            CheckoutResponseDTO.serializer(),
+&nbsp;            dataJson ?: emptyJsonObject()
+&nbsp;        )
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CheckoutResponseDTO(
+&nbsp;    val cartData: CartData? = null,
+&nbsp;    val checkoutData: TransactionResponseDTO? = null,
+&nbsp;    val paymentInfo: PaymentInfoFromCheckout = null,
+&nbsp;    val errorCode: Int? = null,
+&nbsp;    val errorDesc: String? = null,
+&nbsp;    val serviceTransData: ServiceTransData? = null
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InvoiceInfoFromService(
+&nbsp;    val key: JsonPrimitive? = null,
+&nbsp;    val value: JsonPrimitive? = null,
+&nbsp;    val title: String? = null,
+&nbsp;    val titleTextStyle: TextCustomStyle? = null,
+&nbsp;    val valueTextStyle: TextCustomStyle? = null
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ServiceTransData(
+&nbsp;    val disableSof: List&lt;JsonObject?&gt;? = null
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class DisableSof(
+<b class="nc">&nbsp;    val moneySource: Int? = null</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

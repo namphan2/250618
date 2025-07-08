@@ -1,0 +1,304 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > LockPayment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.domain.entities</a>
+</div>
+
+<h1>Coverage Summary for Class: LockPayment (vn.momo.compose.payment.base.domain.entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">LockPayment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.domain.entities
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.Transient
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.core.utils.payment.extensions.isCurrency
+&nbsp;
+&nbsp;data class SOFItem(
+&nbsp;    val ID: String? = null,
+&nbsp;    val moneySource: MoneySource,
+&nbsp;    val logo: String? = null,
+&nbsp;    val shortName: String = &quot;&quot;,
+&nbsp;    val fullName: String = &quot;&quot;,
+&nbsp;    val balance: Long,
+&nbsp;    val sourceToken: String,
+&nbsp;    val disableType: DisableType,
+&nbsp;    val badge: SofBadge? = null,
+&nbsp;    val shortDesc: String = &quot;&quot;,
+&nbsp;    val fullDesc: String = &quot;&quot;,
+&nbsp;    @Transient val action: SofAction? = null,
+&nbsp;    val isInstallment: Boolean = false,
+&nbsp;    val info: PayXSofInfo,
+&nbsp;    val lockPayment: LockPayment? = null,
+&nbsp;    val reward: Int? = null
+&nbsp;) {
+&nbsp;    fun isValidSourceToken() = this.sourceToken.isNotEmpty() &amp;&amp; this.sourceToken != &quot;N/A&quot;
+&nbsp;
+&nbsp;    private fun isValidID() = this.ID?.isNotEmpty() == true
+&nbsp;
+&nbsp;    fun isMatchSource(sofToken: String?, sofID: String?) =
+&nbsp;        (sofToken?.isNotEmpty() == true &amp;&amp; sofToken == sourceToken) || (sofID?.isNotEmpty() == true &amp;&amp; sofID == ID)
+&nbsp;
+&nbsp;    val available: Boolean
+&nbsp;        get() = (isValidSourceToken() || isValidID()) &amp;&amp; disableType == DisableType.Show
+&nbsp;    private val isActiveOnly: Boolean
+&nbsp;        get() = disableType == DisableType.ActiveOnly
+&nbsp;    val canAction: Boolean
+&nbsp;        get() = disableType == DisableType.ActiveOnly || (action != null &amp;&amp; action.isShow &amp;&amp; action.action !is SofActionType.Select)
+&nbsp;    val pressable: Boolean
+&nbsp;        get() = available || isActiveOnly
+&nbsp;
+&nbsp;    val uId
+&nbsp;        get() = sourceToken.takeIf { it.isNotEmpty() } ?: ID
+&nbsp;
+&nbsp;    val canDisplay: Boolean
+&nbsp;        get() = disableType in setOf(
+&nbsp;            DisableType.Show,
+&nbsp;            DisableType.DisableAndShow
+&nbsp;        )
+&nbsp;    val isPromoted = shortDesc.isCurrency() &amp;&amp; badge?.title?.isNotBlank() == true
+&nbsp;    val isNapasNotLinked: Boolean
+&nbsp;        get() = info.rowCardId.isNullOrEmpty()
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SofBadge(
+&nbsp;    val shortTitle: String,
+&nbsp;    val type: TaglineType,
+&nbsp;    val title: String,
+&nbsp;)
+&nbsp;
+&nbsp;enum class DisableType(val type: Int) {
+&nbsp;    Show(0),
+&nbsp;    DisableAndShow(1),
+&nbsp;    Hidden(2),
+&nbsp;    ActiveOnly(3);
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        fun fromInt(type: Int?) = values().find { it.type == type } ?: Hidden
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;interface MoneySource {
+&nbsp;    val id: Int?
+&nbsp;    val partnerCode: String?
+&nbsp;}
+&nbsp;
+&nbsp;data class DefaultMoneySource(override val id: Int?, override val partnerCode: String? = null) :
+&nbsp;    MoneySource
+&nbsp;
+&nbsp;enum class EnumMoneySource(override val id: Int, override val partnerCode: String? = null) :
+&nbsp;    MoneySource {
+&nbsp;    MoMo(1, &quot;momo&quot;),
+&nbsp;    Bank(2),
+&nbsp;    Card(3),
+&nbsp;    Sacombank(4),
+&nbsp;    Napas(5, &quot;9704&quot;),
+&nbsp;    Cashback(6),
+&nbsp;    Pay123(7),
+&nbsp;    Investment(9, &quot;investment&quot;),
+&nbsp;    PayLater(10, &quot;payLater&quot;),
+&nbsp;    CreditCardMarketplace(12),
+&nbsp;    CVS(16);
+&nbsp;
+&nbsp;    companion object {
+&nbsp;        fun from(id: Int?): MoneySource =
+&nbsp;            values().find { it.id == id } ?: DefaultMoneySource(id)
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;data class SofAction(
+&nbsp;    val action: SofActionType,
+&nbsp;    val logo: String? = null,
+&nbsp;    val title: String,
+&nbsp;    val description: String,
+&nbsp;    val isShow: Boolean,
+&nbsp;    val refId: String?,
+&nbsp;    val params: Map&lt;String, Any?&gt; = emptyMap()
+&nbsp;)
+&nbsp;
+&nbsp;sealed class SofActionType {
+&nbsp;    data class CashIn(val amount: Long) : SofActionType()
+&nbsp;    object SofTransfer : SofActionType()
+&nbsp;    data class Activate(val info: JsonObject?) : SofActionType()
+&nbsp;    object HaveNextStep : SofActionType()
+&nbsp;    object Select : SofActionType()
+&nbsp;}
+&nbsp;
+&nbsp;enum class TaglineType(val value: Int) { Promotion(0), Recommend(1) }
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PayXSofInfo(
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val bankCustomerId: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val cyberCardType: String? = null,
+&nbsp;    val cardNumber: String? = null,
+&nbsp;    val bankName: String? = null,
+&nbsp;    val cardSchema: String? = null,
+&nbsp;    val rowCardId: String? = null,
+&nbsp;    val bankCode: String? = null,
+&nbsp;    val sofState: String? = null,
+&nbsp;    val installmentToken: String? = null
+&nbsp;)
+&nbsp;
+&nbsp;data class NapasInfo(
+&nbsp;    val cardNumber: String? = &quot;&quot;,
+&nbsp;    val cardFullName: String? = &quot;&quot;,
+&nbsp;    val cardIssueDate: String? = &quot;&quot;,
+&nbsp;    val isSaveToken: Boolean = false,
+&nbsp;    val moneySource: MoneySource?,
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val sofState: String? = null,
+&nbsp;    val bankName: String? = &quot;&quot;,
+&nbsp;    val urlConfirm: String? = &quot;&quot;
+&nbsp;) {
+&nbsp;    fun toJS(): Map&lt;String, Any?&gt; {
+&nbsp;        return mapOf(
+&nbsp;            &quot;cardNumber&quot; to cardNumber,
+&nbsp;            &quot;cardFullName&quot; to cardFullName,
+&nbsp;            &quot;cardIssueDate&quot; to cardIssueDate,
+&nbsp;            &quot;isSaveToken&quot; to isSaveToken,
+&nbsp;            &quot;moneySource&quot; to moneySource?.id,
+&nbsp;            &quot;partnerCode&quot; to partnerCode,
+&nbsp;            &quot;cardType&quot; to cardType,
+&nbsp;            &quot;sofState&quot; to sofState,
+&nbsp;            &quot;bankName&quot; to bankName,
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;enum class ChangeSofActor { MoneyPay, UserClick, Overlay, ActiveSof }
+&nbsp;
+<b class="nc">&nbsp;enum class LockPayment { SystemLock, UserLock }</b>
+&nbsp;
+&nbsp;val DEFAULT_MOMO_SOURCE = SOFItem(
+&nbsp;    balance = 0,
+&nbsp;    disableType = DisableType.Show,
+&nbsp;    logo = &quot;https://img.mservice.com.vn/app/img/funds_manager/icon-circle-momo.png&quot;,
+&nbsp;    moneySource = EnumMoneySource.MoMo,
+&nbsp;    shortDesc = &quot;Đang cập nhật...&quot;,
+&nbsp;    shortName = &quot;Ví MoMo&quot;,
+&nbsp;    sourceToken = &quot;SOF-1&quot;,
+&nbsp;    ID = null,
+&nbsp;    fullName = &quot;Ví MoMo&quot;,
+&nbsp;    badge = null,
+&nbsp;    fullDesc = &quot;Đang cập nhật...&quot;,
+&nbsp;    action = null,
+&nbsp;    isInstallment = false,
+&nbsp;    info = PayXSofInfo(partnerCode = &quot;momo&quot;),
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

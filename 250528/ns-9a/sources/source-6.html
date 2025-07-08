@@ -1,0 +1,184 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > ViewModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel.slices</a>
+</div>
+
+<h1>Coverage Summary for Class: ViewModel (vn.momo.compose.payment.payx.presentation.viewModel.slices)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ViewModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel.slices
+&nbsp;
+&nbsp;import dev.icerock.moko.mvvm.viewmodel.ViewModel
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.flow.MutableSharedFlow
+&nbsp;import kotlinx.coroutines.flow.MutableStateFlow
+&nbsp;import kotlinx.coroutines.flow.SharedFlow
+&nbsp;import kotlinx.coroutines.flow.StateFlow
+&nbsp;import kotlinx.coroutines.flow.asSharedFlow
+&nbsp;import kotlinx.coroutines.flow.asStateFlow
+&nbsp;import kotlinx.coroutines.flow.update
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.reducer.Reducer
+&nbsp;import vn.momo.compose.screens.auth.changedevice.NoopChangeDeviceViewModel.viewModelScope
+&nbsp;
+&nbsp;private interface Middleware&lt;State : Reducer.State, Action : Reducer.Action, Effect : Reducer.Effect&gt; {
+&nbsp;    val state: StateFlow&lt;State&gt;
+&nbsp;    val effect: SharedFlow&lt;Effect&gt;
+&nbsp;    fun dispatch(action: Action)
+&nbsp;    fun emitEffect(effect: Effect)
+&nbsp;}
+&nbsp;
+&nbsp;private class BaseMiddleware&lt;State : Reducer.State, Action : Reducer.Action, Effect : Reducer.Effect&gt;(
+&nbsp;    initialState: State,
+&nbsp;    private val reducer: Reducer&lt;State, Action, Effect&gt;,
+&nbsp;    private val scope: CoroutineScope
+&nbsp;) : Middleware&lt;State, Action, Effect&gt; {
+&nbsp;
+&nbsp;    private val _state: MutableStateFlow&lt;State&gt; = MutableStateFlow(initialState)
+&nbsp;    override val state: StateFlow&lt;State&gt; = _state.asStateFlow()
+&nbsp;
+&nbsp;    private val _effects = MutableSharedFlow&lt;Effect&gt;(extraBufferCapacity = 1)
+&nbsp;    override val effect = _effects.asSharedFlow()
+&nbsp;
+&nbsp;    override fun dispatch(action: Action) {
+&nbsp;        print(&quot;$action \n&quot;)
+&nbsp;        scope.launch {
+&nbsp;            val (newState, effect) = reducer.reduce(_state.value, action)
+&nbsp;            _state.update { newState }
+&nbsp;            effect?.let {
+&nbsp;                _effects.emit(it)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun emitEffect(effect: Effect) {
+&nbsp;        scope.launch {
+&nbsp;            _effects.emit(effect)
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;abstract class ViewModelSlice&lt;State : Reducer.State, Action : Reducer.Action, Effect : Reducer.Effect&gt;(
+&nbsp;    initialState: State,
+&nbsp;    reducer: Reducer&lt;State, Action, Effect&gt;,
+&nbsp;    scope: CoroutineScope
+&nbsp;) : Middleware&lt;State, Action, Effect&gt; by BaseMiddleware(initialState, reducer, scope)
+&nbsp;
+&nbsp;abstract class ViewModel&lt;State : Reducer.State, Action : Reducer.Action, Effect : Reducer.Effect&gt;(
+&nbsp;    initialState: State,
+&nbsp;    reducer: Reducer&lt;State, Action, Effect&gt;
+<b class="nc">&nbsp;) : ViewModel(),</b>
+<b class="nc">&nbsp;    Middleware&lt;State, Action, Effect&gt; by BaseMiddleware(initialState, reducer, viewModelScope)</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>
