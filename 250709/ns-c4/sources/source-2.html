@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > MoMoMsgInitTransactionDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.dto.request</a>
+</div>
+
+<h1>Coverage Summary for Class: MoMoMsgInitTransactionDTO (vn.momo.compose.payment.singleBill.data.dataSource.dto.request)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">MoMoMsgInitTransactionDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/523)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MoMoMsgInitTransactionDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/525)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.dto.request
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.PaymentNetworkRequest
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.RemoteAPIOption
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SBInitTransactionRequestDTO(
+&nbsp;    val momoMsg: MoMoMsgInitTransactionDTO,
+&nbsp;    val extra: JsonObject = emptyJsonObject(),
+&nbsp;    val pinKeys: List&lt;String&gt; = listOf(&quot;pass&quot;),
+&nbsp;    val pinKeySessionID: String = &quot;&quot;,
+&nbsp;    override val msgType: String = &quot;TRAN_HIS_INIT_MSG&quot;,
+&nbsp;    override val options: RemoteAPIOption = RemoteAPIOption(),
+&nbsp;    override val headers: JsonObject? = emptyJsonObject(),
+&nbsp;    override val path: String? = null,
+&nbsp;    override val subPath: String? = null,
+&nbsp;    override val subDomain: String? = null
+&nbsp;) : PaymentNetworkRequest {
+&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class MoMoMsgInitTransactionDTO(
+<b class="nc">&nbsp;    val user: String? = null,</b>
+<b class="nc">&nbsp;    val tranType: Int? = null,</b>
+<b class="nc">&nbsp;    val clientTime: Long? = null,</b>
+<b class="nc">&nbsp;    val amount: Double? = null,</b>
+<b class="nc">&nbsp;    val comment: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val serviceId: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val extras: String? = &quot;&quot;, // json string</b>
+<b class="nc">&nbsp;    val moneySource: Int? = null,</b>
+<b class="nc">&nbsp;    val partnerCode: String? = null,</b>
+<b class="nc">&nbsp;    val rowCardId: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val sourceToken: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val discountCode: String? = null,</b>
+<b class="nc">&nbsp;    val _class: String = &quot;mservice.backend.entity.msg.TranHisMsg&quot;,</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

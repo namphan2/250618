@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBSofModuleKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.di</a>
+</div>
+
+<h1>Coverage Summary for Class: SBSofModuleKt (vn.momo.compose.payment.singleBill.data.di)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBSofModuleKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SBSofModuleKt$sbSofModule$lambda$5$lambda$4$$inlined$factoryOf$default$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.di
+&nbsp;
+&nbsp;import org.koin.core.module.dsl.factoryOf
+&nbsp;import org.koin.core.qualifier.named
+&nbsp;import org.koin.dsl.bind
+&nbsp;import org.koin.dsl.module
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.network.IRemoteService
+&nbsp;import vn.momo.compose.payment.base.domain.repository.NewSofRepository
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope.SINGLE
+&nbsp;import vn.momo.compose.payment.payx.data.repositoryImpl.DefaultNewSofHandler
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.IRecommendMoneyPayRepository
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.ISuggestedSofRepository
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SBSavedTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SingleBillSession
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.remote.SBRecommendMoneyPayRemoteDataSource
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.remote.SBSuggestedSofRemoteDS
+&nbsp;import vn.momo.compose.payment.singleBill.data.repository.SBRecommendMoneyPayRepository
+&nbsp;import vn.momo.compose.payment.singleBill.data.repository.SBSuggestedSofRepository
+&nbsp;
+<b class="nc">&nbsp;fun sbSofModule() = module {</b>
+<b class="nc">&nbsp;    scope(named(SINGLE)) {</b>
+<b class="nc">&nbsp;        factory{</b>
+<b class="nc">&nbsp;            SBRecommendMoneyPayRemoteDataSource(</b>
+<b class="nc">&nbsp;                remoteApi = get&lt;IRemoteService&gt;()</b>
+&nbsp;            )
+&nbsp;        }
+<b class="nc">&nbsp;        factory{</b>
+<b class="nc">&nbsp;            SBRecommendMoneyPayRepository(</b>
+<b class="nc">&nbsp;                remoteDataSource = get&lt;SBRecommendMoneyPayRemoteDataSource&gt;(),</b>
+<b class="nc">&nbsp;                savedData = get&lt;SBSavedTransaction&gt;(),</b>
+<b class="nc">&nbsp;                session = get&lt;SingleBillSession&gt;()</b>
+&nbsp;            )
+&nbsp;        } bind IRecommendMoneyPayRepository::class
+<b class="nc">&nbsp;        factoryOf(::SBSuggestedSofRemoteDS)</b>
+<b class="nc">&nbsp;        factory {</b>
+<b class="nc">&nbsp;            SBSuggestedSofRepository(</b>
+<b class="nc">&nbsp;                remoteDataSource = get(),</b>
+<b class="nc">&nbsp;                savedData = get(),</b>
+<b class="nc">&nbsp;                requestData = get&lt;SingleBillSession&gt;().request,</b>
+<b class="nc">&nbsp;                localSof = get(),</b>
+<b class="nc">&nbsp;                cacheSuggestedSof = get(),</b>
+<b class="nc">&nbsp;                appFeatureRepository = get(),</b>
+<b class="nc">&nbsp;                navigator = get()</b>
+&nbsp;            )
+&nbsp;        } bind ISuggestedSofRepository::class
+<b class="nc">&nbsp;        factory {</b>
+<b class="nc">&nbsp;            DefaultNewSofHandler(</b>
+<b class="nc">&nbsp;                get&lt;SingleBillSession&gt;().request.tranType,</b>
+<b class="nc">&nbsp;                realm = get()</b>
+&nbsp;            )
+&nbsp;        } bind NewSofRepository::class
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

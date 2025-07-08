@@ -1,0 +1,266 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SingleBillErrorKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.domain.entities.error</a>
+</div>
+
+<h1>Coverage Summary for Class: SingleBillErrorKt (vn.momo.compose.payment.singleBill.domain.entities.error)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SingleBillErrorKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.domain.entities.error
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.OverlayDialogDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.RemoteDialogDTO
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentErrorConfig
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.PayXDialog
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBErrorConfigCDN
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SplitBillBottomSheetConfig
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;import vn.momo.compose.utils.datamapping.tryForceToInt
+&nbsp;import vn.momo.core.modules.networking.http.ErrorCode
+&nbsp;
+&nbsp;const val REQUIRE_BANK_OTP = 9038
+&nbsp;
+&nbsp;sealed class SingleBillError(
+&nbsp;    open val code: Int?,
+&nbsp;    override val message: String?,
+&nbsp;    open val data: JsonObject = emptyJsonObject(),
+&nbsp;    override val cause: Throwable? = null,
+&nbsp;) : Exception(message, cause) {
+&nbsp;    data class CustomPopupError(
+&nbsp;        override val code: Int?,
+&nbsp;        override val message: String?,
+&nbsp;        override val data: JsonObject = emptyJsonObject(),
+&nbsp;        override val cause: Throwable? = null,
+&nbsp;        val dialog: PayXDialog,
+&nbsp;    ) : SingleBillError(code, message, data, cause) {
+&nbsp;        companion object {
+&nbsp;            fun create(
+&nbsp;                errorCode: Int?,
+&nbsp;                errorDesc: String?,
+&nbsp;                fraudData: RemoteDialogDTO?,
+&nbsp;                configCDN: SBErrorConfigCDN?,
+&nbsp;                tranId: String? = null
+&nbsp;            ): CustomPopupError? {
+&nbsp;                val cdnError = errorCode?.toString()?.let { configCDN?.getErrorConfig(it) }
+&nbsp;                return (fraudData ?: cdnError)?.let { errorJson -&gt;
+&nbsp;                    val dialog = OverlayDialogDTO(refParams = errorJson).toPayXDialog(
+&nbsp;                        content = errorDesc,
+&nbsp;                        errorCode = errorCode,
+&nbsp;                        orderId = tranId
+&nbsp;                    )
+&nbsp;                    CustomPopupError(errorCode, errorDesc, dialog = dialog)
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    data class DevError(
+&nbsp;        override val code: Int,
+&nbsp;        override val message: String,
+&nbsp;        override val data: JsonObject = emptyJsonObject(),
+&nbsp;        override val cause: Throwable? = null,
+&nbsp;    ) : SingleBillError(code, message, data, cause)
+&nbsp;
+&nbsp;    data class SofError(
+&nbsp;        override val code: Int?,
+&nbsp;        override val message: String?,
+&nbsp;    ) : SingleBillError(code, message, cause = null) {
+&nbsp;        companion object {
+&nbsp;            fun create(errorCode: Int?, errorDesc: String?): SofError? {
+&nbsp;                return when (errorCode) {
+&nbsp;                    in listOf(-225, -226, -227, -228, -230, -231, -233, -234) -&gt; SofError(
+&nbsp;                        errorCode,
+&nbsp;                        errorDesc
+&nbsp;                    )
+&nbsp;
+&nbsp;                    else -&gt; null
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    data class QD2345(
+&nbsp;        override val code: Int,
+&nbsp;        override val message: String,
+&nbsp;        val overlay: SplitBillBottomSheetConfig
+&nbsp;    ) : SingleBillError(code, message) {
+&nbsp;        companion object {
+&nbsp;            fun create(errorCode: Int?, config: SplitBillBottomSheetConfig?): QD2345? {
+&nbsp;                return when {
+&nbsp;                    errorCode != 9703 -&gt; null
+&nbsp;                    config != null -&gt; QD2345(code = errorCode, message = &quot;&quot;, overlay = config)
+&nbsp;                    else -&gt; null
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    data class SplitBill(
+&nbsp;        override val code: Int?, override val message: String?, override val data: JsonObject
+&nbsp;    ) : SingleBillError(code, message, data, null) {
+&nbsp;        companion object {
+&nbsp;            fun create(code: Int?, message: String?, config: JsonObject?): SplitBill? {
+&nbsp;                return if (config != null) SplitBill(code, message, data = config) else null
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    data class Voucher(
+&nbsp;        override val code: Int?, override val message: String?
+&nbsp;    ) : SingleBillError(code, message) {
+&nbsp;        companion object {
+&nbsp;            fun create(code: Int?, message: String?, voucherErrors: Map&lt;String, Any?&gt;? = emptyMap()): Voucher? {
+&nbsp;                val isVoucherError = voucherErrors?.any { code != null &amp;&amp; it.value.tryForceToInt() == code } ?: false
+&nbsp;                return if (isVoucherError) Voucher(code, message) else null
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    data class UserCancel(
+&nbsp;        override val code: Int?, override val message: String?, override val data: JsonObject
+&nbsp;    ) : SingleBillError(code, message, data, null)
+&nbsp;
+&nbsp;    data class SystemError(
+&nbsp;        override val code: Int?, override val message: String?, override val data: JsonObject
+&nbsp;    ) : SingleBillError(code, message, data, null) {
+&nbsp;        companion object {
+&nbsp;            fun create(code: Int?, message: String?, data: JsonObject): SystemError? {
+&nbsp;                return if (ErrorCode.isSystemError(code ?: 0)) SystemError(code, message, data) else null
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    //    data class NetworkError(override val code: Int?, override val message: String?) : SingleBillError(code, message)
+&nbsp;}
+&nbsp;
+&nbsp;fun Throwable.isNoResponseErrorSB(): Boolean {
+<b class="nc">&nbsp;    val error = this as? SingleBillError ?: return false</b>
+<b class="nc">&nbsp;    return error is SingleBillError.DevError || error is SingleBillError.SystemError</b>
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SingleBillErrorCDN(
+&nbsp;    val errorConfig: Map&lt;String, PaymentErrorConfig&gt;? = emptyMap()
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

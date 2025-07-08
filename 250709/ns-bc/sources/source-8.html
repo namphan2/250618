@@ -1,0 +1,278 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBP2PUpdateMoMoMsg</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.dto.request</a>
+</div>
+
+<h1>Coverage Summary for Class: SBP2PUpdateMoMoMsg (vn.momo.compose.payment.singleBill.data.dataSource.dto.request)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBP2PUpdateMoMoMsg</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/160)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/859)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SBP2PUpdateMoMoMsg$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/160)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/861)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.dto.request
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonArray
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.PaymentNetworkRequest
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.RemoteAPIOption
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SBUpdateTransactionRequest(
+&nbsp;    override val msgType: String,
+&nbsp;    override val options: RemoteAPIOption = RemoteAPIOption(),
+&nbsp;    override val headers: JsonObject? = buildJsonObject {
+&nbsp;        put(&quot;request-track-latency&quot;, true)
+&nbsp;    },
+&nbsp;    override val path: String? = null,
+&nbsp;    override val subPath: String? = null,
+&nbsp;    override val subDomain: String? = null,
+&nbsp;    val momoMsg: SBUpdateMoMoMsgRequest? = null
+&nbsp;) : PaymentNetworkRequest {
+&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;sealed class SBUpdateMoMoMsgRequest {
+&nbsp;    abstract val extras: String?
+&nbsp;    abstract val serviceId: String?
+&nbsp;    abstract val tranType: Int?
+&nbsp;    abstract val amount: Long?
+&nbsp;    abstract val clientTime: Long?
+&nbsp;    abstract val _class: String?
+&nbsp;    abstract val moneySource: Int?
+&nbsp;    abstract val sourceToken: String?
+&nbsp;    abstract val partnerCode: String?
+&nbsp;    abstract val rowCardId: String?
+&nbsp;    abstract val useVoucher: Double?
+&nbsp;    abstract val giftId: String?
+&nbsp;    abstract val discountCode: String?
+&nbsp;    abstract val rowCardNum: String?
+&nbsp;    abstract val ownerName: String?
+&nbsp;    abstract val partnerRef: String?
+&nbsp;    abstract val partnerId: String?
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SBDefaultUpdateMoMoMsg(
+&nbsp;    override val extras: String? = null,
+&nbsp;    override val serviceId: String? = null,
+&nbsp;    override val tranType: Int? = null,
+&nbsp;    override val amount: Long? = null,
+&nbsp;    override val clientTime: Long? = null,
+&nbsp;    override val _class: String? = null,
+&nbsp;    override val moneySource: Int? = null,
+&nbsp;    override val sourceToken: String? = null,
+&nbsp;    override val partnerCode: String? = null,
+&nbsp;    override val rowCardId: String? = null,
+&nbsp;    override val useVoucher: Double? = 0.0,
+&nbsp;    override val giftId: String? = &quot;&quot;,
+&nbsp;    override val discountCode: String? = null,
+&nbsp;    override val rowCardNum: String? = null,
+&nbsp;    override val ownerName: String? = &quot;&quot;,
+&nbsp;    override val partnerRef: String? = &quot;&quot;,
+&nbsp;    override val partnerId: String? = null,
+&nbsp;    val category: Int? = null,
+&nbsp;    val parentTranType: Int? = null,
+&nbsp;    val quantity: Int? = null,
+&nbsp;    val productId: String? = null,
+&nbsp;    val serviceCode: String? = null,
+&nbsp;
+&nbsp;    ) : SBUpdateMoMoMsgRequest()
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class SBP2PUpdateMoMoMsg(
+<b class="nc">&nbsp;    override val extras: String? = null,</b>
+<b class="nc">&nbsp;    override val serviceId: String? = null,</b>
+<b class="nc">&nbsp;    override val tranType: Int? = null,</b>
+<b class="nc">&nbsp;    override val amount: Long? = null,</b>
+<b class="nc">&nbsp;    override val clientTime: Long? = null,</b>
+<b class="nc">&nbsp;    override val _class: String? = null,</b>
+<b class="nc">&nbsp;    override val moneySource: Int? = null,</b>
+<b class="nc">&nbsp;    override val sourceToken: String? = null,</b>
+<b class="nc">&nbsp;    override val partnerCode: String? = null,</b>
+<b class="nc">&nbsp;    override val rowCardId: String? = null,</b>
+<b class="nc">&nbsp;    override val useVoucher: Double? = 0.0,</b>
+<b class="nc">&nbsp;    override val giftId: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    override val discountCode: String? = null,</b>
+<b class="nc">&nbsp;    override val rowCardNum: String? = null,</b>
+<b class="nc">&nbsp;    override val ownerName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    override val partnerRef: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    override val partnerId: String? = null,</b>
+<b class="nc">&nbsp;    val partnerName: String? = null,</b>
+<b class="nc">&nbsp;    val serviceCode: String? = null,</b>
+<b class="nc">&nbsp;    val comment: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val tranList: JsonArray? = null,</b>
+<b class="nc">&nbsp;) : SBUpdateMoMoMsgRequest()</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 10:52</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBConfirmResponseHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.repository.confirm</a>
+</div>
+
+<h1>Coverage Summary for Class: SBConfirmResponseHandler (vn.momo.compose.payment.singleBill.data.repository.confirm)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBConfirmResponseHandler</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.repository.confirm
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.JsonPrimitive
+&nbsp;import kotlinx.serialization.json.jsonPrimitive
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.RemoteAPIOption
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dataMapper.toDefaultConfirmRequest
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.request.confirm.SBConfirmRequestDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.confirm.SBConfirmResponseDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SBSavedTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SingleBillSession
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.remote.SBConfirmDataSource
+&nbsp;import vn.momo.compose.payment.singleBill.domain.entities.SBConfirmResponse
+&nbsp;import vn.momo.compose.payment.singleBill.domain.repositories.confirm.ConfirmSingleBillRepository
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.emptyJsonObject
+&nbsp;
+&nbsp;class SBConfirmRepoFactory(
+&nbsp;    private val remoteDataSource: SBConfirmDataSource,
+&nbsp;    private val savedSingleBillData: SBSavedTransaction,
+&nbsp;    private val session: SingleBillSession,
+&nbsp;) {
+&nbsp;    fun create(
+&nbsp;        msgType: String?,
+&nbsp;        bankOtp: String?,
+&nbsp;        confirmExtras: JsonObject? = emptyJsonObject()
+&nbsp;    ): SBConfirmRepository? {
+&nbsp;        val message = buildMessageFactory(msgType, bankOtp, confirmExtras)
+&nbsp;        return message?.let {
+&nbsp;            SBConfirmRepository(
+&nbsp;                message = it,
+&nbsp;                remoteDataSource,
+&nbsp;                responseHandler = SBDefaultConfirmResponseHandler()
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildMessageFactory(
+&nbsp;        msgType: String?,
+&nbsp;        bankOtp: String?,
+&nbsp;        confirmExtras: JsonObject? = emptyJsonObject(),
+&nbsp;    ): SBConfirmRequestDTO? {
+&nbsp;        val momoMsg = savedSingleBillData.data?.toDefaultConfirmRequest(
+&nbsp;            savedSingleBillData.extra,
+&nbsp;            false,
+&nbsp;            session.request.confirmClass
+&nbsp;        )
+&nbsp;            ?.toMutableMap()?.apply {
+&nbsp;                bankOtp?.takeIf { it.isNotEmpty() }?.let {
+&nbsp;                    this[&quot;otpBanknet&quot;] = JsonPrimitive(it)
+&nbsp;                }
+&nbsp;                val extrasMerged = ModelConvertUtils.decode(
+&nbsp;                    JsonObject.serializer(),
+&nbsp;                    this[&quot;extras&quot;]?.jsonPrimitive?.content ?: &quot;&quot;
+&nbsp;                )?.plus(confirmExtras ?: emptyJsonObject())
+&nbsp;                this[&quot;extras&quot;] = JsonPrimitive(JsonObject(extrasMerged ?: emptyMap()).toString())
+&nbsp;            }?.let { JsonObject(it) }
+&nbsp;
+&nbsp;        return momoMsg?.let {
+&nbsp;            SBConfirmRequestDTO(
+&nbsp;                options = RemoteAPIOption(
+&nbsp;                    timeout = if (msgType == &quot;M2MU_CONFIRM&quot;) 10000 else 30000,
+&nbsp;                    handleError = msgType != &quot;M2MU_CONFIRM&quot;
+&nbsp;                ),
+&nbsp;                headers = emptyJsonObject(),
+&nbsp;                msgType = msgType?.takeIf { type -&gt; type.isNotEmpty() } ?: &quot;TRAN_HIS_CONFIRM_MSG&quot;,
+&nbsp;                path = session.request.confirmApi?.path,
+&nbsp;                subPath = session.request.confirmApi?.subPath,
+&nbsp;                subDomain = session.request.confirmApi?.subDomain,
+&nbsp;                momoMsg = it,
+&nbsp;                pinKeySessionID = savedSingleBillData.pinKeySessionId
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;interface SBConfirmResponseHandler {
+&nbsp;    suspend fun handleResponse(response: SBConfirmResponseDTO): SBConfirmResponse
+&nbsp;}
+&nbsp;
+&nbsp;class SBConfirmRepository(
+&nbsp;    private val message: SBConfirmRequestDTO,
+&nbsp;    private val remoteDataSource: SBConfirmDataSource,
+&nbsp;    private val responseHandler: SBDefaultConfirmResponseHandler
+&nbsp;) : ConfirmSingleBillRepository {
+&nbsp;    override fun confirm(): Flow&lt;SBConfirmResponse&gt; {
+&nbsp;        return remoteDataSource.confirm(message, SBConfirmResponseDTO.serializer()).map {
+&nbsp;            return@map responseHandler.handleResponse(it)
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

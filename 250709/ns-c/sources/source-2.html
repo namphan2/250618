@@ -1,0 +1,229 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PaymentJsonBase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core</a>
+</div>
+
+<h1>Coverage Summary for Class: PaymentJsonBase (vn.momo.compose.payment.base.core)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PaymentJsonBase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27.3%
+  </span>
+  <span class="absValue">
+    (3/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    19.4%
+  </span>
+  <span class="absValue">
+    (6/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    17.8%
+  </span>
+  <span class="absValue">
+    (27/152)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core
+&nbsp;
+&nbsp;import kotlinx.serialization.KSerializer
+&nbsp;import kotlinx.serialization.builtins.ListSerializer
+&nbsp;import kotlinx.serialization.encodeToString
+&nbsp;import kotlinx.serialization.json.Json
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonElement
+&nbsp;import vn.momo.core.modules.logs.NapierMoMo
+&nbsp;import vn.momo.core.modules.common.utilities.safePrintStackTrace
+&nbsp;
+<b class="fc">&nbsp;open class PaymentJsonBase(</b>
+<b class="fc">&nbsp;    val formatter: Json</b>
+&nbsp;) {
+&nbsp;    fun handleJsonError(e: Throwable) {
+<b class="nc">&nbsp;        e.safePrintStackTrace()</b>
+<b class="nc">&nbsp;        NapierMoMo.e(tag = &quot;[DATA-CONVERTER]&quot;, throwable = e, message = e.message.toString())</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; encodeToString(kSerializer: KSerializer&lt;T&gt;, obj: T): String? = try {
+<b class="nc">&nbsp;        formatter.encodeToString(kSerializer, obj)</b>
+&nbsp;    } catch (ex: Throwable) {
+<b class="nc">&nbsp;        handleJsonError(ex)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; encodeToJson(kSerializer: KSerializer&lt;T&gt;, obj: T): JsonElement? = try {
+<b class="nc">&nbsp;        formatter.encodeToJsonElement(kSerializer, obj)</b>
+&nbsp;    } catch (ex: Throwable) {
+<b class="nc">&nbsp;        handleJsonError(ex)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun encodeToJson(data: String?): JsonElement? = try {
+<b class="nc">&nbsp;        formatter.parseToJsonElement(data ?: &quot;&quot;)</b>
+&nbsp;    } catch (e: Throwable) {
+<b class="nc">&nbsp;        handleJsonError(e)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; decode(kSerializer: KSerializer&lt;T&gt;, obj: String): T? = try {
+<b class="nc">&nbsp;        formatter.decodeFromString(kSerializer, obj)</b>
+&nbsp;    } catch (ex: Throwable) {
+<b class="nc">&nbsp;        handleJsonError(ex)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; decode(kSerializer: KSerializer&lt;T&gt;, obj: Map&lt;String, Any?&gt;): T? = try {
+<b class="fc">&nbsp;        formatter.decodeFromJsonElement(kSerializer, obj.toJsonElement())</b>
+&nbsp;    } catch (ex: Throwable) {
+<b class="nc">&nbsp;        handleJsonError(ex)</b>
+<b class="fc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    inline fun &lt;reified T&gt; decode(data: String): T? = try {
+<b class="fc">&nbsp;        formatter.decodeFromString(data)</b>
+&nbsp;    } catch (e: Exception) {
+<b class="nc">&nbsp;        handleJsonError(e)</b>
+<b class="fc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; decodeFromJson(deserializer: KSerializer&lt;T&gt;, element: JsonElement): T? = try {
+<b class="nc">&nbsp;        formatter.decodeFromJsonElement(deserializer, element)</b>
+&nbsp;    } catch (e: Exception) {
+<b class="nc">&nbsp;        handleJsonError(e)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun &lt;T&gt; decodeToList(kSerializer: KSerializer&lt;T&gt;, jsonString: String): List&lt;T&gt; {
+&nbsp;        return try {
+<b class="nc">&nbsp;            formatter.decodeFromString(ListSerializer(kSerializer), jsonString)</b>
+&nbsp;        } catch (exception: Throwable) {
+<b class="nc">&nbsp;            handleJsonError(exception)</b>
+<b class="nc">&nbsp;            emptyList()</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    inline fun &lt;reified T&gt; encodeToString(value: T): String? = try {
+<b class="nc">&nbsp;        formatter.encodeToString(value)</b>
+&nbsp;    } catch (e: Exception) {
+<b class="nc">&nbsp;        handleJsonError(e)</b>
+<b class="nc">&nbsp;        null</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;object PaymentJson {
+&nbsp;    val Default = object : PaymentJsonBase(
+&nbsp;        Json {
+&nbsp;            encodeDefaults = true
+&nbsp;            ignoreUnknownKeys = true
+&nbsp;        }
+&nbsp;    ) {}
+&nbsp;    val UiDecode = object : PaymentJsonBase(
+&nbsp;        Json {
+&nbsp;            classDiscriminator = &quot;viewType&quot;
+&nbsp;            ignoreUnknownKeys = true
+&nbsp;            coerceInputValues = true // decode null to default value
+&nbsp;            isLenient = true // flexible primitive type
+&nbsp;        }
+&nbsp;    ) {}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

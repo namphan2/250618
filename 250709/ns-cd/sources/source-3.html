@@ -1,0 +1,332 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > DefaultUpdateRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.repository.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: DefaultUpdateRepository (vn.momo.compose.payment.singleBill.data.repository.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">DefaultUpdateRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/42)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/609)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DefaultUpdateRepository$mapResponseToModel$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">DefaultUpdateRepository$update$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/88)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/697)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.repository.transaction
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.StateFlow
+&nbsp;import kotlinx.coroutines.flow.combine
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import org.jetbrains.compose.resources.getString
+&nbsp;import org.koin.core.parameter.parametersOf
+&nbsp;import org.koin.core.scope.Scope
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.SofDTO
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.storage.VoucherDataSource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.VoucherItemLocal
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.PaymentAmount
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.TotalAmount
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionInvoiceHandler
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionSofHandler
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.InvoiceItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.FormatCurrencyUseCase
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dataMapper.generatePromotionData
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.PaymentInfoDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBErrorConfigCDN
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBTransactionDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBMomoMsgDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SBSavedTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.remote.SBUpdateTransactionRemoteDS
+&nbsp;import vn.momo.compose.payment.singleBill.domain.entities.error.SingleBillError
+&nbsp;import vn.momo.compose.payment.singleBill.domain.model.SBTransaction
+&nbsp;import vn.momo.compose.resources.Res
+&nbsp;import vn.momo.compose.resources.free
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.core.modules.common.utilities.emptyJsonObject
+&nbsp;import vn.momo.core.modules.common.utilities.toMap
+&nbsp;
+<b class="nc">&nbsp;class DefaultUpdateRepository(</b>
+<b class="nc">&nbsp;    override val koinScope: Scope,</b>
+<b class="nc">&nbsp;    private val remote: SBUpdateTransactionRemoteDS,</b>
+<b class="nc">&nbsp;    private val savedData: SBSavedTransaction,</b>
+<b class="nc">&nbsp;    private val formatCurrency: FormatCurrencyUseCase,</b>
+<b class="nc">&nbsp;    private val voucherDataSource: VoucherDataSource</b>
+&nbsp;) : SBUpdateRepository {
+&nbsp;    override fun getSofHandler(
+&nbsp;        remoteSof: List&lt;SofDTO&gt;,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;    ): TransactionSofHandler {
+<b class="nc">&nbsp;        return koinScope.get&lt;SBUpdateSofHandler&gt; {</b>
+<b class="nc">&nbsp;            parametersOf(remoteSof, sofList)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getInvoiceHandler(
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;,
+&nbsp;        momoMsg: SBMomoMsgDTO?,
+&nbsp;        newAmount: Double?
+&nbsp;    ): TransactionInvoiceHandler {
+<b class="nc">&nbsp;        return koinScope.get&lt;SBUpdateInvoiceHandler&gt; {</b>
+<b class="nc">&nbsp;            parametersOf(currentInvoice, currentPaymentInfo, momoMsg, newAmount)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun update(
+&nbsp;        newAmount: Double?,
+&nbsp;        sof: SOFItem,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        configFlow: StateFlow&lt;SBErrorConfigCDN?&gt;,
+&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;?,
+&nbsp;        discountCode: String?,
+&nbsp;        voucherConfigFlow: StateFlow&lt;JsonObject?&gt;,
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;
+&nbsp;    ): Flow&lt;Response&lt;SBTransaction&gt;&gt; {
+<b class="nc">&nbsp;        return combine(</b>
+<b class="nc">&nbsp;            remote.updateTransaction(</b>
+<b class="nc">&nbsp;                sof, newAmount, vouchers, discountCode</b>
+<b class="nc">&nbsp;            ), configFlow, voucherConfigFlow</b>
+&nbsp;        ) { resp, config, voucherConfigCDN -&gt;
+<b class="nc">&nbsp;            val dto =</b>
+<b class="nc">&nbsp;                ModelConvertUtils.decode(SBTransactionDTO.serializer(), resp ?: emptyJsonObject())</b>
+<b class="nc">&nbsp;            if (dto == null) {</b>
+<b class="nc">&nbsp;                throw SingleBillError.DevError(code = -1, message = &quot;Response null&quot;)</b>
+&nbsp;            }
+<b class="nc">&nbsp;            val error =</b>
+<b class="nc">&nbsp;                DefaultErrorGenerator(dto, config, voucherConfigCDN?.toMap()).generateError()</b>
+<b class="nc">&nbsp;            val transactionData = mapResponseToModel(</b>
+<b class="nc">&nbsp;                dto,</b>
+<b class="nc">&nbsp;                sofList,</b>
+<b class="nc">&nbsp;                currentInvoice,</b>
+<b class="nc">&nbsp;                sof,</b>
+<b class="nc">&nbsp;                newAmount,</b>
+<b class="nc">&nbsp;                currentPaymentInfo</b>
+&nbsp;            )
+<b class="nc">&nbsp;            if (error == null) {</b>
+<b class="nc">&nbsp;                return@combine Response.success(transactionData)</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return@combine Response.fail(transactionData, error)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private suspend fun mapResponseToModel(
+&nbsp;        response: SBTransactionDTO,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        currentSof: SOFItem,
+<b class="nc">&nbsp;        newAmount: Double? = null,</b>
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;
+&nbsp;    ): SBTransaction {
+<b class="nc">&nbsp;        response.momoMsg?.also { savedData.data = it }</b>
+<b class="nc">&nbsp;        response.extra?.also { savedData.extra = it }</b>
+<b class="nc">&nbsp;        val transHis = response.momoMsg?.tranHisMsg</b>
+<b class="nc">&nbsp;        val sofHandler = getSofHandler(response.extra?.sofInfo ?: emptyList(), sofList)</b>
+<b class="nc">&nbsp;        val newSofList = sofHandler.buildSofList()</b>
+<b class="nc">&nbsp;        voucherDataSource.handleRemoveVoucherErrorsSB(response.momoMsg?.giftId)</b>
+<b class="nc">&nbsp;        return SBTransaction(</b>
+<b class="nc">&nbsp;            tranId = response.momoMsg?.tranHisMsg?.tranId?.toString(),</b>
+<b class="nc">&nbsp;            enableConfirm = response.result == true,</b>
+<b class="nc">&nbsp;            sofList = newSofList.list,</b>
+<b class="nc">&nbsp;            selectedSof = transHis?.sourceToken?.let { newSofList.list.find { sof -&gt; sof.sourceToken == it } }</b>
+<b class="nc">&nbsp;                ?: currentSof,</b>
+<b class="nc">&nbsp;            invoice = getInvoiceHandler(</b>
+<b class="nc">&nbsp;                currentInvoice,</b>
+<b class="nc">&nbsp;                currentPaymentInfo,</b>
+<b class="nc">&nbsp;                response.momoMsg,</b>
+<b class="nc">&nbsp;                newAmount</b>
+<b class="nc">&nbsp;            ).buildInvoiceList().firstOrNull() ?: InvoiceItem(),</b>
+<b class="nc">&nbsp;            totalAmount = TotalAmount(</b>
+<b class="nc">&nbsp;                total = PaymentAmount(</b>
+<b class="nc">&nbsp;                    response.momoMsg?.tranHisMsg?.amount?.toLong() ?: 0,</b>
+<b class="nc">&nbsp;                    format = formatCurrency(</b>
+<b class="nc">&nbsp;                        response.momoMsg?.tranHisMsg?.amount, fallback = getString(</b>
+<b class="nc">&nbsp;                            Res.string.free</b>
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            ),
+<b class="nc">&nbsp;            warningMsg = response.momoMsg?.tranHisMsg?.extras?.warningMsg ?: &quot;&quot;,</b>
+<b class="nc">&nbsp;            promotion = response.momoMsg?.generatePromotionData(localVouchers = voucherDataSource.getVoucherLocalModel()),</b>
+<b class="nc">&nbsp;            isEmptySof = newSofList.isRemoteEmpty</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>

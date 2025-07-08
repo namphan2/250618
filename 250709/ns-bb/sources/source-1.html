@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > EventType</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal.parser.api</a>
+</div>
+
+<h1>Coverage Summary for Class: EventType (vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal.parser.api)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">EventType</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/78)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal.parser.api
+&nbsp;
+&nbsp;/**
+&nbsp; * Enumeration of all even types reported by KtXml. Some event types are only
+&nbsp; * reported when calling nextToken() (opposed to next()).
+&nbsp; */
+&nbsp;enum class EventType {
+&nbsp;    /**
+&nbsp;     * The parser is at the very beginning of the document and nothing was read yet.
+&nbsp;     *
+&nbsp;     * This event type can only be observed by reading eventType before the first call to next(),
+&nbsp;     * nextToken(), or nextTag()).
+&nbsp;     */
+<b class="nc">&nbsp;    START_DOCUMENT,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Logical end of the xml document.
+&nbsp;     *
+&nbsp;     * Returned from eventType, next() and nextToken() when the end of the input document has
+&nbsp;     * been reached.
+&nbsp;     *
+&nbsp;     * **NOTE:** calling next() or nextToken() again will result in exception being thrown.
+&nbsp;     */
+<b class="nc">&nbsp;    END_DOCUMENT,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returned from eventType, next() and nextToken() when a start tag was read.
+&nbsp;     *
+&nbsp;     * The name of start tag is available via the name property, its namespace and prefix are
+&nbsp;     * available via the corresponding properties if namespaces are enabled.
+&nbsp;     *
+&nbsp;     * - See getAttribute* methods to retrieve element attributes.
+&nbsp;     * - See getNamespace* methods to retrieve newly declared namespaces.
+&nbsp;     */
+<b class="nc">&nbsp;    START_TAG,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returned from eventType, next(), or nextToken() when an end tag was read.
+&nbsp;     * The name of the start tag, its namespace and prefix are available via the properties
+&nbsp;     * with these names.
+&nbsp;     */
+<b class="nc">&nbsp;    END_TAG,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Character data was read and will is available via the text property.
+&nbsp;     *
+&nbsp;     * **Please note:** next() will accumulate multiple
+&nbsp;     * events into one TEXT event, skipping IGNORABLE_WHITESPACE,
+&nbsp;     * PROCESSING_INSTRUCTION and COMMENT events.
+&nbsp;     *
+&nbsp;     * In contrast, nextToken() will stop reading
+&nbsp;     * text when any other event is observed.
+&nbsp;     *
+&nbsp;     * Also, when the state was reached by calling next(), the text value will
+&nbsp;     * be normalized, whereas it will return unnormalized content in the case of nextToken().
+&nbsp;     * This allows an exact roundtrip without changing line ends when examining low
+&nbsp;     * level events, whereas for high level applications the text is
+&nbsp;     * normalized appropriately.
+&nbsp;     */
+<b class="nc">&nbsp;    TEXT,</b>
+&nbsp;
+&nbsp;    // ----------------------------------------------------------------------------
+&nbsp;    // additional events exposed by lower level nextToken()
+&nbsp;    /**
+&nbsp;     * A CDATA sections was just read;
+&nbsp;     * this token is available only from calls to nextToken().
+&nbsp;     * A call to next() will accumulate various text events into a single event
+&nbsp;     * of type TEXT. The text contained in the CDATA section is available via the text property.
+&nbsp;     */
+<b class="nc">&nbsp;    CDSECT,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * An entity reference was just read.
+&nbsp;     *
+&nbsp;     * This token is available from nextToken() only. The entity name is available via the name
+&nbsp;     * property. If available, the replacement text can be obtained by via the text property;
+&nbsp;     * otherwise, the user is responsible for resolving the entity reference.
+&nbsp;     *
+&nbsp;     * This event type is never returned from next(); next() will accumulate the replacement
+&nbsp;     * text and other text events to a single TEXT event.
+&nbsp;     */
+<b class="nc">&nbsp;    ENTITY_REF,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Ignorable whitespace was just read.
+&nbsp;     *
+&nbsp;     * This token is available only from nextToken(). For non-validating parsers, this event is
+&nbsp;     * only reported by nextToken() when outside the root element.
+&nbsp;     *
+&nbsp;     * Validating parsers may be able to detect ignorable whitespace at other locations.
+&nbsp;     * The ignorable whitespace string is available via the text property.
+&nbsp;     *
+&nbsp;     * **NOTE:** this is different from accessing isWhitespace, since text content
+&nbsp;     * may be whitespace but not ignorable.
+&nbsp;     *
+&nbsp;     * Ignorable whitespace is skipped by next() automatically; this event
+&nbsp;     * type is never returned from next().
+&nbsp;     */
+<b class="nc">&nbsp;    IGNORABLE_WHITESPACE,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * An XML processing instruction declaration was just read.
+&nbsp;     *
+&nbsp;     * This event type is available only via nextToken().
+&nbsp;     * The text property will return text that is inside the processing instruction.
+&nbsp;     * Calls to next() will skip processing instructions automatically.
+&nbsp;     */
+<b class="nc">&nbsp;    PROCESSING_INSTRUCTION,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * An XML comment was just read.
+&nbsp;     *
+&nbsp;     * This event type is this token is available via nextToken() only;
+&nbsp;     * calls to next() will skip comments automatically.
+&nbsp;     * The content of the comment can be accessed using the getText()
+&nbsp;     * method.
+&nbsp;     */
+<b class="nc">&nbsp;    COMMENT,</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * An XML document type declaration was just read.
+&nbsp;     *
+&nbsp;     * This token is available from nextToken() only. The unparsed text inside the doctype is
+&nbsp;     * available via the `text` property.
+&nbsp;     */
+<b class="nc">&nbsp;    DOCDECL,</b>
+&nbsp;
+&nbsp;    /** XML Declaration */
+<b class="nc">&nbsp;    XML_DECL</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-08 11:34</div>
+</div>
+</body>
+</html>
