@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > Response</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.entities</a>
+</div>
+
+<h1>Coverage Summary for Class: Response (vn.momo.compose.payment.payx.domain.entities)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">Response</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/37)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Response$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/48)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.entities
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;class Response&lt;T&gt; private constructor(</b>
+<b class="nc">&nbsp;    private val value: T, private val _exception: Throwable?</b>
+&nbsp;) {
+<b class="nc">&nbsp;    private constructor(value: T) : this(value, null)</b>
+&nbsp;
+&nbsp;    val isSuccess
+<b class="nc">&nbsp;        get() = _exception == null</b>
+&nbsp;    val isFailure
+<b class="nc">&nbsp;        get() = _exception != null</b>
+&nbsp;
+&nbsp;    val exception: Throwable
+&nbsp;        get() {
+<b class="nc">&nbsp;            if (this.isFailure) return this._exception!!</b>
+<b class="nc">&nbsp;            return Throwable(&quot;\&quot;Response\&quot; exception invalid access&quot;)</b>
+&nbsp;        }
+&nbsp;    val data
+<b class="nc">&nbsp;        get() = this.value</b>
+&nbsp;
+&nbsp;
+&nbsp;    companion object {
+<b class="nc">&nbsp;        fun &lt;T&gt; success(value: T): Response&lt;T&gt; = Response(value)</b>
+<b class="nc">&nbsp;        fun &lt;T&gt; fail(value: T, exception: Throwable) = Response(value, exception)</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;sealed class PayXResult&lt;out D, out E&gt; {
+&nbsp;    data class Success&lt;D&gt;(val data: D) : PayXResult&lt;D, Nothing&gt;()
+&nbsp;    data class Fail&lt;D, E : Throwable&gt;(val data: D? = null, val error: E) : PayXResult&lt;D, E&gt;()
+&nbsp;    object Loading : PayXResult&lt;Nothing, Nothing&gt;()
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

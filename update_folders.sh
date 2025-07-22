@@ -3,6 +3,9 @@
 # Script để cập nhật danh sách thư mục và dữ liệu coverage cho navigation
 # Chạy script này mỗi khi có thư mục mới được thêm vào
 
+echo "Đang dọn dẹp các folder cũ..."
+python3 clean_folders.py
+
 echo "Đang cập nhật danh sách thư mục..."
 
 # Chạy script Python để quét thư mục

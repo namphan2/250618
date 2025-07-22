@@ -1,0 +1,353 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > App2AppRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.repositoryImpl</a>
+</div>
+
+<h1>Coverage Summary for Class: App2AppRepository (vn.momo.compose.payment.payx.data.repositoryImpl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">App2AppRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/42)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/191)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">App2AppRepository$getOTPInfo$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$getOTPInfo$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$getOTPInfo$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$syncOTPInfo$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$syncOTPInfo$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$syncOTPInfo$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">App2AppRepository$syncOTPInfo$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/44)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/206)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.repositoryImpl
+&nbsp;
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.ExperimentalCoroutinesApi
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.flatMapConcat
+&nbsp;import kotlinx.coroutines.flow.flowOn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.observer.IObserverService
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.DecryptBankDataRequestDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.request.MoMoMsgDecryptBankDataRequestDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.remote.PaymentBankDataSource
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.transactionresult.OTPInfo
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.IApp2AppRepository
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.datamapping.toMap
+&nbsp;import vn.momo.compose.utils.toJsonElement
+&nbsp;import vn.momo.core.di.Providers
+&nbsp;import vn.momo.core.features.authentication.userprofile.UserRepository
+&nbsp;
+&nbsp;const val OTP_INFO_KEY = &quot;OTP_INFO&quot;
+&nbsp;
+<b class="nc">&nbsp;class App2AppRepository(</b>
+<b class="nc">&nbsp;    private val observerService: IObserverService,</b>
+<b class="nc">&nbsp;    private val paymentBankDataSource: PaymentBankDataSource,</b>
+<b class="nc">&nbsp;    private val logger: ILogger</b>
+&nbsp;) : IApp2AppRepository {
+<b class="nc">&nbsp;    private val userRepository: UserRepository = Providers.provideUserRepository()</b>
+&nbsp;
+&nbsp;    override fun saveOTPInfo(purchaseId: String, tidBank: String?, miniAppWidgetId: String?) {
+<b class="nc">&nbsp;        if (!tidBank.isNullOrEmpty()) {</b>
+<b class="nc">&nbsp;            val json = buildJsonObject {</b>
+<b class="nc">&nbsp;                put(&quot;$tidBank&quot;, buildJsonObject {</b>
+<b class="nc">&nbsp;                    put(&quot;purchaseId&quot;, purchaseId.toJsonElement())</b>
+<b class="nc">&nbsp;                    put(&quot;tidBank&quot;, tidBank.toJsonElement())</b>
+<b class="nc">&nbsp;                    put(</b>
+<b class="nc">&nbsp;                        &quot;miniAppId&quot;, miniAppWidgetId.toJsonElement()</b>
+&nbsp;                    )
+<b class="nc">&nbsp;                })</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            observerService.setDataObserver(OTP_INFO_KEY, json)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getOTPInfo(tidBank: String): Flow&lt;OTPInfo&gt; {
+<b class="nc">&nbsp;        return observerService.getDataObserver(OTP_INFO_KEY, JsonObject.serializer())</b>
+<b class="nc">&nbsp;            .map { jsonObject -&gt;</b>
+&nbsp;                logger.i(&quot;App2AppRepository-getOTPInfo:${jsonObject}&quot;)
+&nbsp;                val data =
+&nbsp;                    jsonObject?.get(tidBank) ?: throw IllegalArgumentException(&quot;NotFoundOTPInfo&quot;)
+&nbsp;                ModelConvertUtils.decode(OTPInfo.serializer(), data.toMap()) ?: OTPInfo()
+&nbsp;            }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OptIn(ExperimentalCoroutinesApi::class)
+&nbsp;    override fun syncOTPInfo(
+&nbsp;        shouldEncryptDeeplinkData: Boolean,
+&nbsp;        tidBank: String,
+&nbsp;        encryptedData: String,
+&nbsp;    ): Flow&lt;OTPInfo&gt; {
+<b class="nc">&nbsp;        return (if (shouldEncryptDeeplinkData) {</b>
+<b class="nc">&nbsp;            val request = generateDecryptRequest(encryptedData)</b>
+<b class="nc">&nbsp;            paymentBankDataSource.decryptPaymentBankData(request).flowOn(Dispatchers.IO)</b>
+<b class="nc">&nbsp;                .map { response -&gt;</b>
+&nbsp;                    logger.i(&quot;App2AppRepository-syncOTPInfo:${response}&quot;)
+&nbsp;                    response.momoMsg?.strTid
+<b class="nc">&nbsp;                }.flatMapConcat {</b>
+<b class="nc">&nbsp;                    logger.i(&quot;syncOTPInfo: ${it}&quot;)</b>
+<b class="nc">&nbsp;                    getOTPInfo(it ?: tidBank)</b>
+&nbsp;                }
+<b class="nc">&nbsp;        } else getOTPInfo(tidBank))</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getMockDeeplink(tidBank: String, token: String?): String {
+<b class="nc">&nbsp;        val featureCode = &quot;transaction_result_loading_native&quot;</b>
+<b class="nc">&nbsp;        val bankCode = &quot;12345&quot;</b>
+<b class="nc">&nbsp;        return &quot;momo://app?refId=${featureCode}&amp;featureCode=${featureCode}&amp;localizedName=Vietcombank&amp;bankCode=${bankCode}&amp;tid_bank=${tidBank}&amp;token=${token}&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun generateDecryptRequest(encryptedData: String): DecryptBankDataRequestDTO {
+<b class="nc">&nbsp;        return DecryptBankDataRequestDTO(</b>
+<b class="nc">&nbsp;            momoMsg = MoMoMsgDecryptBankDataRequestDTO(</b>
+<b class="nc">&nbsp;                agent = userRepository.getUserProfile().userId, encryptedData = encryptedData</b>
+&nbsp;            ),
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getMockOTPInfo(): OTPInfo {
+<b class="nc">&nbsp;        return OTPInfo(</b>
+<b class="nc">&nbsp;            purchaseId = &quot;PO-C53EFD6BAFF941E89F4569C7BCEF056E&quot;,</b>
+<b class="nc">&nbsp;            tidBank = &quot;3295970217&quot;,</b>
+<b class="nc">&nbsp;            miniAppId = &quot;vn.momo.mobilecenter&quot;,</b>
+<b class="nc">&nbsp;            token = &quot;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDI0NjE0NDgwNjMsImRhdGEiOnsidHJhbnhJZCI6IjMyOTU5NzAxNzYiLCJwYXJ0bmVyUmVmIjoiMzI5NTk3MDE3NiJ9LCJpc3MiOiJWQ0IiLCJleHAiOjE3NDI0NjE0NDgwNjN9.YLUc5mZA5BwEQRU9yTMdePoXzOBrkV0cytg5v81CAZrjYHy60x5pkrwEOmGJrjNHoUpRfBOdvuPYjUzW9zT46iLYoiRZjtUmgvFsieHRKPylQ1pUBfxkWn3mo74LFM4MZwKg8YrUkLjSSYbfsp2wJKXItHgABcnsT6_gP696VASPg1k7Mv-mJv_DaJW23HRLo8gCS42Xx6-q5MbWkqrrj8FgrK9zyOALJqPJbOdYNwuCbObebD9rDKqa1LRJ1YlXLo3DqgBSH6bifmLB997RbNm4xxwzGQBZrzcxw2uJqEjW0aUFvW0YDHkCNfy9tUTvKOQ0uhxktzvBdWGQqaAQ&quot;</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun saveOtpInfoSingleBill(transId: String, tidBank: String, miniAppId: String) {
+<b class="nc">&nbsp;        val json = buildJsonObject {</b>
+<b class="nc">&nbsp;            put(tidBank, buildJsonObject {</b>
+<b class="nc">&nbsp;                put(&quot;tids&quot;, transId.toJsonElement())</b>
+<b class="nc">&nbsp;                put(&quot;tidBank&quot;, tidBank.toJsonElement())</b>
+<b class="nc">&nbsp;                put(&quot;miniAppId&quot;, miniAppId.toJsonElement())</b>
+<b class="nc">&nbsp;            })</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        observerService.setDataObserver(OTP_INFO_KEY, json)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

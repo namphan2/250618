@@ -182,11 +182,8 @@
       <div class="nav-item">
         <a href="#" class="nav-link active" onclick="showTab('charts')">Biểu đồ</a>
       </div>
-      <div class="nav-item dropdown">
-        <a href="#" class="nav-link">Thư mục</a>
-        <div class="dropdown-content" id="folderDropdown">
-          <!-- Folders will be loaded dynamically -->
-        </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link" onclick="showTab('detail')">Chi tiết</a>
       </div>
       <div class="nav-item">
         <a href="#" class="nav-link" onclick="showTab('guide')">Hướng dẫn</a>
@@ -241,6 +238,13 @@
             <canvas id="instructionChart"></canvas>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Chi tiết Tab -->
+    <div id="detail" class="tab-content">
+      <div id="detail-content" class="readme-content" style="padding:0; background:none; box-shadow:none;">
+        <p>Đang tải nội dung chi tiết...</p>
       </div>
     </div>
 
@@ -331,43 +335,11 @@
       if (tabName === 'charts') {
         loadCharts();
       }
-    }
-
-    // Function to load folders dynamically
-    async function loadFolders() {
-      try {
-        // Thử lấy danh sách thư mục từ server với cache busting
-        const response = await fetch('./folders.json?t=' + Date.now());
-        const folders = await response.json();
-        
-        // Tạo dropdown menu
-        const dropdown = document.getElementById('folderDropdown');
-        dropdown.innerHTML = '';
-        
-        folders.forEach(folder => {
-          const link = document.createElement('a');
-          link.href = `${folder}/index.html`;
-          link.textContent = folder;
-          dropdown.appendChild(link);
-        });
-        
-        console.log('Loaded folders:', folders);
-        
-      } catch (error) {
-        console.log('Không thể tải folders.json, sử dụng fallback...');
-        
-        // Fallback: sử dụng danh sách cứng nhưng có thể cập nhật dễ dàng
-        const fallbackFolders = ['250528', '250618', '250709'];
-        const dropdown = document.getElementById('folderDropdown');
-        dropdown.innerHTML = '';
-        
-        fallbackFolders.forEach(folder => {
-          const link = document.createElement('a');
-          link.href = `${folder}/index.html`;
-          link.textContent = folder;
-          dropdown.appendChild(link);
-        });
+      // Nếu là tab detail, load detail
+      if (tabName === 'detail') {
+        loadDetail();
       }
+      // Tab guide không cần xử lý động
     }
 
     // Function to load and create charts
@@ -472,14 +444,50 @@
     // Function to refresh data (force reload)
     async function refreshData() {
       console.log('Refreshing data...');
-      await loadFolders();
       await loadCharts();
       console.log('Data refreshed successfully!');
     }
 
+    // Function để lấy folder mới nhất (tên số lớn nhất)
+    async function getNewestFolder() {
+      try {
+        const response = await fetch('./folders.json?t=' + Date.now());
+        const folders = await response.json();
+        // Lọc tên số
+        const numericFolders = folders.filter(f => /^\d+$/.test(f));
+        if (numericFolders.length === 0) return null;
+        numericFolders.sort();
+        return numericFolders[numericFolders.length - 1];
+      } catch (e) {
+        // fallback cứng
+        const fallbackFolders = ['250528', '250618', '250709'];
+        const numericFolders = fallbackFolders.filter(f => /^\d+$/.test(f));
+        if (numericFolders.length === 0) return null;
+        numericFolders.sort();
+        return numericFolders[numericFolders.length - 1];
+      }
+    }
+
+    // Function để load nội dung index.html của folder mới nhất vào iframe
+    async function loadDetail() {
+      const detailDiv = document.getElementById('detail-content');
+      detailDiv.innerHTML = '<p>Đang tải nội dung chi tiết...</p>';
+      const newest = await getNewestFolder();
+      if (!newest) {
+        detailDiv.innerHTML = '<p>Không tìm thấy folder nào.</p>';
+        document.title = 'Chi tiết';
+        return;
+      }
+      // Đặt title giao diện
+      document.title = `Chi tiết - ${newest}`;
+      // Hiển thị tên folder ở đầu tab detail
+      detailDiv.innerHTML = `<div style='padding:16px 0 8px 0; font-size:20px; font-weight:bold;'>Folder: ${newest}</div>` +
+        `<iframe src="./${newest}/index.html?t=${Date.now()}" style="width:100%; min-height:80vh; border:none; background:white;"></iframe>`;
+    }
+
     // Load folders and charts when page loads
     document.addEventListener('DOMContentLoaded', function() {
-      loadFolders();
+      // Bỏ loadFolders
       loadCharts(); // Load charts immediately since it's the default tab
     });
   </script>

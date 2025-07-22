@@ -1,0 +1,444 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > HyperTextKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.presentation.uiKit.component</a>
+</div>
+
+<h1>Coverage Summary for Class: HyperTextKt (vn.momo.compose.payment.base.presentation.uiKit.component)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">HyperTextKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/76)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/114)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1107)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">HyperTextKt$HyperText$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/165)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/146)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1272)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.presentation.uiKit.component
+&nbsp;
+&nbsp;import androidx.compose.foundation.gestures.detectTapGestures
+&nbsp;import androidx.compose.material3.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.input.pointer.pointerInput
+&nbsp;import androidx.compose.ui.text.SpanStyle
+&nbsp;import androidx.compose.ui.text.TextLayoutResult
+&nbsp;import androidx.compose.ui.text.TextStyle
+&nbsp;import androidx.compose.ui.text.buildAnnotatedString
+&nbsp;import androidx.compose.ui.text.style.TextOverflow
+&nbsp;import androidx.compose.ui.text.withStyle
+&nbsp;import org.jetbrains.compose.resources.stringResource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.PayXCta
+&nbsp;import vn.momo.compose.payment.base.domain.entities.uiKit.PayXText
+&nbsp;import vn.momo.compose.resources.Res
+&nbsp;import vn.momo.compose.resources.collapseTxt
+&nbsp;import vn.momo.compose.resources.expandTxt
+&nbsp;import vn.momo.kits.const.Colors
+&nbsp;import vn.momo.kits.const.Typography
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun HyperText(
+&nbsp;    data: List&lt;PayXText&gt;,
+<b class="nc">&nbsp;    maxLines: Int? = null,</b>
+<b class="nc">&nbsp;    onPress: ((cta: PayXCta?) -&gt; Unit)? = null</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;    val defaultStyle = Typography.bodyDefaultRegular</b>
+<b class="nc">&nbsp;    var isExpanded by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var isEllipsized by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var shrinkedData by remember { mutableStateOf(data) }</b>
+<b class="nc">&nbsp;    var showSeeMore by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var showCollapse by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;    var textLayoutResult: TextLayoutResult? by remember { mutableStateOf(null) }</b>
+<b class="nc">&nbsp;    var seeMoreStartOffset by remember { mutableStateOf(-1) }</b>
+<b class="nc">&nbsp;    var collapseStartOffset by remember { mutableStateOf(-1) }</b>
+<b class="nc">&nbsp;    val seeMoreText = stringResource(Res.string.expandTxt)</b>
+<b class="nc">&nbsp;    val collapseText = stringResource(Res.string.collapseTxt)</b>
+&nbsp;
+<b class="nc">&nbsp;    val shouldShowExpandCollapse = maxLines != null</b>
+&nbsp;
+<b class="nc">&nbsp;    val annotatedText =</b>
+<b class="nc">&nbsp;        remember(shrinkedData, isExpanded, showSeeMore, showCollapse, shouldShowExpandCollapse) {</b>
+<b class="nc">&nbsp;            buildHyperAnnotatedString(</b>
+<b class="nc">&nbsp;                data = data,</b>
+<b class="nc">&nbsp;                shrinkedData = shrinkedData,</b>
+<b class="nc">&nbsp;                isExpanded = isExpanded,</b>
+<b class="nc">&nbsp;                showSeeMore = showSeeMore &amp;&amp; shouldShowExpandCollapse,</b>
+<b class="nc">&nbsp;                showCollapse = showCollapse &amp;&amp; shouldShowExpandCollapse,</b>
+<b class="nc">&nbsp;                seeMoreText = seeMoreText,</b>
+<b class="nc">&nbsp;                collapseText = collapseText,</b>
+<b class="nc">&nbsp;                defaultStyle = defaultStyle,</b>
+<b class="nc">&nbsp;                seeMoreStartOffsetSetter = { seeMoreStartOffset = it },</b>
+<b class="nc">&nbsp;                collapseStartOffsetSetter = { collapseStartOffset = it }</b>
+<b class="nc">&nbsp;            )</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;    val finalMaxLines = if (maxLines != null) {</b>
+<b class="nc">&nbsp;        if (isExpanded) Int.MAX_VALUE else maxLines</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;        Int.MAX_VALUE</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    Text(</b>
+<b class="nc">&nbsp;        text = annotatedText,</b>
+<b class="nc">&nbsp;        style = TextStyle.Default,</b>
+<b class="nc">&nbsp;        overflow = TextOverflow.Ellipsis,</b>
+<b class="nc">&nbsp;        onTextLayout = { layoutResult -&gt;</b>
+<b class="nc">&nbsp;            textLayoutResult = layoutResult</b>
+<b class="nc">&nbsp;            if (shouldShowExpandCollapse) {</b>
+<b class="nc">&nbsp;                handleTextLayout(</b>
+<b class="nc">&nbsp;                    layoutResult = layoutResult,</b>
+<b class="nc">&nbsp;                    isExpanded = isExpanded,</b>
+<b class="nc">&nbsp;                    maxLines = finalMaxLines,</b>
+<b class="nc">&nbsp;                    showSeeMore = showSeeMore,</b>
+<b class="nc">&nbsp;                    data = data,</b>
+<b class="nc">&nbsp;                    seeMoreText = seeMoreText,</b>
+<b class="nc">&nbsp;                    shrinkedDataSetter = { shrinkedData = it },</b>
+<b class="nc">&nbsp;                    showSeeMoreSetter = { showSeeMore = it },</b>
+<b class="nc">&nbsp;                    isEllipsizedSetter = { isEllipsized = it },</b>
+<b class="nc">&nbsp;                    showCollapseSetter = { showCollapse = it }</b>
+&nbsp;                )
+&nbsp;            }
+&nbsp;        },
+<b class="nc">&nbsp;        maxLines = finalMaxLines,</b>
+<b class="nc">&nbsp;        modifier = Modifier.pointerInput(Unit) {</b>
+<b class="nc">&nbsp;            detectTapGestures { offset -&gt;</b>
+<b class="nc">&nbsp;                textLayoutResult?.let { layoutResult -&gt;</b>
+<b class="nc">&nbsp;                    val position = layoutResult.getOffsetForPosition(offset)</b>
+<b class="nc">&nbsp;                    val handled = if (shouldShowExpandCollapse) {</b>
+<b class="nc">&nbsp;                        handleTap(</b>
+<b class="nc">&nbsp;                            position = position,</b>
+<b class="nc">&nbsp;                            isExpanded = isExpanded,</b>
+<b class="nc">&nbsp;                            showSeeMore = showSeeMore,</b>
+<b class="nc">&nbsp;                            showCollapse = showCollapse,</b>
+<b class="nc">&nbsp;                            seeMoreStartOffset = seeMoreStartOffset,</b>
+<b class="nc">&nbsp;                            seeMoreText = seeMoreText,</b>
+<b class="nc">&nbsp;                            collapseStartOffset = collapseStartOffset,</b>
+<b class="nc">&nbsp;                            collapseText = collapseText,</b>
+&nbsp;                            onExpand = {
+<b class="nc">&nbsp;                                isExpanded = true</b>
+<b class="nc">&nbsp;                                showSeeMore = false</b>
+<b class="nc">&nbsp;                                shrinkedData = data</b>
+&nbsp;                            },
+&nbsp;                            onCollapse = {
+<b class="nc">&nbsp;                                isExpanded = false</b>
+<b class="nc">&nbsp;                                showSeeMore = false</b>
+<b class="nc">&nbsp;                                shrinkedData = data</b>
+&nbsp;                            }
+&nbsp;                        )
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        false</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    if (handled) return@detectTapGestures</b>
+<b class="nc">&nbsp;                    val sourceData =</b>
+<b class="nc">&nbsp;                        if (isExpanded &amp;&amp; shouldShowExpandCollapse) data else shrinkedData</b>
+<b class="nc">&nbsp;                    sourceData.forEachIndexed { index, item -&gt;</b>
+<b class="nc">&nbsp;                        val tag = &quot;TAG_$index&quot;</b>
+<b class="nc">&nbsp;                        annotatedText.getStringAnnotations(tag, position, position).firstOrNull()</b>
+<b class="nc">&nbsp;                            ?.let {</b>
+<b class="nc">&nbsp;                                item.action?.refId?.let {</b>
+<b class="nc">&nbsp;                                    onPress?.invoke(item.action)</b>
+&nbsp;                                    return@detectTapGestures
+&nbsp;                                }
+<b class="nc">&nbsp;                            }</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    )
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;private fun buildHyperAnnotatedString(
+&nbsp;    data: List&lt;PayXText&gt;,
+&nbsp;    shrinkedData: List&lt;PayXText&gt;,
+&nbsp;    isExpanded: Boolean,
+&nbsp;    showSeeMore: Boolean,
+&nbsp;    showCollapse: Boolean,
+&nbsp;    seeMoreText: String,
+&nbsp;    collapseText: String,
+&nbsp;    defaultStyle: TextStyle,
+&nbsp;    seeMoreStartOffsetSetter: (Int) -&gt; Unit,
+&nbsp;    collapseStartOffsetSetter: (Int) -&gt; Unit
+&nbsp;): androidx.compose.ui.text.AnnotatedString {
+<b class="nc">&nbsp;    return buildAnnotatedString {</b>
+<b class="nc">&nbsp;        val sourceData = if (isExpanded) data else shrinkedData</b>
+<b class="nc">&nbsp;        sourceData.forEachIndexed { index, item -&gt;</b>
+<b class="nc">&nbsp;            val tag = &quot;TAG_$index&quot;</b>
+<b class="nc">&nbsp;            pushStringAnnotation(tag, tag)</b>
+<b class="nc">&nbsp;            withStyle(</b>
+<b class="nc">&nbsp;                style = SpanStyle(</b>
+<b class="nc">&nbsp;                    color = item.color ?: Colors.black_17,</b>
+<b class="nc">&nbsp;                    fontSize = item.style?.fontSize ?: defaultStyle.fontSize,</b>
+<b class="nc">&nbsp;                    fontWeight = item.style?.fontWeight ?: defaultStyle.fontWeight,</b>
+<b class="nc">&nbsp;                    fontStyle = item.style?.fontStyle ?: defaultStyle.fontStyle</b>
+&nbsp;                )
+&nbsp;            ) {
+<b class="nc">&nbsp;                append(item.text)</b>
+&nbsp;            }
+<b class="nc">&nbsp;            pop()</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        if (!isExpanded &amp;&amp; showSeeMore) {</b>
+<b class="nc">&nbsp;            seeMoreStartOffsetSetter(length)</b>
+<b class="nc">&nbsp;            withStyle(</b>
+<b class="nc">&nbsp;                style = SpanStyle(</b>
+<b class="nc">&nbsp;                    color = Colors.pink_03,</b>
+<b class="nc">&nbsp;                    fontSize = defaultStyle.fontSize,</b>
+<b class="nc">&nbsp;                    fontWeight = defaultStyle.fontWeight</b>
+&nbsp;                )
+&nbsp;            ) {
+<b class="nc">&nbsp;                append(seeMoreText)</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            seeMoreStartOffsetSetter(-1)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (isExpanded &amp;&amp; showCollapse) {</b>
+<b class="nc">&nbsp;            collapseStartOffsetSetter(length)</b>
+<b class="nc">&nbsp;            withStyle(</b>
+<b class="nc">&nbsp;                style = SpanStyle(</b>
+<b class="nc">&nbsp;                    color = Colors.pink_03,</b>
+<b class="nc">&nbsp;                    fontSize = defaultStyle.fontSize,</b>
+<b class="nc">&nbsp;                    fontWeight = defaultStyle.fontWeight</b>
+&nbsp;                )
+&nbsp;            ) {
+<b class="nc">&nbsp;                append(collapseText)</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            collapseStartOffsetSetter(-1)</b>
+&nbsp;        }
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+&nbsp;
+&nbsp;private fun handleTextLayout(
+&nbsp;    layoutResult: TextLayoutResult,
+&nbsp;    isExpanded: Boolean,
+&nbsp;    maxLines: Int,
+&nbsp;    showSeeMore: Boolean,
+&nbsp;    data: List&lt;PayXText&gt;,
+&nbsp;    seeMoreText: String,
+&nbsp;    shrinkedDataSetter: (List&lt;PayXText&gt;) -&gt; Unit,
+&nbsp;    showSeeMoreSetter: (Boolean) -&gt; Unit,
+&nbsp;    isEllipsizedSetter: (Boolean) -&gt; Unit,
+&nbsp;    showCollapseSetter: (Boolean) -&gt; Unit
+&nbsp;) {
+<b class="nc">&nbsp;    if (!isExpanded) {</b>
+<b class="nc">&nbsp;        val ellipsized =</b>
+<b class="nc">&nbsp;            layoutResult.lineCount &gt; maxLines || (layoutResult.lineCount &gt; 0 &amp;&amp; layoutResult.isLineEllipsized(</b>
+<b class="nc">&nbsp;                maxLines - 1</b>
+&nbsp;            ))
+<b class="nc">&nbsp;        if (ellipsized &amp;&amp; !showSeeMore) {</b>
+<b class="nc">&nbsp;            showSeeMoreSetter(true)</b>
+<b class="nc">&nbsp;            val lastLineEnd = layoutResult.getLineEnd(maxLines - 1, visibleEnd = true)</b>
+<b class="nc">&nbsp;            val cutOffset = (lastLineEnd - &quot; $seeMoreText...&quot;.length).coerceAtLeast(0)</b>
+<b class="nc">&nbsp;            val fullText = data.joinToString(separator = &quot;&quot;) { it.text ?: &quot;&quot; }</b>
+<b class="nc">&nbsp;            val shrinkedText =</b>
+<b class="nc">&nbsp;                if (cutOffset &lt; fullText.length) fullText.substring(0, cutOffset) else fullText</b>
+<b class="nc">&nbsp;            shrinkedDataSetter(listOf(PayXText(text = shrinkedText)))</b>
+&nbsp;        }
+<b class="nc">&nbsp;        isEllipsizedSetter(ellipsized)</b>
+<b class="nc">&nbsp;        showCollapseSetter(false)</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;        showCollapseSetter(true)</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;private fun handleTap(
+&nbsp;    position: Int,
+&nbsp;    isExpanded: Boolean,
+&nbsp;    showSeeMore: Boolean,
+&nbsp;    showCollapse: Boolean,
+&nbsp;    seeMoreStartOffset: Int,
+&nbsp;    seeMoreText: String,
+&nbsp;    collapseStartOffset: Int,
+&nbsp;    collapseText: String,
+&nbsp;    onExpand: () -&gt; Unit,
+&nbsp;    onCollapse: () -&gt; Unit
+&nbsp;): Boolean {
+<b class="nc">&nbsp;    if (!isExpanded &amp;&amp; showSeeMore &amp;&amp; seeMoreStartOffset &gt;= 0) {</b>
+<b class="nc">&nbsp;        val seeMoreEnd = seeMoreStartOffset + seeMoreText.length</b>
+<b class="nc">&nbsp;        if (position in seeMoreStartOffset until seeMoreEnd) {</b>
+<b class="nc">&nbsp;            onExpand()</b>
+<b class="nc">&nbsp;            return true</b>
+&nbsp;        }
+&nbsp;    }
+<b class="nc">&nbsp;    if (isExpanded &amp;&amp; showCollapse &amp;&amp; collapseStartOffset &gt;= 0) {</b>
+<b class="nc">&nbsp;        val collapseEnd = collapseStartOffset + collapseText.length</b>
+<b class="nc">&nbsp;        if (position in collapseStartOffset until collapseEnd) {</b>
+<b class="nc">&nbsp;            onCollapse()</b>
+<b class="nc">&nbsp;            return true</b>
+&nbsp;        }
+&nbsp;    }
+<b class="nc">&nbsp;    return false</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

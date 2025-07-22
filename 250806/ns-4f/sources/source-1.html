@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > NapasInputRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.napas.data.repositoryImpl</a>
+</div>
+
+<h1>Coverage Summary for Class: NapasInputRepository (vn.momo.compose.payment.napas.data.repositoryImpl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">NapasInputRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/107)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NapasInputRepository$getProfileData$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">NapasInputRepository$submit$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">NapasInputRepository$submit$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">NapasInputRepository$submit$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/107)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.napas.data.repositoryImpl
+&nbsp;
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.firstOrNull
+&nbsp;import kotlinx.coroutines.flow.flowOn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.userProfile.IUserProfile
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.userProfile.model.UserProfileData
+&nbsp;import vn.momo.compose.payment.base.domain.entities.error.DevError
+&nbsp;import vn.momo.compose.payment.napas.data.dataSource.mapper.InitCashInPayloadDTO
+&nbsp;import vn.momo.compose.payment.napas.data.dataSource.mapper.InitCashInResponse
+&nbsp;import vn.momo.compose.payment.napas.data.dataSource.remote.NapasInputRemoteDataSource
+&nbsp;import vn.momo.compose.payment.napas.domain.entities.CardSubmitParams
+&nbsp;import vn.momo.compose.payment.napas.domain.entities.NapasInputResponseError
+&nbsp;import vn.momo.compose.payment.napas.domain.repositories.INapasInputRepository
+&nbsp;
+<b class="nc">&nbsp;class NapasInputRepository(</b>
+<b class="nc">&nbsp;    val profileApi: IUserProfile,</b>
+<b class="nc">&nbsp;    val logger: ILogger,</b>
+<b class="nc">&nbsp;    val remoteDataSource: NapasInputRemoteDataSource,</b>
+&nbsp;) : INapasInputRepository {
+<b class="nc">&nbsp;    private val logName = &quot;NAPAS_INPUT_REPOSITORY&quot;</b>
+&nbsp;    override suspend fun getConfig() {
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    override suspend fun getProfileData(): UserProfileData? {
+<b class="nc">&nbsp;        return profileApi.getData().firstOrNull().also {</b>
+<b class="nc">&nbsp;            logger.i(&quot;$logName - profile data: $it&quot;)</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun submit(params: CardSubmitParams): Flow&lt;InitCashInResponse&gt; {
+<b class="nc">&nbsp;        return remoteDataSource.initCashInByCardInfo(</b>
+<b class="nc">&nbsp;            InitCashInPayloadDTO(</b>
+<b class="nc">&nbsp;                amount = params.amount,</b>
+<b class="nc">&nbsp;                serviceId = params.serviceId,</b>
+<b class="nc">&nbsp;                merchantId = params.merchantId,</b>
+<b class="nc">&nbsp;                extras = params.extras,</b>
+<b class="nc">&nbsp;                cardNumber = params.cardNumber,</b>
+<b class="nc">&nbsp;                cardFullName = params.cardFullName,</b>
+<b class="nc">&nbsp;                cardIssueDate = params.cardIssueDate,</b>
+<b class="nc">&nbsp;                partnerCode = params.partnerCode,</b>
+<b class="nc">&nbsp;                personalId = params.personalId,</b>
+<b class="nc">&nbsp;                isLinkCard = params.isLinkCard,</b>
+<b class="nc">&nbsp;                isSaveToken = params.isSaveToken</b>
+&nbsp;            )
+<b class="nc">&nbsp;        ).map {</b>
+&nbsp;            if (it.errorCode != 0) {
+&nbsp;                throw NapasInputResponseError.CustomPopupError(
+&nbsp;                    code = it?.errorCode ?: DevError.NoResponse.code,
+&nbsp;                    message = it?.errorDesc ?: &quot;&quot;,
+&nbsp;                    cause = Exception(this::class.simpleName)
+&nbsp;                )
+&nbsp;            }
+&nbsp;            it.toModel()
+<b class="nc">&nbsp;        }.flowOn(Dispatchers.IO)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

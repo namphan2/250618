@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > ShadowKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.components.modifiers</a>
+</div>
+
+<h1>Coverage Summary for Class: ShadowKt (vn.momo.compose.payment.payx.presentation.view.components.modifiers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShadowKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/110)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.components.modifiers
+&nbsp;
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.draw.drawBehind
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+&nbsp;import androidx.compose.ui.unit.Dp
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.graphics.Paint
+&nbsp;import androidx.compose.ui.graphics.toArgb
+&nbsp;import vn.momo.kits.platform.setMaskFilter
+&nbsp;
+&nbsp;fun Modifier.shadowBill(
+<b class="nc">&nbsp;    color: Color = Color(0xFFE27EB5).copy(alpha = 0.15f),</b>
+<b class="nc">&nbsp;    blurRadius: Float = 12f,</b>
+<b class="nc">&nbsp;    offsetY: Dp = 6.dp,</b>
+<b class="nc">&nbsp;    offsetX: Dp = (-1).dp,</b>
+<b class="nc">&nbsp;    spread: Dp = 3.dp,</b>
+<b class="nc">&nbsp;    cornerRadius: Dp = 16.dp,</b>
+<b class="nc">&nbsp;): Modifier = drawBehind {</b>
+<b class="nc">&nbsp;    drawIntoCanvas { canvas -&gt;</b>
+<b class="nc">&nbsp;        val paint = Paint()</b>
+<b class="nc">&nbsp;        val frameworkPaint = paint.asFrameworkPaint()</b>
+&nbsp;
+<b class="nc">&nbsp;        if (blurRadius &gt; 0f) {</b>
+<b class="nc">&nbsp;            frameworkPaint.setMaskFilter(blurRadius)</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        frameworkPaint.color = color.toArgb()</b>
+&nbsp;
+<b class="nc">&nbsp;        val spreadPx = spread.toPx()</b>
+<b class="nc">&nbsp;        val offsetXPx = offsetX.toPx()</b>
+<b class="nc">&nbsp;        val offsetYPx = offsetY.toPx()</b>
+&nbsp;
+<b class="nc">&nbsp;        val shadowTop = 12f + spreadPx + blurRadius</b>
+<b class="nc">&nbsp;        val shadowBottom = size.height + spreadPx + blurRadius</b>
+&nbsp;
+<b class="nc">&nbsp;        val left = -spreadPx + offsetXPx</b>
+<b class="nc">&nbsp;        val right = size.width + spreadPx + offsetXPx</b>
+&nbsp;
+<b class="nc">&nbsp;        canvas.drawRoundRect(</b>
+<b class="nc">&nbsp;            left = left,</b>
+<b class="nc">&nbsp;            top = shadowTop,</b>
+<b class="nc">&nbsp;            right = right,</b>
+<b class="nc">&nbsp;            bottom = shadowBottom,</b>
+<b class="nc">&nbsp;            radiusX = cornerRadius.toPx(),</b>
+<b class="nc">&nbsp;            radiusY = cornerRadius.toPx(),</b>
+<b class="nc">&nbsp;            paint = paint</b>
+&nbsp;        )
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

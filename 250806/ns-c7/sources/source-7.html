@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBConfirmResponseDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.dataSource.dto.response.confirm</a>
+</div>
+
+<h1>Coverage Summary for Class: SBConfirmResponseDTO (vn.momo.compose.payment.singleBill.data.dataSource.dto.response.confirm)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBConfirmResponseDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/280)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SBConfirmResponseDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/282)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.dataSource.dto.response.confirm
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.PaymentNetWorkResponse
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.Extra
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.emptyJsonObject
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class SBConfirmResponseDTO(
+<b class="nc">&nbsp;    val momoMsg: JsonObject? = emptyJsonObject(),</b>
+<b class="nc">&nbsp;    override val result: Boolean? = false,</b>
+<b class="nc">&nbsp;    override val msgType: String? = null,</b>
+<b class="nc">&nbsp;    override val errorCode: Int? = null,</b>
+<b class="nc">&nbsp;    override val errorDesc: String? = null,</b>
+<b class="nc">&nbsp;    override val extra: JsonObject? = emptyJsonObject(),</b>
+&nbsp;) : PaymentNetWorkResponse {
+<b class="nc">&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)</b>
+<b class="nc">&nbsp;    val extraModel get() = ModelConvertUtils.decode(Extra.serializer(), extra ?: emptyJsonObject())</b>
+&nbsp;    val sbMoMoMsg
+<b class="nc">&nbsp;        get() = ModelConvertUtils.decode(</b>
+<b class="nc">&nbsp;            SBMoMoMsgConfirmResponse.serializer(),</b>
+<b class="nc">&nbsp;            momoMsg ?: emptyJsonObject()</b>
+&nbsp;        )
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SBMoMoMsgConfirmResponse(
+&nbsp;    val ID: String? = null,
+&nbsp;    val transId: Double? = null,
+&nbsp;    val tranId: Long? = null,
+&nbsp;    val tranHisMsg: JsonObject? = null, // default
+&nbsp;    val bankInReply: JsonObject? = null, // p2p
+&nbsp;    val replyMsgs: List&lt;JsonObject&gt;? = emptyList() //p2p
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;class SBGetPaymentStatusP2PResponse(
+&nbsp;    val data: JsonObject? = null,
+&nbsp;    val success: Boolean? = false,
+&nbsp;    val resultCode: Int? = null,
+&nbsp;    val errorDes: String? = null,
+&nbsp;    override val result: Boolean? = null,
+&nbsp;    override val msgType: String? = null,
+&nbsp;    override val errorCode: Int? = null,
+&nbsp;    override val errorDesc: String? = null,
+&nbsp;    override val extra: JsonObject? = null
+&nbsp;) : PaymentNetWorkResponse {
+&nbsp;    override fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

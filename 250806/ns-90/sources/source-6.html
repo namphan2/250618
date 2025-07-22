@@ -1,0 +1,308 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > InfoTextStyle</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.components.card</a>
+</div>
+
+<h1>Coverage Summary for Class: InfoTextStyle (vn.momo.compose.payment.payx.presentation.view.components.card)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">InfoTextStyle</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.components.card
+&nbsp;
+&nbsp;import androidx.compose.foundation.BorderStroke
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.shape.RoundedCornerShape
+&nbsp;import androidx.compose.material.Surface
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.draw.alpha
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import androidx.compose.ui.layout.ContentScale
+&nbsp;import androidx.compose.ui.text.TextStyle
+&nbsp;import androidx.compose.ui.text.style.TextDecoration
+&nbsp;import androidx.compose.ui.text.style.TextOverflow
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SofBadge
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.xsale.XSaleBadge
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.noFeedbackClickable
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.scaledOffset
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.scaledPadding
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.scaledSize
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.modifiers.scaledSpacedBy
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.xsale.RibbonBadge
+&nbsp;import vn.momo.kits.components.Image
+&nbsp;import vn.momo.kits.components.Options
+&nbsp;import vn.momo.kits.components.Text
+&nbsp;import vn.momo.kits.const.AppTheme
+&nbsp;import vn.momo.kits.const.Typography
+&nbsp;
+<b class="nc">&nbsp;data class InfoTextStyle(</b>
+<b class="nc">&nbsp;    val modifier: Modifier = Modifier,</b>
+<b class="nc">&nbsp;    val font: TextStyle,</b>
+<b class="nc">&nbsp;    val color: Color,</b>
+<b class="nc">&nbsp;    val textDecoration: TextDecoration? = null</b>
+&nbsp;)
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun InfoCard(
+&nbsp;    modifier: Modifier = Modifier,
+&nbsp;    title: String,
+&nbsp;    titleStyle: InfoTextStyle = InfoTextStyle(
+&nbsp;        font = Typography.headerXsSemibold,
+&nbsp;        color = AppTheme.current.colors.text.default
+&nbsp;    ),
+&nbsp;    titleExtra: @Composable () -&gt; Unit = {},
+&nbsp;    description: String,
+&nbsp;    descriptionStyle: InfoTextStyle = InfoTextStyle(
+&nbsp;        font = Typography.descriptionXsRegular,
+&nbsp;        color = AppTheme.current.colors.text.hint
+&nbsp;    ),
+&nbsp;    leading: @Composable () -&gt; Unit,
+&nbsp;    trailing: @Composable () -&gt; Unit,
+&nbsp;    extra: @Composable () -&gt; Unit,
+&nbsp;    pressable: Boolean = true,
+&nbsp;    blur: Boolean = false,
+&nbsp;    onPress: () -&gt; Unit = {},
+&nbsp;) {
+&nbsp;    val alpha = if (blur) 0.5f else 1f
+&nbsp;    Row(
+&nbsp;        modifier = Modifier.fillMaxWidth().then(modifier)
+&nbsp;            .noFeedbackClickable(enabled = pressable, onClick = onPress),
+&nbsp;        verticalAlignment = Alignment.CenterVertically,
+&nbsp;        horizontalArrangement = scaledSpacedBy(8f)
+&nbsp;    ) {
+&nbsp;        leading()
+&nbsp;        Row(
+&nbsp;            Modifier.weight(1f).alpha(alpha),
+&nbsp;            verticalAlignment = Alignment.CenterVertically,
+&nbsp;            horizontalArrangement = scaledSpacedBy(8f),
+&nbsp;        ) {
+&nbsp;            Column {
+&nbsp;                Row(
+&nbsp;                    horizontalArrangement = scaledSpacedBy(4f),
+&nbsp;                    verticalAlignment = Alignment.CenterVertically
+&nbsp;                ) {
+&nbsp;                    Text(
+&nbsp;                        text = title,
+&nbsp;                        style = titleStyle.font,
+&nbsp;                        modifier = titleStyle.modifier,
+&nbsp;                        maxLines = 1,
+&nbsp;                        overflow = TextOverflow.Ellipsis,
+&nbsp;                        color = titleStyle.color
+&nbsp;                    )
+&nbsp;                    titleExtra()
+&nbsp;                }
+&nbsp;
+&nbsp;                description.takeIf { it.isNotBlank() }?.also {
+&nbsp;                    Text(
+&nbsp;                        modifier = descriptionStyle.modifier,
+&nbsp;                        text = description,
+&nbsp;                        style = descriptionStyle.font,
+&nbsp;                        color = descriptionStyle.color,
+&nbsp;                        maxLines = 1,
+&nbsp;                        overflow = TextOverflow.Ellipsis
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;            Box(
+&nbsp;                modifier = Modifier.weight(1f)
+&nbsp;            ) {
+&nbsp;                extra()
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        trailing()
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun MiniCard(
+&nbsp;    modifier: Modifier = Modifier,
+&nbsp;    border: BorderStroke? = null,
+&nbsp;    title: String,
+&nbsp;    titleStyle: InfoTextStyle = InfoTextStyle(
+&nbsp;        font = Typography.headerSSemibold,
+&nbsp;        color = AppTheme.current.colors.text.default
+&nbsp;    ),
+&nbsp;    subTitle: String? = null,
+&nbsp;    subTitleStyle: InfoTextStyle = InfoTextStyle(
+&nbsp;        font = Typography.descriptionXsRegular,
+&nbsp;        color = AppTheme.current.colors.text.hint
+&nbsp;    ),
+&nbsp;    description: String,
+&nbsp;    descriptionStyle: InfoTextStyle = InfoTextStyle(
+&nbsp;        font = Typography.descriptionXsRegular,
+&nbsp;        color = AppTheme.current.colors.text.hint
+&nbsp;    ),
+&nbsp;    image: Any? = null,
+&nbsp;    badge: SofBadge? = null
+&nbsp;) {
+&nbsp;    Box(modifier) {
+&nbsp;        Surface(
+&nbsp;            shape = RoundedCornerShape(12.dp),
+&nbsp;            border = border
+&nbsp;        ) {
+&nbsp;            Column(Modifier.scaledPadding(8f)) {
+&nbsp;                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+&nbsp;                    Text(
+&nbsp;                        text = title,
+&nbsp;                        style = titleStyle.font,
+&nbsp;                        color = titleStyle.color,
+&nbsp;                        maxLines = 1,
+&nbsp;                        overflow = TextOverflow.Ellipsis
+&nbsp;                    )
+&nbsp;                    subTitle?.takeIf { it.isNotBlank() }?.also {
+&nbsp;                        Text(
+&nbsp;                            text = subTitle,
+&nbsp;                            modifier = Modifier.weight(1f),
+&nbsp;                            style = subTitleStyle.font,
+&nbsp;                            color = subTitleStyle.color,
+&nbsp;                            textDecoration = subTitleStyle.textDecoration,
+&nbsp;                            maxLines = 1,
+&nbsp;                            overflow = TextOverflow.Ellipsis
+&nbsp;                        )
+&nbsp;                    }
+&nbsp;                }
+&nbsp;                Text(
+&nbsp;                    text = description,
+&nbsp;                    modifier = Modifier.fillMaxWidth(),
+&nbsp;                    style = descriptionStyle.font,
+&nbsp;                    color = descriptionStyle.color,
+&nbsp;                    maxLines = 1,
+&nbsp;                    overflow = TextOverflow.Ellipsis
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;        image?.also {
+&nbsp;            Image(
+&nbsp;                source = image,
+&nbsp;                modifier = Modifier
+&nbsp;                    .align(Alignment.TopEnd)
+&nbsp;                    .scaledSize(20f),
+&nbsp;                options = Options(contentScale = ContentScale.Fit)
+&nbsp;            )
+&nbsp;        }
+&nbsp;        badge?.also {
+&nbsp;            RibbonBadge.Default(
+&nbsp;                data = XSaleBadge(label = it.title, type = it.type),
+&nbsp;                modifier = Modifier.align(Alignment.TopEnd).scaledOffset(x = 2f, y = -8f)
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>

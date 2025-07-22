@@ -1,0 +1,309 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > VoucherPosRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.data.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: VoucherPosRepository (vn.momo.compose.payment.promotion.data.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">VoucherPosRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/195)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">VoucherPosRepository$getListVoucherPos$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">VoucherPosRepository$getListVoucherPos$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">VoucherPosRepository$getListVoucherPos$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">VoucherPosRepository$onSearchVoucherPos$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">VoucherPosRepository$onSearchVoucherPos$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">VoucherPosRepository$onSearchVoucherPos$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/195)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.data.repositories
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import vn.momo.compose.payment.promotion.core.model.PromotionApiPerfEvent
+&nbsp;import vn.momo.compose.payment.promotion.core.utils.ListPage
+&nbsp;import vn.momo.compose.payment.promotion.core.utils.tracePromotionApi
+&nbsp;import vn.momo.compose.payment.promotion.data.constants.DEFAULT_PAGE_SIZE
+&nbsp;import vn.momo.compose.payment.promotion.data.constants.VoucherPathType
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.VoucherPosRequestDTO
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.VoucherPosRequestRequestBody
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.VoucherPosSearchRequestDTO
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.VoucherPosSearchRequestRequestBody
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.VoucherPosSearchRequestRequestMomoMsg
+&nbsp;import vn.momo.compose.payment.promotion.data.mappers.toVoucherBase
+&nbsp;import vn.momo.compose.payment.promotion.data.remote.VoucherPosDataSource
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.IVoucherBase
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.LocationCoords
+&nbsp;import vn.momo.compose.payment.promotion.domain.repositories.IVoucherPosRepository
+&nbsp;import vn.momo.compose.payment.promotion.presentation.model.ChoosePromotionPosScreenProps
+&nbsp;import vn.momo.compose.payment.promotion.presentation.utils.toFormattedCardNumbers
+&nbsp;
+<b class="nc">&nbsp;class VoucherPosRepository(</b>
+<b class="nc">&nbsp;    private val remoteDataSource: VoucherPosDataSource</b>
+&nbsp;) : IVoucherPosRepository {
+&nbsp;    override fun getListVoucherPos(
+&nbsp;        pathType: VoucherPathType,
+&nbsp;        page: Int?,
+&nbsp;        params: ChoosePromotionPosScreenProps,
+&nbsp;        location: LocationCoords?,
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt; {
+<b class="nc">&nbsp;        val request = VoucherPosRequestDTO(</b>
+<b class="nc">&nbsp;            body = VoucherPosRequestRequestBody(</b>
+<b class="nc">&nbsp;                diffMoneySource = pathType == VoucherPathType.PosInvalid,</b>
+<b class="nc">&nbsp;                page = page,</b>
+<b class="nc">&nbsp;                displayConfig = params.displayConfig ?: params.serviceId,</b>
+<b class="nc">&nbsp;                type_ = -1,</b>
+<b class="nc">&nbsp;                isLocationSort = true,</b>
+<b class="nc">&nbsp;                lat = location?.latitude?.toString(),</b>
+<b class="nc">&nbsp;                lng = location?.longitude?.toString(),</b>
+<b class="nc">&nbsp;                moneySourceFilter = params.moneySourceFilter?.joinToString(&quot;,&quot;),</b>
+<b class="nc">&nbsp;                cardNumberFilter = params.cardNumberFilter?.toFormattedCardNumbers()</b>
+<b class="nc">&nbsp;                    ?.joinToString(&quot;,&quot;),</b>
+&nbsp;            )
+&nbsp;        )
+&nbsp;
+<b class="nc">&nbsp;        return remoteDataSource.getRecommendVouchers(request)</b>
+<b class="nc">&nbsp;            .tracePromotionApi(pathType.traceEvent)</b>
+<b class="nc">&nbsp;            .map { response -&gt;</b>
+&nbsp;                response?.momoMsg?.let {
+&nbsp;                    ListPage(page = it.page ?: 1,
+&nbsp;                        limit = it.limit ?: DEFAULT_PAGE_SIZE,
+&nbsp;                        totalRecord = it.totalRecord ?: 0,
+&nbsp;                        records = it.records?.map { item -&gt;
+&nbsp;                            item.toVoucherBase(
+&nbsp;                                VoucherPathType.toLocalType(pathType)
+&nbsp;                            )
+&nbsp;                        } ?: emptyList())
+&nbsp;                } ?: ListPage(
+&nbsp;                    page = 1, limit = DEFAULT_PAGE_SIZE, totalRecord = 0, records = emptyList()
+&nbsp;                )
+&nbsp;            }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun onSearchVoucherPos(
+&nbsp;        searchKey: String, page: Int?, params: ChoosePromotionPosScreenProps
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt; {
+<b class="nc">&nbsp;        val cardNumber = if (!params.cardNumberFilter.isNullOrEmpty()) {</b>
+<b class="nc">&nbsp;            params.cardNumberFilter.toFormattedCardNumbers().joinToString(&quot;,&quot;)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            null</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        val request = VoucherPosSearchRequestDTO(</b>
+<b class="nc">&nbsp;            body = VoucherPosSearchRequestRequestBody(</b>
+<b class="nc">&nbsp;                momoMsg = VoucherPosSearchRequestRequestMomoMsg(</b>
+<b class="nc">&nbsp;                    page = page,</b>
+<b class="nc">&nbsp;                    searchKey = searchKey,</b>
+<b class="nc">&nbsp;                    isPaymentOffline = true,</b>
+<b class="nc">&nbsp;                    moneySourceFilter = params.moneySourceFilter,</b>
+<b class="nc">&nbsp;                    cardNumber = cardNumber,</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;        )
+&nbsp;
+<b class="nc">&nbsp;        return remoteDataSource.searchVoucher(request)</b>
+<b class="nc">&nbsp;            .tracePromotionApi(PromotionApiPerfEvent.GetSearchVouchersPos.event)</b>
+<b class="nc">&nbsp;            .map { response -&gt;</b>
+&nbsp;                println(&quot;onSearchVoucherPos response: $response&quot;)
+&nbsp;                response?.momoMsg?.let {
+&nbsp;                    ListPage(page = it.page ?: 1,
+&nbsp;                        limit = it.limit ?: DEFAULT_PAGE_SIZE,
+&nbsp;                        totalRecord = it.totalRecord ?: 0,
+&nbsp;                        records = it.records?.map { item -&gt;
+&nbsp;                            item.toVoucherBase()
+&nbsp;                        } ?: emptyList())
+&nbsp;                } ?: ListPage(
+&nbsp;                    page = 1, limit = DEFAULT_PAGE_SIZE, totalRecord = 0, records = emptyList()
+&nbsp;                )
+&nbsp;            }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 16:30</div>
+</div>
+</body>
+</html>
