@@ -1,0 +1,379 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > TransactionOverlayKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionOverlayKt (vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionOverlayKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/36)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleConfirmOverlay$$inlined$filter$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleConfirmOverlay$$inlined$filter$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleConfirmOverlay$$inlined$filter$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleOverlay$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleOverlay$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">TransactionOverlayKt$handleOverlay$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.filter
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestWithFlow
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.INavigator
+&nbsp;import vn.momo.compose.payment.base.domain.entities.ErrorPopupCallback
+&nbsp;import vn.momo.compose.payment.di.PaymentKoinScope
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.PaymentSession
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmResponse
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.DirectDebitPopupType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.PayXAction
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXState
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXTransaction
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.RedirectScreen
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.PayXBottomSheet
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.PayXDialog
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.PayXToastMessage
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.SofBottomSheetData
+&nbsp;import vn.momo.compose.payment.base.domain.entities.overlayData.UiOverlayData
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.controller.paymentOverlay.OverlayEffect
+&nbsp;import vn.momo.compose.payment.payx.presentation.model.PaymentEvent
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.goToTransactionHistoryTab
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.controller.paymentOverlay.actionData.TransactionOverlayAction
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler.UiBottomSheet
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler.UiDialog
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler.UiOverlay
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.uiHandler.UiToastMessage
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.shouldForceReInit
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;
+&nbsp;class TransactionOverlay(
+&nbsp;    val overlayData: UiOverlayData,
+&nbsp;    override val navigator: INavigator,
+&nbsp;    private val paymentSession: PaymentSession,
+&nbsp;    private val composeApi: IComposeApi
+&nbsp;) : PayXOverlayHandler {
+&nbsp;    override fun createUi(): UiOverlay? {
+&nbsp;        return when (overlayData) {
+&nbsp;            is PayXDialog -&gt; UiDialog(
+&nbsp;                navigator,
+&nbsp;                overlayData,
+&nbsp;                TransactionOverlayAction()
+&nbsp;            )
+&nbsp;
+&nbsp;            is PayXToastMessage -&gt; UiToastMessage(
+&nbsp;                navigator,
+&nbsp;                data = overlayData,
+&nbsp;                actionCreator = TransactionOverlayAction()
+&nbsp;            )
+&nbsp;
+&nbsp;            SofBottomSheetData -&gt; {
+&nbsp;                val paymentSession by lazy {
+&nbsp;                    PaymentKoinScope.getScope().get&lt;PaymentSession&gt;()
+&nbsp;                }
+&nbsp;                paymentSession.paymentEvent.tryEmit(PaymentEvent.OpenPopUpSof)
+&nbsp;                null
+&nbsp;            }
+&nbsp;
+&nbsp;            is PayXBottomSheet -&gt; UiBottomSheet(
+&nbsp;                navigator,
+&nbsp;                overlayData,
+&nbsp;                TransactionOverlayAction()
+&nbsp;            )
+&nbsp;
+&nbsp;            else -&gt; null
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun handle(): OverlayEffect? {
+&nbsp;        when (val action = createUi()?.handle()) {
+&nbsp;            PayXAction.OpenPopUpSof -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.OpenPopUpSof
+&nbsp;            )
+&nbsp;
+&nbsp;            PayXAction.GoToCashIn -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.CashIn
+&nbsp;            )
+&nbsp;
+&nbsp;            PayXAction.GoHome -&gt; navigator.dismissAll()
+&nbsp;
+&nbsp;            PayXAction.AddBank -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.AddBank
+&nbsp;            )
+&nbsp;
+&nbsp;            is PayXAction.OpenPhoneDialer -&gt; composeApi.requestWithFlow(
+&nbsp;                APIs.openDialer.name,
+&nbsp;                listOf(action.phoneNumber)
+&nbsp;            ).launchIn(CoroutineScope(Dispatchers.IO))
+&nbsp;
+&nbsp;            is PayXAction.OpenWeb -&gt; composeApi.requestWithFlow(
+&nbsp;                APIs.openWeb.name, listOf(
+&nbsp;                    buildJsonObject {
+&nbsp;                        put(&quot;url&quot;, action.refId)
+&nbsp;                        put(&quot;title&quot;, action.webTitle)
+&nbsp;                    })
+&nbsp;            )
+&nbsp;                .launchIn(CoroutineScope(Dispatchers.IO))
+&nbsp;
+&nbsp;            is PayXAction.OpenDeeplink -&gt; navigator.openUrl(action.url)
+&nbsp;
+&nbsp;            is PayXAction.StartFeature -&gt; {
+&nbsp;                navigator.navigateFeatureCode(
+&nbsp;                    action.refId, action.refParams
+&nbsp;                        ?: emptyJsonObject(),
+&nbsp;                    ErrorPopupCallback.serializer()
+&nbsp;                ).map {
+&nbsp;                    return@map shouldForceReInit(action.refId, action.refParams, it)
+&nbsp;                }.onEach {
+&nbsp;                    if (it) {
+&nbsp;                        paymentSession.paymentEvent.tryEmit(
+&nbsp;                            PaymentEvent.ForceReInit
+&nbsp;                        )
+&nbsp;                    }
+&nbsp;                }.launchIn(CoroutineScope(Dispatchers.IO))
+&nbsp;            }
+&nbsp;
+&nbsp;            is PayXAction.DirectDebit -&gt; handleDirectDebitAction(action.directDebitAction)
+&nbsp;
+&nbsp;            is PayXAction.Cancel -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.CallbackToMiniApp(
+&nbsp;                    emptyJsonObject(), PayXState.USER_CANCEL
+&nbsp;                )
+&nbsp;            )
+&nbsp;            is PayXAction.TabBarTransaction -&gt; goToTransactionHistoryTab()
+&nbsp;
+&nbsp;            else -&gt; {
+&nbsp;                // do nothing
+&nbsp;            }
+&nbsp;        }
+&nbsp;        // TODO return effect to remove paymentSession
+&nbsp;        return null
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleDirectDebitAction(action: String?) {
+&nbsp;        when (action) {
+&nbsp;            DirectDebitPopupType.REGISTER.action -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.RegisterDirectDebit
+&nbsp;            )
+&nbsp;
+&nbsp;            DirectDebitPopupType.ON.action -&gt; paymentSession.paymentEvent.tryEmit(PaymentEvent.OnDirectDebit)
+&nbsp;
+&nbsp;            DirectDebitPopupType.CHANGE_SOURCE.action -&gt; paymentSession.paymentEvent.tryEmit(
+&nbsp;                PaymentEvent.ChangeSourceDirectDebit
+&nbsp;            )
+&nbsp;
+&nbsp;            else -&gt; {}
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun Flow&lt;Response&lt;PayXTransaction&gt;&gt;.handleOverlay(): Flow&lt;Response&lt;PayXTransaction&gt;&gt; {
+<b class="nc">&nbsp;    val paymentSessionCenter by lazy { PaymentKoinScope.getScope().get&lt;PaymentSession&gt;() }</b>
+<b class="nc">&nbsp;    return this.map { response -&gt;</b>
+&nbsp;        response.data.overlayData?.let {
+&nbsp;            paymentSessionCenter.overlayEvent.tryEmit(it)
+&nbsp;        }
+&nbsp;        return@map response
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun Flow&lt;Response&lt;ConfirmResponse&gt;&gt;.handleConfirmOverlay(): Flow&lt;Response&lt;ConfirmResponse&gt;&gt; {
+<b class="nc">&nbsp;    val paymentSessionCenter by lazy { PaymentKoinScope.getScope().get&lt;PaymentSession&gt;() }</b>
+&nbsp;
+<b class="nc">&nbsp;    return this.filter { response -&gt;</b>
+&nbsp;        if (response.data.overlayData != null &amp;&amp;
+&nbsp;            response.data.momoMsg?.redirectScreen == RedirectScreen.PAYMENT_REVISION.id) {
+&nbsp;            paymentSessionCenter.overlayEvent.tryEmit(response.data.overlayData!!)
+&nbsp;            false
+&nbsp;        } else {
+&nbsp;            true
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

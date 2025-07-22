@@ -1,0 +1,307 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBTransactionManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.data.repository.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: SBTransactionManager (vn.momo.compose.payment.singleBill.data.repository.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBTransactionManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/41)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/124)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SBTransactionManager$checkout$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/41)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/124)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.data.repository.transaction
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.SharingStarted
+&nbsp;import kotlinx.coroutines.flow.StateFlow
+&nbsp;import kotlinx.coroutines.flow.stateIn
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import org.koin.core.scope.Scope
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.cdnConfig.CDNConfig
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.SofDTO
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionSofHandler
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.InvoiceItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.base.domain.entities.VoucherItemLocal
+&nbsp;import vn.momo.compose.payment.base.domain.repository.transaction.TransactionInvoiceHandler
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.PaymentInfoDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBErrorConfigCDN
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.dto.response.SBMomoMsgDTO
+&nbsp;import vn.momo.compose.payment.singleBill.data.dataSource.memory.SBSavedTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.domain.entities.error.SingleBillError
+&nbsp;import vn.momo.compose.payment.singleBill.domain.model.SBTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.presentation.model.SBConfirmScreenProps
+&nbsp;import vn.momo.core.features.payment.model.EnumPaymentType
+&nbsp;import vn.momo.core.features.payment.model.PaymentType
+&nbsp;
+<b class="nc">&nbsp;class SBTransactionManager(</b>
+<b class="nc">&nbsp;    private val koinScope: Scope,</b>
+<b class="nc">&nbsp;    private val savedTransaction: SBSavedTransaction,</b>
+&nbsp;    cdnConfig: CDNConfig,
+&nbsp;) {
+&nbsp;    private val cdnErrorConfig =
+<b class="nc">&nbsp;        cdnConfig.get(&quot;PAYMENT_ERROR&quot;, SBErrorConfigCDN.serializer()).stateIn(</b>
+<b class="nc">&nbsp;            CoroutineScope(Dispatchers.IO),</b>
+<b class="nc">&nbsp;            started = SharingStarted.WhileSubscribed(500),</b>
+<b class="nc">&nbsp;            initialValue = null</b>
+&nbsp;        )
+&nbsp;
+&nbsp;    private val voucherErrorsConfig =
+<b class="nc">&nbsp;        cdnConfig.get(&quot;SB_VOUCHER_ERROR&quot;, JsonObject.serializer()).stateIn(</b>
+<b class="nc">&nbsp;            CoroutineScope(Dispatchers.IO),</b>
+<b class="nc">&nbsp;            started = SharingStarted.WhileSubscribed(500),</b>
+<b class="nc">&nbsp;            initialValue = null</b>
+&nbsp;        )
+&nbsp;
+&nbsp;    suspend fun checkout(param: SBConfirmScreenProps): Response&lt;SBTransaction&gt; {
+<b class="nc">&nbsp;        return when (EnumPaymentType.fromId(param.tranType)) {</b>
+<b class="nc">&nbsp;            is PaymentType -&gt; koinScope.get&lt;DefaultCheckoutRepository&gt;()</b>
+<b class="nc">&nbsp;            else -&gt; null</b>
+&nbsp;        }
+<b class="nc">&nbsp;            ?.handleCheckoutData(</b>
+<b class="nc">&nbsp;                data = param.checkoutData,</b>
+<b class="nc">&nbsp;                paymentInfo = param.paymentInfo,</b>
+<b class="nc">&nbsp;                savedTransaction = savedTransaction</b>
+&nbsp;            )
+<b class="nc">&nbsp;            ?: throw Exception(&quot;Unsupported tranType: ${param.tranType}&quot;)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @throws Exception if response is null
+&nbsp;     */
+&nbsp;    fun update(
+&nbsp;        sof: SOFItem,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;        currentInvoice: InvoiceItem,
+<b class="nc">&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;? = emptyList(),</b>
+<b class="nc">&nbsp;        discountCode: String? = null,</b>
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;
+&nbsp;    ): Flow&lt;Response&lt;SBTransaction&gt;&gt; {
+<b class="nc">&nbsp;        return koinScope.get&lt;DefaultUpdateRepository&gt;()</b>
+<b class="nc">&nbsp;            .update(</b>
+<b class="nc">&nbsp;                null,</b>
+<b class="nc">&nbsp;                sof,</b>
+<b class="nc">&nbsp;                sofList,</b>
+<b class="nc">&nbsp;                currentInvoice,</b>
+<b class="nc">&nbsp;                cdnErrorConfig,</b>
+<b class="nc">&nbsp;                vouchers,</b>
+<b class="nc">&nbsp;                discountCode,</b>
+<b class="nc">&nbsp;                voucherErrorsConfig,</b>
+<b class="nc">&nbsp;                currentPaymentInfo</b>
+&nbsp;            )
+&nbsp;    }
+&nbsp;
+&nbsp;    fun reInitWithNewAmount(
+&nbsp;        newAmount: Double?,
+&nbsp;        sof: SOFItem,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;
+&nbsp;    ): Flow&lt;Response&lt;SBTransaction&gt;&gt; {
+<b class="nc">&nbsp;        return koinScope.get&lt;DefaultUpdateRepository&gt;()</b>
+<b class="nc">&nbsp;            .update(</b>
+<b class="nc">&nbsp;                newAmount,</b>
+<b class="nc">&nbsp;                sof,</b>
+<b class="nc">&nbsp;                sofList,</b>
+<b class="nc">&nbsp;                currentInvoice,</b>
+<b class="nc">&nbsp;                cdnErrorConfig,</b>
+<b class="nc">&nbsp;                voucherConfigFlow = voucherErrorsConfig,</b>
+<b class="nc">&nbsp;                currentPaymentInfo = currentPaymentInfo</b>
+&nbsp;            )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;interface SBCheckoutRepository {
+&nbsp;    val koinScope: Scope
+&nbsp;    fun getSofHandler(remoteSof: List&lt;SofDTO&gt;, serviceId: String?): TransactionSofHandler
+&nbsp;    fun getInvoiceHandler(
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;,
+&nbsp;        momoMsg: SBMomoMsgDTO?,
+&nbsp;        showTranId: Boolean?,
+&nbsp;    ): TransactionInvoiceHandler
+&nbsp;
+&nbsp;    suspend fun handleCheckoutData(
+&nbsp;        data: String?,
+&nbsp;        paymentInfo: List&lt;PaymentInfoDTO&gt;,
+&nbsp;        savedTransaction: SBSavedTransaction
+&nbsp;    ): Response&lt;SBTransaction&gt;
+&nbsp;}
+&nbsp;
+&nbsp;interface SBUpdateRepository {
+&nbsp;    val koinScope: Scope
+&nbsp;    fun getSofHandler(
+&nbsp;        remoteSof: List&lt;SofDTO&gt;,
+&nbsp;        sofList: List&lt;SOFItem&gt;
+&nbsp;    ): TransactionSofHandler
+&nbsp;
+&nbsp;    fun getInvoiceHandler(
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;,
+&nbsp;        momoMsg: SBMomoMsgDTO?,
+&nbsp;        newAmount: Double?
+&nbsp;    ): TransactionInvoiceHandler
+&nbsp;
+&nbsp;    fun update(
+&nbsp;        newAmount: Double?,
+&nbsp;        sof: SOFItem,
+&nbsp;        sofList: List&lt;SOFItem&gt;,
+&nbsp;        currentInvoice: InvoiceItem,
+&nbsp;        configFlow: StateFlow&lt;SBErrorConfigCDN?&gt;,
+&nbsp;        vouchers: List&lt;VoucherItemLocal&gt;? = emptyList(),
+&nbsp;        discountCode: String? = null,
+&nbsp;        voucherConfigFlow: StateFlow&lt;JsonObject?&gt;,
+&nbsp;        currentPaymentInfo: List&lt;PaymentInfoDTO&gt;
+&nbsp;    ): Flow&lt;Response&lt;SBTransaction&gt;&gt;
+&nbsp;}
+&nbsp;
+&nbsp;interface SBErrorGenerator {
+&nbsp;    suspend fun generateError(): SingleBillError?
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

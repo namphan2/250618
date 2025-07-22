@@ -1,0 +1,100 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IFirebaseTracer</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.composeApi.firebaseEvent</a>
+</div>
+
+<h1>Coverage Summary for Class: IFirebaseTracer (vn.momo.compose.payment.base.core.composeApi.firebaseEvent)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">IFirebaseTracer</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.composeApi.firebaseEvent
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestWithFlow
+&nbsp;import vn.momo.compose.utils.emptyJsonObject
+&nbsp;
+&nbsp;fun interface IFirebaseTracer {
+&nbsp;    fun track(eventName: String, eventParams: JsonObject?)
+&nbsp;}
+&nbsp;
+&nbsp;class PayXFirebaseTracer(private val api: IComposeApi) : IFirebaseTracer {
+&nbsp;    override fun track(eventName: String, eventParams: JsonObject?) {
+&nbsp;        api.requestWithFlow(
+&nbsp;            APIs.trackEvent.name,
+&nbsp;            listOf(eventName, eventParams ?: emptyJsonObject())
+&nbsp;        )
+&nbsp;            .take(1)
+&nbsp;            .launchIn(CoroutineScope(Dispatchers.IO))
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > GenerateChoosePromotionUseCase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.useCases.voucher</a>
+</div>
+
+<h1>Coverage Summary for Class: GenerateChoosePromotionUseCase (vn.momo.compose.payment.payx.domain.useCases.voucher)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenerateChoosePromotionUseCase</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/62)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/483)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GenerateChoosePromotionUseCase$invoke$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/62)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/483)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.useCases.voucher
+&nbsp;
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.compose.payment.base.domain.entities.EnumMoneySource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.InvoiceInfoDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.SavedPaymentData
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PromoDisplay
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PromotionType
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.voucher.IVoucherRepository
+&nbsp;import vn.momo.compose.utils.datamapping.emptyJsonObject
+&nbsp;import vn.momo.compose.utils.datamapping.toJsonElement
+&nbsp;
+<b class="nc">&nbsp;class GenerateChoosePromotionUseCase(</b>
+<b class="nc">&nbsp;    private val repository: IVoucherRepository,</b>
+<b class="nc">&nbsp;    private val savedPaymentData: SavedPaymentData</b>
+&nbsp;) {
+&nbsp;    suspend operator fun invoke(
+&nbsp;        moneySource: Int?,
+&nbsp;        promotions: List&lt;PromoDisplay&gt;,
+&nbsp;        sofList: List&lt;SOFItem&gt;
+&nbsp;    ): JsonObject {
+<b class="nc">&nbsp;        val momoMsgSaved = savedPaymentData.cloneTransaction()</b>
+<b class="nc">&nbsp;        val moneySourceInfo =</b>
+<b class="nc">&nbsp;            momoMsgSaved?.purchaseInfo?.bundleSof?.get(0)?.moneySourceInfo?.toJs() ?: emptyJsonObject()</b>
+<b class="nc">&nbsp;        val invoiceInfoSaved = momoMsgSaved?.purchaseInfo?.invoiceInfo</b>
+<b class="nc">&nbsp;        val discountCode =</b>
+<b class="nc">&nbsp;            promotions.find { it.promoType == PromotionType.DISCOUNT_CODE }?.promoId ?: &quot;&quot;</b>
+<b class="nc">&nbsp;        val purchaseId = momoMsgSaved?.purchaseInfo?.purchaseId ?: &quot;&quot;</b>
+<b class="nc">&nbsp;        val paymentType = momoMsgSaved?.paymentType ?: &quot;&quot;</b>
+<b class="nc">&nbsp;        val productInfo = invoiceInfoSaved?.get(0)?.items?.get(0)?.productInfo?.toJs() ?: emptyJsonObject()</b>
+&nbsp;
+<b class="nc">&nbsp;        return buildJsonObject {</b>
+<b class="nc">&nbsp;            put(&quot;selectedVouchers&quot;, repository.convertVoucherItemToJs(promotions).toJsonElement())</b>
+<b class="nc">&nbsp;            put(&quot;cardNumber&quot;, buildCardNumberFilter(sofList))</b>
+<b class="nc">&nbsp;            put(&quot;moneySourceFilter&quot;, listOf(moneySource).toJsonElement())</b>
+<b class="nc">&nbsp;            put(&quot;billData&quot;, buildBillData(</b>
+<b class="nc">&nbsp;                invoiceInfoSaved,</b>
+<b class="nc">&nbsp;                promotions,</b>
+<b class="nc">&nbsp;                momoMsgSaved?.tranType</b>
+&nbsp;            ))
+<b class="nc">&nbsp;            put(&quot;discountCode&quot;, discountCode)</b>
+<b class="nc">&nbsp;            put(&quot;purchaseId&quot;, purchaseId)</b>
+<b class="nc">&nbsp;            put(&quot;invoiceInfo&quot;, buildInvoiceInfo(invoiceInfoSaved, moneySource, moneySourceInfo))</b>
+<b class="nc">&nbsp;            put(&quot;paymentType&quot;, paymentType)</b>
+<b class="nc">&nbsp;            put(&quot;productInfo&quot;, productInfo)</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildBillData(
+&nbsp;        invoiceInfo: List&lt;InvoiceInfoDTO&gt;?,
+&nbsp;        promotions: List&lt;PromoDisplay&gt;,
+&nbsp;        tranType: Int?
+&nbsp;    ): JsonObject {
+<b class="nc">&nbsp;        val items = invoiceInfo?.mapNotNull { invoice -&gt;</b>
+<b class="nc">&nbsp;            val item = invoice.items?.get(0)</b>
+<b class="nc">&nbsp;            item?.let {</b>
+<b class="nc">&nbsp;                buildJsonObject {</b>
+<b class="nc">&nbsp;                    put(&quot;itemId&quot;, item.itemId)</b>
+<b class="nc">&nbsp;                    put(&quot;originalAmount&quot;, item.originalAmount)</b>
+<b class="nc">&nbsp;                    put(&quot;serviceId&quot;, item.serviceId)</b>
+<b class="nc">&nbsp;                    put(&quot;serviceType&quot;, item.serviceType)</b>
+<b class="nc">&nbsp;                    put(&quot;orderInfo&quot;,buildJsonObject {</b>
+<b class="nc">&nbsp;                        put(&quot;tranData&quot;, item.tranData)</b>
+<b class="nc">&nbsp;                    })</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        val giftId = promotions.map { it.promoId }.joinToString(&quot;,&quot;)</b>
+&nbsp;
+<b class="nc">&nbsp;        return buildJsonObject {</b>
+<b class="nc">&nbsp;            put(&quot;items&quot;, items.toJsonElement())</b>
+<b class="nc">&nbsp;            put(&quot;giftId&quot;, giftId)</b>
+<b class="nc">&nbsp;            put(&quot;tranType&quot;, tranType)</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildInvoiceInfo(
+&nbsp;        invoiceInfo: List&lt;InvoiceInfoDTO&gt;?,
+&nbsp;        moneySource: Int?,
+&nbsp;        moneySourceInfo: JsonObject
+&nbsp;    ): JsonElement {
+<b class="nc">&nbsp;        invoiceInfo?.let {</b>
+<b class="nc">&nbsp;            return it.mapNotNull { invoice -&gt;</b>
+<b class="nc">&nbsp;                val item = invoice.items?.get(0)</b>
+<b class="nc">&nbsp;                item?.let {</b>
+<b class="nc">&nbsp;                    buildJsonObject {</b>
+<b class="nc">&nbsp;                        put(&quot;itemId&quot;, item.itemId)</b>
+<b class="nc">&nbsp;                        put(&quot;moneySource&quot;, moneySource)</b>
+<b class="nc">&nbsp;                        put(&quot;totalAmount&quot;, invoice.totalAmount)</b>
+<b class="nc">&nbsp;                        put(&quot;invoiceId&quot;, invoice.invoiceId)</b>
+<b class="nc">&nbsp;                        put(&quot;subtotalAmount&quot;, invoice.subtotalAmount)</b>
+<b class="nc">&nbsp;                        put(&quot;moneySourceInfo&quot;, moneySourceInfo)</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }.toJsonElement()</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return emptyList&lt;JsonObject&gt;().toJsonElement()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildCardNumberFilter(sofList: List&lt;SOFItem&gt;): JsonElement {
+<b class="nc">&nbsp;        return sofList.filter {</b>
+<b class="nc">&nbsp;            listOf(</b>
+<b class="nc">&nbsp;                EnumMoneySource.Card,</b>
+<b class="nc">&nbsp;                EnumMoneySource.CreditCardMarketplace</b>
+<b class="nc">&nbsp;            ).contains(it.moneySource)</b>
+<b class="nc">&nbsp;        }.mapNotNull { it.info.cardNumber }.toJsonElement()</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,301 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SBConfirmTracker</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.singleBill.presentation.viewModel.delegate</a>
+</div>
+
+<h1>Coverage Summary for Class: SBConfirmTracker (vn.momo.compose.payment.singleBill.presentation.viewModel.delegate)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">SBConfirmTracker</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.singleBill.presentation.viewModel.delegate
+&nbsp;
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.TraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.GrafanaTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.TrackingErrorCode
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.SBUserEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ChangePromotionSB
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ChoosePromotionSB
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ClearPromotionSB
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ConfirmButtonClicked
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ErrorPopupDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.OnBackPaymentConfirm
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentScreenDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentScreenInteracted
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.SeeAllMoneySourceClicked
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ToggleCardDetail
+&nbsp;import vn.momo.compose.payment.base.domain.entities.DisableType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.transaction.TransactionData
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.delegate.ConfirmViewModelTracking
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.payx.presentation.view.components.PromotionStatus
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.reducers.UiVersion
+&nbsp;import vn.momo.compose.payment.singleBill.domain.entities.error.SingleBillError
+&nbsp;import vn.momo.compose.payment.singleBill.domain.model.SBTransaction
+&nbsp;import vn.momo.compose.payment.singleBill.presentation.viewModel.reducer.SingleBillTransactionReducer
+&nbsp;
+&nbsp;interface SBConfirmTracker : ConfirmViewModelTracking {
+&nbsp;    fun trackTriggerConfirm(
+&nbsp;        state: SingleBillTransactionReducer.State,
+&nbsp;        currentSof: SOFItem?,
+&nbsp;        version: UiVersion
+&nbsp;    )
+&nbsp;
+&nbsp;    fun trackBottomSheetConfirmDisplayed()
+&nbsp;
+&nbsp;    fun trackChoosePromotionSB()
+&nbsp;    fun trackChangePromotionSB()
+&nbsp;    fun trackClearPromotionSB()
+&nbsp;}
+&nbsp;
+&nbsp;class DefaultSBConfirmTracker : SBConfirmTracker {
+&nbsp;    override fun trackScreenDisplay(version: UiVersion) {
+&nbsp;        FirebaseTrace.track(PaymentScreenDisplayed(flowType = &quot;single&quot;, tagName = version.name))
+&nbsp;        GrafanaTrace.start(SBUserEvent.ScreenInteracted.event)
+&nbsp;        GrafanaTrace.start(SBUserEvent.E2ECheckoutToResult.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun &lt;T : TransactionData&gt; trackScreenInteracted(
+&nbsp;        initTransaction: T?,
+&nbsp;        version: UiVersion,
+&nbsp;        checkoutGrafanaId: String?,
+&nbsp;        checkoutFlow: String?
+&nbsp;    ) {
+&nbsp;        if (initTransaction as? SBTransaction != null) {
+&nbsp;            FirebaseTrace.track(
+&nbsp;                PaymentScreenInteracted(
+&nbsp;                    availableSofs = initTransaction.sofList
+&nbsp;                        .filter { it.disableType == DisableType.Show &amp;&amp; it.moneySource.id != null }
+&nbsp;                        .joinToString(separator = &quot;,&quot;) { it.moneySource.id.toString() },
+&nbsp;                    tagName = version.name,
+&nbsp;                    selectedSof = initTransaction.selectedSof?.moneySource?.id,
+&nbsp;                    result = initTransaction.enableConfirm,
+&nbsp;                    amount = initTransaction.totalAmount.total.value,
+&nbsp;                    flowType = &quot;single&quot;,
+&nbsp;                    errorCode = initTransaction.errorCode
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;        GrafanaTrace.stop(
+&nbsp;            checkoutGrafanaId ?: &quot;&quot;,
+&nbsp;            SBUserEvent.SubmitCheckout.event,
+&nbsp;            true,
+&nbsp;            TraceParameter(
+&nbsp;                errorCode = (initTransaction as? SBTransaction)?.errorCode?.toDouble()
+&nbsp;            )
+&nbsp;        )
+&nbsp;        GrafanaTrace.stop(
+&nbsp;            checkoutGrafanaId ?: &quot;&quot;,
+&nbsp;            SBUserEvent.ScreenInteracted.event,
+&nbsp;            true,
+&nbsp;            TraceParameter(
+&nbsp;                errorCode = (initTransaction as? SBTransaction)?.errorCode?.toDouble()
+&nbsp;            )
+&nbsp;        )
+&nbsp;        GrafanaTrace.count(SBUserEvent.CheckoutSuccessCount.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackGoBack(version: UiVersion) {
+&nbsp;        FirebaseTrace.track(OnBackPaymentConfirm(tagName = version.name, flowType = &quot;single&quot;))
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackClickShowAllSof(version: UiVersion) {
+&nbsp;        FirebaseTrace.track(SeeAllMoneySourceClicked(tagName = version.name, flowType = &quot;single&quot;))
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackCartDetailTriggered(value: String, version: UiVersion) {
+&nbsp;        FirebaseTrace.track(ToggleCardDetail(iconValue = value, tagName = version.name))
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackStartCallAPIChangeSof() {
+&nbsp;        GrafanaTrace.start(SBUserEvent.ChangeSof.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun &lt;T : TransactionData&gt; trackChangeSofFinished(
+&nbsp;        result: Response&lt;T&gt;
+&nbsp;    ) {
+&nbsp;        if (result.isSuccess) {
+&nbsp;            GrafanaTrace.success(SBUserEvent.ChangeSof.event, TraceParameter(errorCode = 0.0))
+&nbsp;        } else {
+&nbsp;            val errorCode =
+&nbsp;                (result.exception as? SingleBillError)?.code ?: TrackingErrorCode.NoErrorCode.code
+&nbsp;            GrafanaTrace.fail(
+&nbsp;                SBUserEvent.ChangeSof.event,
+&nbsp;                TraceParameter(errorCode = errorCode.toDouble())
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    override fun trackChoosePromotion(status: PromotionStatus?, version: UiVersion) {
+&nbsp;        GrafanaTrace.start(SBUserEvent.PickPromotion.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackChoosePromotionSuccess() {
+&nbsp;        GrafanaTrace.success(SBUserEvent.PickPromotion.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackChoosePromotionFail() {
+&nbsp;        GrafanaTrace.fail(SBUserEvent.PickPromotion.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackChangePromotion() {
+&nbsp;        GrafanaTrace.start(SBUserEvent.ChangePromotion.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun &lt;T : TransactionData&gt; trackChangePromotionFinished(
+&nbsp;        result: Response&lt;T&gt;
+&nbsp;    ) {
+&nbsp;        if (result.isSuccess) {
+&nbsp;            GrafanaTrace.success(SBUserEvent.ChangePromotion.event, TraceParameter(errorCode = 0.0))
+&nbsp;        } else {
+&nbsp;            val errorCode =
+&nbsp;                (result.exception as? SingleBillError)?.code ?: TrackingErrorCode.NoErrorCode.code
+&nbsp;            GrafanaTrace.fail(
+&nbsp;                SBUserEvent.ChangePromotion.event,
+&nbsp;                TraceParameter(errorCode = errorCode.toDouble())
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackStartRedirect() {
+&nbsp;        GrafanaTrace.start(SBUserEvent.RedirectPaymentResult.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackRedirectFail() {
+&nbsp;        GrafanaTrace.fail(SBUserEvent.RedirectPaymentResult.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackAuthenticationSuccess() {
+&nbsp;        GrafanaTrace.count(SBUserEvent.AuthenticationSuccessCount.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackAuthenticationFail() {
+&nbsp;        GrafanaTrace.count(SBUserEvent.AuthenticationFailCount.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackToggleAmount(state: String, version: UiVersion) {
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackErrorPopup(errorCode: Int?, version: UiVersion) {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            ErrorPopupDisplayed(
+&nbsp;                errorCode = errorCode,
+&nbsp;                tagName = version.name,
+&nbsp;                flowType = &quot;single&quot;
+&nbsp;            )
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackScreenEnd() {
+&nbsp;        GrafanaTrace.fail(SBUserEvent.E2ECheckoutToResult.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackTriggerConfirm(
+&nbsp;        state: SingleBillTransactionReducer.State,
+&nbsp;        currentSof: SOFItem?,
+&nbsp;        version: UiVersion
+&nbsp;    ) {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            ConfirmButtonClicked(
+&nbsp;                promotionIds = state.promotion.promoDisplay.joinToString(separator = &quot;,&quot;) {
+&nbsp;                    it.promoId ?: &quot;&quot;
+&nbsp;                },
+&nbsp;                moneySource = currentSof?.moneySource?.id,
+&nbsp;                quantity = state.invoice.size,
+&nbsp;                orderId = state.tranId,
+&nbsp;                tagName = version.name,
+&nbsp;                flowType = &quot;single&quot;
+&nbsp;            )
+&nbsp;        )
+&nbsp;        GrafanaTrace.count(SBUserEvent.StartAuthenticationCount.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackBottomSheetConfirmDisplayed() {
+&nbsp;        GrafanaTrace.count(SBUserEvent.DisplaySplitBillCount.event)
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackChoosePromotionSB() {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            ChoosePromotionSB()
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackChangePromotionSB() {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            ChangePromotionSB()
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun trackClearPromotionSB() {
+&nbsp;        FirebaseTrace.track(
+&nbsp;            ClearPromotionSB()
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > CollectVoucherRequestBody</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.data.dto</a>
+</div>
+
+<h1>Coverage Summary for Class: CollectVoucherRequestBody (vn.momo.compose.payment.promotion.data.dto)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">CollectVoucherRequestBody</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CollectVoucherRequestBody$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/68)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.data.dto
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.promotion.core.network.model.PromotionNetworkOptions
+&nbsp;import vn.momo.compose.payment.promotion.core.network.model.PromotionNetworkRequest
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class CollectVoucherRequestBody(
+<b class="nc">&nbsp;    val voucherId: String,</b>
+<b class="nc">&nbsp;    val campaignId: String? = null,</b>
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CollectVoucherRequestDTO(
+&nbsp;    val body: CollectVoucherRequestBody,
+&nbsp;    override val path: String? = &quot;promotionplatform-collect-voucher/v1/collect&quot;,
+&nbsp;    override val subPath: String? = null,
+&nbsp;    override val subDomain: String? = null,
+&nbsp;    override val msgType: String? = null,
+&nbsp;    override val options: PromotionNetworkOptions = PromotionNetworkOptions( retry = 2, offEncryption = true, loading = false, timeout = 5000 ),
+&nbsp;    override val headers: JsonObject? = null,
+&nbsp;): PromotionNetworkRequest {
+&nbsp;    override fun toJson() = ModelConvertUtils.encodeToJson(serializer(), this)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CollectVoucherResponsePopup(
+&nbsp;    val body: String? = null,
+&nbsp;    val cta: String? = null,
+&nbsp;    val refId: String? = null,
+&nbsp;    val params: JsonObject? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CollectVoucherResponseResult(
+&nbsp;    val collectStatus: Boolean? = null,
+&nbsp;    val collectCode: Int? = null,
+&nbsp;    val giftId: String? = null,
+&nbsp;    val startDate: Long? = null,
+&nbsp;    val endDate: Long? = null,
+&nbsp;    val currentTime: Long? = null,
+&nbsp;    val validateApplyTime: Boolean? = null,
+&nbsp;    val popup: CollectVoucherResponsePopup? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CollectVoucherResponseDTO(
+&nbsp;    val result: CollectVoucherResponseResult? = null,
+&nbsp;) {
+&nbsp;    fun toJson(): JsonElement? = ModelConvertUtils.encodeToJson(CollectVoucherResponseDTO.serializer(), this)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

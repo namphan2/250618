@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IVoucherRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.domain.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: IVoucherRepository (vn.momo.compose.payment.promotion.domain.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+  <tr>
+    <td class="name">IVoucherRepository$DefaultImpls</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.domain.repositories
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import vn.momo.compose.payment.promotion.core.utils.ListPage
+&nbsp;import vn.momo.compose.payment.promotion.data.constants.VoucherPathType
+&nbsp;import vn.momo.compose.payment.promotion.data.dto.CollectVoucherResponseDTO
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.ClaimVoucherCoinRefExtra
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.IVoucherBase
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.VoucherCoinListPage
+&nbsp;import vn.momo.compose.payment.promotion.presentation.model.ChoosePromotionScreenProps
+&nbsp;
+&nbsp;interface IVoucherRepository {
+&nbsp;    fun getVoucherList(
+&nbsp;        pathType: VoucherPathType,
+<b class="nc">&nbsp;        page: Int? = 1,</b>
+&nbsp;        params: ChoosePromotionScreenProps,
+<b class="nc">&nbsp;        user: String? = &quot;&quot;,</b>
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt;
+&nbsp;
+&nbsp;    fun getVoucherMultiBill(
+&nbsp;        pathType: VoucherPathType,
+<b class="nc">&nbsp;        page: Int? = 1,</b>
+&nbsp;        params: ChoosePromotionScreenProps,
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt;
+&nbsp;
+&nbsp;    fun getVoucherRecommendSingleBill(
+&nbsp;        pathType: VoucherPathType,
+<b class="nc">&nbsp;        page: Int? = 1,</b>
+&nbsp;        params: ChoosePromotionScreenProps,
+<b class="nc">&nbsp;        user: String? = &quot;&quot;,</b>
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt;
+&nbsp;
+&nbsp;    fun getVoucherSingleBill(
+&nbsp;        pathType: VoucherPathType,
+<b class="nc">&nbsp;        page: Int? = 1,</b>
+&nbsp;        params: ChoosePromotionScreenProps,
+<b class="nc">&nbsp;        user: String? = &quot;&quot;,</b>
+&nbsp;    ): Flow&lt;ListPage&lt;IVoucherBase&gt;&gt;
+&nbsp;
+&nbsp;    fun getListVoucherCoin(
+<b class="nc">&nbsp;        page: Int? = 1,</b>
+&nbsp;        params: ChoosePromotionScreenProps,
+<b class="nc">&nbsp;        filter: String? = null,</b>
+&nbsp;    ): Flow&lt;VoucherCoinListPage&gt;
+&nbsp;
+&nbsp;    fun claimVoucherCoin(rewardId: String): Flow&lt;ClaimVoucherCoinRefExtra?&gt;
+&nbsp;
+&nbsp;    fun collectVoucher(collectId: String, campaignId: String?): Flow&lt;CollectVoucherResponseDTO?&gt;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

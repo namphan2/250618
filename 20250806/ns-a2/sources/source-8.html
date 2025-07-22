@@ -1,0 +1,257 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > XSaleSlice</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel.slices</a>
+</div>
+
+<h1>Coverage Summary for Class: XSaleSlice (vn.momo.compose.payment.payx.presentation.viewModel.slices)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">XSaleSlice</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/43)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">XSaleSlice$getDisplayConfig$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/57)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">XSaleSlice$getDisplayConfig$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/108)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel.slices
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.XSaleDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.XSaleInViewPort
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.orderExtra.xsale.XSaleRepository
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.reducers.XSaleReducer
+&nbsp;
+&nbsp;
+&nbsp;class XSaleSlice(
+<b class="nc">&nbsp;    private val scope: CoroutineScope,</b>
+<b class="nc">&nbsp;    private val repository: XSaleRepository,</b>
+<b class="nc">&nbsp;) : ViewModelSlice&lt;XSaleReducer.XSaleState, XSaleReducer.XSaleAction, XSaleReducer.XSaleEffect&gt;(</b>
+<b class="nc">&nbsp;    initialState = XSaleReducer.XSaleState(),</b>
+<b class="nc">&nbsp;    reducer = XSaleReducer(),</b>
+<b class="nc">&nbsp;    scope</b>
+&nbsp;) {
+&nbsp;    fun getDisplayConfig(purchaseId: String?) {
+<b class="nc">&nbsp;        repository.getConfig()</b>
+<b class="nc">&nbsp;            .onEach { config -&gt;</b>
+<b class="nc">&nbsp;                dispatch(XSaleReducer.XSaleAction.UpdateConfig(config))</b>
+<b class="nc">&nbsp;                config?.let {</b>
+<b class="nc">&nbsp;                    FirebaseTrace.track(</b>
+<b class="nc">&nbsp;                        XSaleDisplayed(</b>
+<b class="nc">&nbsp;                            serviceId = config.serviceId,</b>
+<b class="nc">&nbsp;                            layoutType = config.trackingLayout,</b>
+<b class="nc">&nbsp;                            uiItemType = &quot;${config.trackingLayout}1&quot;,</b>
+<b class="nc">&nbsp;                            purchaseId = purchaseId</b>
+&nbsp;                        )
+&nbsp;                    )
+<b class="nc">&nbsp;                    FirebaseTrace.track(</b>
+<b class="nc">&nbsp;                        XSaleInViewPort(</b>
+<b class="nc">&nbsp;                            serviceId = config.serviceId,</b>
+<b class="nc">&nbsp;                            layoutType = config.trackingLayout,</b>
+<b class="nc">&nbsp;                            uiItemType = &quot;${config.trackingLayout}1&quot;,</b>
+<b class="nc">&nbsp;                            purchaseId = purchaseId</b>
+&nbsp;                        )
+&nbsp;                    )
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;            .catch {</b>
+<b class="nc">&nbsp;                dispatch(XSaleReducer.XSaleAction.UpdateConfig(null))</b>
+&nbsp;            }
+<b class="nc">&nbsp;            .launchIn(scope)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

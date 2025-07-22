@@ -1,0 +1,368 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SourceNapasFromJS</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.dataSource.dto.response</a>
+</div>
+
+<h1>Coverage Summary for Class: SourceNapasFromJS (vn.momo.compose.payment.payx.data.dataSource.dto.response)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SourceNapasFromJS</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/146)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/842)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SourceNapasFromJS$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/146)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/844)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.dataSource.dto.response
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.AdditionalText
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.CashIn
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.CashOut
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.Cta
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.LimitPerTrans
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.Notice
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.Payment
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.SofDetailDTO
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AddBankResponseDto(
+&nbsp;    val isSelectNapas: Boolean? = false,
+&nbsp;    val sourceNapas: SourceNapasFromJS? = null,
+&nbsp;    val incomeSource: SofSchemaFromJS? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SofSchemaFromJS(
+&nbsp;    val ID: String? = null,
+&nbsp;    val user: String? = null,
+&nbsp;    val bankId: String? = null,
+&nbsp;    val bankName: String? = null,
+&nbsp;    val shortName: String? = null,
+&nbsp;    val shortDesc: String? = null,
+&nbsp;    val cardId: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val cardNumber: String? = null,
+&nbsp;    val email: String? = null,
+&nbsp;    val status: Double? = 0.0,
+&nbsp;    val cardScheme: String? = null,
+&nbsp;    val transLock: String? = null,
+&nbsp;    val sourceToken: String? = null,
+&nbsp;    val disableType: Double? = 0.0,
+&nbsp;    val moneySource: Double? = 0.0,
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val bankCode: String? = null,
+&nbsp;    val title: String? = null,
+&nbsp;    val subTitle: String? = null,
+&nbsp;    val icon: String? = null,
+&nbsp;    val balance: Double? = 0.0,
+&nbsp;    val detail: SofDetailJS? = null,
+&nbsp;    val bankCustomerId: String? = null,
+&nbsp;    val sourceName: String? = null,
+&nbsp;    val active: Boolean? = false,
+&nbsp;    val unlock: Boolean? = false,
+&nbsp;    val logo: String? = null,
+&nbsp;    val displayName: String? = null,
+&nbsp;    val description: String? = null,
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class SourceNapasFromJS(
+<b class="nc">&nbsp;    val code: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val serviceCode: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val icon: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val type: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val createdDate: Double? = null,</b>
+<b class="nc">&nbsp;    val lastUpdate: Double? = null,</b>
+<b class="nc">&nbsp;    val name: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val ID: String? = null,</b>
+<b class="nc">&nbsp;    val status: Double? = 0.0,</b>
+<b class="nc">&nbsp;    val bankName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val bankShortName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val cardType: String? = null,</b>
+<b class="nc">&nbsp;    val bankFullName: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val partnerCode: String? = null,</b>
+<b class="nc">&nbsp;    val moneySource: Double? = null,</b>
+<b class="nc">&nbsp;    val cardId: String? = null,</b>
+<b class="nc">&nbsp;    val bankType: Double? = null,</b>
+<b class="nc">&nbsp;    val sofState: String? = null,</b>
+<b class="nc">&nbsp;    val title: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val subTitle: String? = &quot;&quot;,</b>
+<b class="nc">&nbsp;    val transLock: String? = &quot;&quot;</b>
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class SofDetailJS(
+&nbsp;    val createdAt: Double? = null,
+&nbsp;    val tagline: String? = null,
+&nbsp;    val bankCustomerId: String? = null,
+&nbsp;    val cardType: String? = null,
+&nbsp;    val cyberCardType: String? = null,
+&nbsp;    val cardNumber: String? = null,
+&nbsp;    val bankName: String? = null,
+&nbsp;    @SerialName(&quot;card_scheme&quot;)
+&nbsp;    val cardScheme: String? = null,
+&nbsp;    val installmentKey: String? = null,
+&nbsp;    val allowAutoPick: Boolean? = null,
+&nbsp;    val limitPerTrans: LimitPerTransJS? = null,
+&nbsp;    val enableCashOut: Boolean? = null,
+&nbsp;    val enableCashIn: Boolean? = null,
+&nbsp;    val enableActive: Boolean? = null,
+&nbsp;    val noticeCashIn: NoticeJS? = null,
+&nbsp;    val noticeCashOut: NoticeJS? = null,
+&nbsp;    val noticeActive: NoticeJS? = null,
+&nbsp;    val amountCashIn: Double? = null,
+&nbsp;    val bankAccountNo: String? = null,
+&nbsp;    val favorite: Double? = null,
+&nbsp;    var additionalText: AdditionalTextJS? = null,
+&nbsp;    val refId: String? = null,
+&nbsp;    val enableCTAHeader: Boolean? = false,
+&nbsp;    val activationInfo: JsonObject? = null,
+&nbsp;    val lockPayment: Boolean? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = SofDetailDTO(
+&nbsp;        createdAt = this.createdAt,
+&nbsp;        tagline,
+&nbsp;        bankCustomerId,
+&nbsp;        cardType,
+&nbsp;        cyberCardType,
+&nbsp;        cardNumber,
+&nbsp;        bankName,
+&nbsp;        cardScheme,
+&nbsp;        installmentKey,
+&nbsp;        allowAutoPick,
+&nbsp;        limitPerTrans = this.limitPerTrans?.toDTO(),
+&nbsp;        enableCashOut,
+&nbsp;        enableCashIn,
+&nbsp;        enableActive,
+&nbsp;        noticeCashIn = this.noticeCashIn?.toDTO(),
+&nbsp;        noticeCashOut = this.noticeCashOut?.toDTO(),
+&nbsp;        noticeActive = this.noticeActive?.toDTO(),
+&nbsp;        amountCashIn = this.amountCashIn?.toLong(),
+&nbsp;        bankAccountNo,
+&nbsp;        favorite = this.favorite?.toInt(),
+&nbsp;        additionalText = this.additionalText?.toDTO(),
+&nbsp;        refId, enableCTAHeader, activationInfo
+&nbsp;    )
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AdditionalTextJS(
+&nbsp;    val active: Double? = null,
+&nbsp;    val type: Double? = null,
+&nbsp;    val shortDesc: String? = &quot;&quot;,
+&nbsp;    val maxDesc: String? = &quot;&quot;,
+&nbsp;) {
+&nbsp;    fun toDTO() = AdditionalText(this.active?.toInt(), this.type?.toInt(), shortDesc, maxDesc)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LimitPerTransJS(
+&nbsp;    val cashIn: CashInJS? = null,
+&nbsp;    val cashOut: CashOutJS? = null,
+&nbsp;    val payment: PaymentJS? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = LimitPerTrans(this.cashIn?.toDTO(), this.cashOut?.toDTO(), this.payment?.toDTO())
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CashInJS(
+&nbsp;    val min: Double? = null,
+&nbsp;    val max: Double? = null,
+&nbsp;    val otp: Double? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = CashIn(min = this.min?.toInt(), max = this.max?.toInt(), otp = this.otp?.toInt())
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CashOutJS(
+&nbsp;    val min: Double? = null,
+&nbsp;    val max: Double? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = CashOut(min = this.min?.toInt(), max = this.max?.toInt())
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentJS(
+&nbsp;    val min: Double? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = Payment(this.min?.toInt())
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class NoticeJS(
+&nbsp;    val showAlert: Boolean? = null,
+&nbsp;    val type: Double? = null,
+&nbsp;    val img: String? = null,
+&nbsp;    val title: String? = null,
+&nbsp;    val description: String? = null,
+&nbsp;    val cta: Cta? = null,
+&nbsp;) {
+&nbsp;    fun toDTO() = Notice(showAlert, type = this.type?.toInt(), img, title, description, cta)
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

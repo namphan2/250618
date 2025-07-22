@@ -1,0 +1,509 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > SofState</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.presentation.viewModel.reducer</a>
+</div>
+
+<h1>Coverage Summary for Class: SofState (vn.momo.compose.payment.base.presentation.viewModel.reducer)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">SofState</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.presentation.viewModel.reducer
+&nbsp;
+&nbsp;import androidx.compose.runtime.Stable
+&nbsp;import kotlinx.collections.immutable.PersistentList
+&nbsp;import kotlinx.collections.immutable.toPersistentList
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.repository.sof.PromotePayNow
+&nbsp;import vn.momo.compose.payment.base.domain.entities.ChangeSofActor
+&nbsp;import vn.momo.compose.payment.base.domain.entities.DisableType
+&nbsp;import vn.momo.compose.payment.base.domain.entities.EnumMoneySource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.MoneySource
+&nbsp;import vn.momo.compose.payment.base.domain.entities.PayXSofInfo
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFGroup
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SOFItem
+&nbsp;import vn.momo.compose.payment.base.domain.entities.Sof
+&nbsp;import vn.momo.compose.payment.base.domain.entities.SofActionType
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PromotedSof
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.RecommendInstallmentState
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.RecommendMoneyPayCTA
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.SofCTAItem
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.SuggestedSof
+&nbsp;import vn.momo.compose.payment.payx.localization.localized
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.reducers.GroupOfSof
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.reducers.PayLaterConfigUi
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.reducers.UiVersion
+&nbsp;import vn.momo.core.features.annotation.Immutable
+&nbsp;import kotlin.math.min
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents the state for SOF (Source of Funds) selection and display in the MVI architecture.
+&nbsp; *
+&nbsp; * @property list Original list of SOF items for user selection.
+&nbsp; * @property selected Currently selected SOF item, or null if none.
+&nbsp; * @property isHideBalance Whether to hide the balance of the SOF items.
+&nbsp; * @property groupOfSof Grouping state for SOF items (for new UI).
+&nbsp; * @property version Current UI version for conditional logic or display.
+&nbsp; */
+&nbsp;@Stable
+&nbsp;interface SofState : Reducer.State {
+&nbsp;    val list: PersistentList&lt;SOFItem&gt;
+&nbsp;    val selected: SOFItem?
+&nbsp;    val isHideBalance: Boolean
+&nbsp;    val groupOfSof: GroupOfSof
+&nbsp;    val version: UiVersion
+&nbsp;    val moneyPayCTA: RecommendMoneyPayCTA?
+&nbsp;    val iconBankList: PersistentList&lt;String&gt;
+&nbsp;    val cta: PersistentList&lt;SofCTAItem&gt;
+&nbsp;}
+&nbsp;
+&nbsp;abstract class SofReducer&lt;T : SofState&gt; : Reducer&lt;T, SofReducer.Action, SofReducer.Effect&gt; {
+&nbsp;    @Immutable
+&nbsp;    sealed class Action : Reducer.Action {
+&nbsp;        data class UpdateShowBalance(val value: Boolean) : Action()
+&nbsp;        data class SetInstallmentPackage(val recommendInstallmentState: RecommendInstallmentState?) :
+&nbsp;            Action()
+&nbsp;
+&nbsp;        data class SetSofList(val list: List&lt;SOFItem&gt;, val selected: SOFItem?) : Action()
+&nbsp;        data class SyncSuggestedSof(val data: SuggestedSof) : Action()
+&nbsp;        data class AddSofToCarousel(val sof: SOFItem) : Action()
+&nbsp;        data class CashIn(val newSof: SOFItem) : Action()
+&nbsp;        object CloseInstallmentPackage : Action()
+&nbsp;        object ToggleCollapseInstallment : Action()
+&nbsp;        data class SetMoneyPayCTA(val moneyPayCTA: RecommendMoneyPayCTA?) : Action()
+&nbsp;        data class UpdateMoneyPayCTA(val title: String, val isSelected: Boolean) : Action()
+&nbsp;        object ResetPromoteSof : Action()
+&nbsp;        data class MoveOrAddSofToFirst(val sof: SOFItem) : Action()
+&nbsp;        data class ChangeSof(
+&nbsp;            val sof: SOFItem,
+&nbsp;            val actor: ChangeSofActor = ChangeSofActor.UserClick,
+&nbsp;        ) : Action()
+&nbsp;
+&nbsp;        object RefreshSof : Action()
+&nbsp;        data class SetPromoteSof(val promoteSof: PromotedSof?) : Action()
+&nbsp;        data class SelectPromotedSof(val sof: SOFItem?) : Action()
+&nbsp;        data class UpdateTooltip(val isShow: Boolean) : Action()
+&nbsp;        data class ActiveAndSelect(val sof: SOFItem) : Action()
+&nbsp;        data class UpdateVersion(val ver: UiVersion) : Action()
+&nbsp;        data class SyncInstallmentPackage(val group: SOFGroup) : Action()
+&nbsp;        data class UpdateReward(val rewardMap: Map&lt;MoneySource, Int&gt;) : Action()
+&nbsp;        object ToggleExpandSof : Action()
+&nbsp;        data class SetPayLaterConfigUi(val payLaterConfigUi: PayLaterConfigUi?) : Action()
+&nbsp;        data class SetIconList(val icons: List&lt;String&gt;) : Action()
+&nbsp;        data class SetPromotePayNow(val config: PromotePayNow?) : Action()
+&nbsp;        object RearrangeSof : Action()
+&nbsp;    }
+&nbsp;
+&nbsp;    @Immutable
+&nbsp;    sealed class Effect : Reducer.Effect {
+&nbsp;        data class InitSofTransaction(
+&nbsp;            val sof: SOFItem,
+&nbsp;            val actor: ChangeSofActor = ChangeSofActor.UserClick,
+&nbsp;        ) : Effect()
+&nbsp;
+&nbsp;        data class ActiveSof(
+&nbsp;            val refId: String,
+&nbsp;            val refParams: JsonObject,
+&nbsp;        ) : Effect()
+&nbsp;
+&nbsp;        object SyncReward : Effect()
+&nbsp;        object RearrangeSof : Effect()
+&nbsp;    }
+&nbsp;
+&nbsp;    fun syncGroupSof(
+&nbsp;        prev: GroupOfSof,
+&nbsp;        originalList: List&lt;SOFItem&gt;,
+&nbsp;        selected: SOFItem?,
+&nbsp;        hadInstallment: Boolean = false
+&nbsp;    ): GroupOfSof {
+&nbsp;        val promotedMoneySourceType = prev.campaignSof?.moneySource
+&nbsp;        val isCollapsed = prev.isCollapsed
+&nbsp;
+&nbsp;        val acc = accumulateSofItems(originalList, promotedMoneySourceType, hadInstallment)
+&nbsp;        val fundGroup = if (acc.fundSofs.isNotEmpty()) createFundGroup(acc.fundSofs) else null
+&nbsp;        val debitWithoutPromoted = buildDebitListWithoutPromoted(originalList, promotedMoneySourceType, acc, fundGroup)
+&nbsp;        val sortedDebit = sortDebitList(debitWithoutPromoted, prev)
+&nbsp;        val shouldPromote = shouldPromoteSof(acc.promotedSof)
+&nbsp;        val finalDebit = buildFinalDebitList(sortedDebit, acc, promotedMoneySourceType, shouldPromote, fundGroup)
+&nbsp;        val shouldShowSuggest = shouldPromote &amp;&amp; acc.promotedIndex &gt;= prev.promoteThreshold
+&nbsp;        val finalGroup = prev.copy(
+&nbsp;            debit = finalDebit.toPersistentList(),
+&nbsp;            payLater = acc.payLaterSofs.toPersistentList(),
+&nbsp;            campaignSof = prev.campaignSof?.copy(
+&nbsp;                shouldShow = shouldShowSuggest
+&nbsp;            ),
+&nbsp;            windowSize = if (shouldShowSuggest) 3 else prev.promoteThreshold
+&nbsp;        )
+&nbsp;        return if (isCollapsed) {
+&nbsp;            rearrangeList(finalGroup, selected = selected)
+&nbsp;        } else finalGroup
+&nbsp;    }
+&nbsp;
+&nbsp;    private data class SofAcc(
+&nbsp;        val payLaterSofs: MutableList&lt;SOFItem&gt; = mutableListOf(),
+&nbsp;        val fundSofs: MutableList&lt;SOFItem&gt; = mutableListOf(),
+&nbsp;        var promotedSof: SOFItem? = null,
+&nbsp;        var fundInsertIndex: Int = -1,
+&nbsp;        var promotedIndex: Int = -1,
+&nbsp;        val result: MutableList&lt;Sof&gt; = mutableListOf(),
+&nbsp;        var fundGroupInserted: Boolean = false
+&nbsp;    )
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tạo các SOFItem từ danh sách gốc, xác định các loại SOF đặc biệt như promoted, fund, pay later.
+&nbsp;     */
+&nbsp;    private fun accumulateSofItems(
+&nbsp;        originalList: List&lt;SOFItem&gt;,
+&nbsp;        promotedSof: MoneySource?,
+&nbsp;        hadInstallment: Boolean
+&nbsp;    ): SofAcc {
+&nbsp;        return originalList.foldIndexed(SofAcc()) { idx, acc, sof -&gt;
+&nbsp;            if (sof.isInstallment &amp;&amp; hadInstallment) return@foldIndexed acc
+&nbsp;            when (sof.moneySource) {
+&nbsp;                EnumMoneySource.PayLater -&gt; acc.payLaterSofs.add(sof)
+&nbsp;                EnumMoneySource.Fund -&gt; {
+&nbsp;                    acc.fundSofs.add(sof)
+&nbsp;                    if (acc.fundInsertIndex == -1) acc.fundInsertIndex = idx
+&nbsp;                    if (promotedSof != null &amp;&amp; sof.isSource(promotedSof) &amp;&amp; acc.promotedIndex == -1) {
+&nbsp;                        acc.promotedSof = sof
+&nbsp;                        acc.promotedIndex = idx
+&nbsp;                    }
+&nbsp;                }
+&nbsp;
+&nbsp;                else -&gt; {
+&nbsp;                    if (promotedSof != null &amp;&amp; sof.isSource(promotedSof) &amp;&amp; acc.promotedIndex == -1) {
+&nbsp;                        acc.promotedSof = sof
+&nbsp;                        acc.promotedIndex = idx
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;            acc
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Xây dựng danh sách debit loại bỏ promoted SOF (sẽ được add vào sau đó) và nhóm các nguồn tiền quỹ
+&nbsp;     */
+&nbsp;    private fun buildDebitListWithoutPromoted(
+&nbsp;        originalList: List&lt;SOFItem&gt;,
+&nbsp;        promotedSof: MoneySource?,
+&nbsp;        acc: SofAcc,
+&nbsp;        fundGroup: SOFGroup?
+&nbsp;    ): List&lt;Sof&gt; {
+&nbsp;        val result = mutableListOf&lt;Sof&gt;()
+&nbsp;        originalList.forEach { sof -&gt;
+&nbsp;            when (sof.moneySource) {
+&nbsp;                EnumMoneySource.PayLater -&gt; return@forEach
+&nbsp;                promotedSof -&gt; {
+&nbsp;                    if (promotedSof == EnumMoneySource.Fund) return@forEach
+&nbsp;                    if (sof.uId == acc.promotedSof?.uId) return@forEach
+&nbsp;                    result.add(sof)
+&nbsp;                }
+&nbsp;
+&nbsp;                EnumMoneySource.Fund -&gt; {
+&nbsp;                    if (!acc.fundGroupInserted &amp;&amp; fundGroup != null) {
+&nbsp;                        result.add(fundGroup)
+&nbsp;                        acc.fundGroupInserted = true
+&nbsp;                    }
+&nbsp;                }
+&nbsp;
+&nbsp;                else -&gt; result.add(sof)
+&nbsp;            }
+&nbsp;        }
+&nbsp;        return result
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sắp xếp danh sách debit dựa trên trạng thái disable và thứ tự trước đó.
+&nbsp;     */
+&nbsp;    private fun sortDebitList(
+&nbsp;        debitList: List&lt;Sof&gt;,
+&nbsp;        prev: GroupOfSof
+&nbsp;    ): List&lt;Sof&gt; {
+&nbsp;        val prevOrderMap = prev.debit.mapIndexed { idx, sof -&gt;
+&nbsp;            when (sof) {
+&nbsp;                is SOFItem -&gt; sof.uId to idx
+&nbsp;                is SOFGroup -&gt; sof.parent.uId to idx
+&nbsp;            }
+&nbsp;        }.toMap()
+&nbsp;        return debitList.sortedWith(compareByDescending&lt;Sof&gt; {
+&nbsp;            when (it) {
+&nbsp;                is SOFItem -&gt; it.disableType == DisableType.Show
+&nbsp;                is SOFGroup -&gt; it.parent.disableType == DisableType.Show
+&nbsp;            }
+&nbsp;        }.thenBy {
+&nbsp;            when (it) {
+&nbsp;                is SOFItem -&gt; prevOrderMap[it.uId] ?: Int.MAX_VALUE
+&nbsp;                is SOFGroup -&gt; prevOrderMap[it.parent.uId] ?: Int.MAX_VALUE
+&nbsp;            }
+&nbsp;        })
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Kiểm tra xem promoted SOF có nên được hiển thị hay không.
+&nbsp;     */
+&nbsp;    private fun shouldPromoteSof(promotedSof: SOFItem?): Boolean {
+&nbsp;        return promotedSof != null &amp;&amp; (promotedSof.disableType != DisableType.DisableAndShow || promotedSof.moneySource == EnumMoneySource.Investment)
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Xây dựng danh sách debit cuối cùng, chèn promoted SOF hoặc fund group vào vị trí phù hợp.
+&nbsp;     */
+&nbsp;    private fun buildFinalDebitList(
+&nbsp;        sortedDebit: List&lt;Sof&gt;,
+&nbsp;        acc: SofAcc,
+&nbsp;        promotedSof: MoneySource?,
+&nbsp;        shouldPromote: Boolean,
+&nbsp;        fundGroup: SOFGroup?
+&nbsp;    ): List&lt;Sof&gt; {
+&nbsp;        return acc.promotedSof?.let { promoted -&gt;
+&nbsp;            buildList {
+&nbsp;                addAll(sortedDebit)
+&nbsp;                val insertIdx = when {
+&nbsp;                    !shouldPromote -&gt; acc.promotedIndex.coerceIn(0, size)
+&nbsp;                    acc.promotedIndex in 0..1 -&gt; acc.promotedIndex.coerceIn(0, size)
+&nbsp;                    else -&gt; min(2, size)
+&nbsp;                }
+&nbsp;                if (promotedSof == EnumMoneySource.Fund) {
+&nbsp;                    fundGroup?.also { add(insertIdx, fundGroup) }
+&nbsp;                } else {
+&nbsp;                    add(insertIdx, promoted)
+&nbsp;                }
+&nbsp;            }
+&nbsp;        } ?: sortedDebit
+&nbsp;    }
+&nbsp;
+&nbsp;    fun rearrangeList(
+&nbsp;        group: GroupOfSof,
+&nbsp;        selected: SOFItem?,
+&nbsp;    ): GroupOfSof {
+&nbsp;        val promoted = group.campaignSof?.moneySource
+&nbsp;        val windowSize = group.windowSize
+&nbsp;        if (selected == null || selected.moneySource == EnumMoneySource.PayLater) {
+&nbsp;            return group
+&nbsp;        }
+&nbsp;
+&nbsp;        val debitList = group.debit
+&nbsp;        val selectedIdx = findSofIndex(debitList, selected.uId)
+&nbsp;        val promotedIdx = findPromotedIndex(debitList, promoted)
+&nbsp;
+&nbsp;        if (isWithinWindow(selectedIdx, promotedIdx, windowSize)) {
+&nbsp;            return group
+&nbsp;        }
+&nbsp;
+&nbsp;        val newDebitList = rearrangeDebitList(debitList, selectedIdx, promotedIdx, windowSize)
+&nbsp;        return group.copy(
+&nbsp;            debit = newDebitList.toPersistentList(),
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tìm index của SOF được chọn trong danh sách debit.
+&nbsp;     */
+&nbsp;    private fun findSofIndex(debitList: PersistentList&lt;Sof&gt;, selectedUid: String?): Int {
+&nbsp;        return debitList.indexOfFirst {
+&nbsp;            when (it) {
+&nbsp;                is SOFItem -&gt; it.uId == selectedUid
+&nbsp;                is SOFGroup -&gt; it.isSelected(selectedUid)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tìm index của promoted SOF trong danh sách debit.
+&nbsp;     */
+&nbsp;    private fun findPromotedIndex(debitList: PersistentList&lt;Sof&gt;, promoted: MoneySource?): Int {
+&nbsp;        if (promoted == null) return -1
+&nbsp;        return debitList.indexOfFirst {
+&nbsp;            when (it) {
+&nbsp;                is SOFItem -&gt; it.isSource(promoted) &amp;&amp; (it.disableType != DisableType.DisableAndShow || it.moneySource == EnumMoneySource.Investment)
+&nbsp;                is SOFGroup -&gt; it.parent.isSource(promoted) &amp;&amp; it.parent.disableType != DisableType.DisableAndShow
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Kiểm tra xem cả selectedIdx và promotedIdx có nằm trong window hiển thị không.
+&nbsp;     */
+&nbsp;    private fun isWithinWindow(selectedIdx: Int, promotedIdx: Int, windowSize: Int): Boolean {
+&nbsp;        return selectedIdx &lt; windowSize &amp;&amp; promotedIdx &lt; windowSize
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sắp xếp lại danh sách debit để selected và promoted nằm trong window hiển thị.
+&nbsp;     */
+&nbsp;    private fun rearrangeDebitList(
+&nbsp;        debitList: PersistentList&lt;Sof&gt;, selectedIdx: Int, promotedIdx: Int, windowSize: Int
+&nbsp;    ): List&lt;Sof&gt; {
+&nbsp;        val otherSofs =
+&nbsp;            debitList.filterIndexed { idx, _ -&gt; idx != selectedIdx &amp;&amp; idx != promotedIdx }
+&nbsp;
+&nbsp;        return buildList {
+&nbsp;            addAll(otherSofs)
+&nbsp;
+&nbsp;            val newSelected = calculateNewPosition(selectedIdx, 0, windowSize, size)
+&nbsp;            val newPromoted = calculateNewPosition(promotedIdx, windowSize - 1, windowSize, size)
+&nbsp;
+&nbsp;            if (selectedIdx == promotedIdx) {
+&nbsp;                addSelectedIfValid(debitList, selectedIdx, newSelected)
+&nbsp;            } else {
+&nbsp;                addPromoteAndSelected(
+&nbsp;                    debitList, selectedIdx, promotedIdx, newSelected, newPromoted, windowSize
+&nbsp;                )
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tính toán vị trí mới cho một phần tử dựa trên index hiện tại và target.
+&nbsp;     */
+&nbsp;    private fun calculateNewPosition(
+&nbsp;        currentIdx: Int, targetIdx: Int, windowSize: Int, listSize: Int
+&nbsp;    ): Int {
+&nbsp;        return if (currentIdx == -1 || currentIdx &lt; windowSize) {
+&nbsp;            currentIdx.coerceIn(0, listSize)
+&nbsp;        } else {
+&nbsp;            targetIdx.coerceIn(0, listSize)
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Thêm SOF được chọn vào danh sách nếu hợp lệ.
+&nbsp;     */
+&nbsp;    private fun MutableList&lt;Sof&gt;.addSelectedIfValid(
+&nbsp;        debitList: PersistentList&lt;Sof&gt;, selectedIdx: Int, newSelected: Int
+&nbsp;    ) {
+&nbsp;        if (newSelected != -1 &amp;&amp; selectedIdx != -1) {
+&nbsp;            add(newSelected, debitList[selectedIdx])
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Thêm promoted và selected SOF vào danh sách theo vị trí phù hợp.
+&nbsp;     */
+&nbsp;    private fun MutableList&lt;Sof&gt;.addPromoteAndSelected(
+&nbsp;        debitList: PersistentList&lt;Sof&gt;,
+&nbsp;        selectedIdx: Int,
+&nbsp;        promotedIdx: Int,
+&nbsp;        newSelected: Int,
+&nbsp;        newPromoted: Int,
+&nbsp;        windowSize: Int
+&nbsp;    ) {
+&nbsp;        if (newSelected == newPromoted &amp;&amp; newSelected == windowSize - 1) {
+&nbsp;            if (newSelected != -1 &amp;&amp; selectedIdx != -1) {
+&nbsp;                add(0, debitList[selectedIdx])
+&nbsp;            }
+&nbsp;            if (newPromoted != -1 &amp;&amp; promotedIdx != -1) {
+&nbsp;                add(newPromoted, debitList[promotedIdx])
+&nbsp;            }
+&nbsp;        } else {
+&nbsp;            if (newSelected != -1 &amp;&amp; selectedIdx != -1) {
+&nbsp;                add(newSelected, debitList[selectedIdx])
+&nbsp;            }
+&nbsp;            if (newPromoted != -1 &amp;&amp; promotedIdx != -1) {
+&nbsp;                add(newPromoted, debitList[promotedIdx])
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tạo SOFGroup từ danh sách fund SOF.
+&nbsp;     */
+&nbsp;    private fun createFundGroup(fundSofs: List&lt;SOFItem&gt;): SOFGroup {
+&nbsp;        val presentationSof = fundSofs.firstOrNull()
+&nbsp;        return SOFGroup(
+&nbsp;            parent = SOFItem(
+&nbsp;                moneySource = EnumMoneySource.Fund,
+&nbsp;                shortName = &quot;fund&quot;.localized(),
+&nbsp;                logo = presentationSof?.logo,
+&nbsp;                balance = -1,
+&nbsp;                sourceToken = &quot;Fund-parent&quot;,
+&nbsp;                disableType = if (fundSofs.any { it.disableType == DisableType.Show }) DisableType.Show else DisableType.DisableAndShow,
+&nbsp;                info = presentationSof?.info ?: PayXSofInfo(),
+&nbsp;                reward = presentationSof?.reward
+&nbsp;            ), children = fundSofs
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    fun syncSuggestedSof(currentList: List&lt;SOFItem&gt;, data: SuggestedSof): SuggestedSof {
+&nbsp;        val (sofList, ctaList) = data
+&nbsp;        val availableSofs = sofList.filter { it.disableType != DisableType.Hidden }
+&nbsp;        val suggestedSofMap = availableSofs.associateBy { it.uId }
+&nbsp;        val resultSof = currentList.map { currentSof -&gt;
+&nbsp;            suggestedSofMap[currentSof.uId]?.let { currentSof.merge(it) } ?: currentSof
+&nbsp;        }.toMutableList()
+&nbsp;
+&nbsp;        val currentSofIds = currentList.mapTo(mutableSetOf()) { it.uId }
+&nbsp;        val newSofItems =
+&nbsp;            availableSofs.filterNot { currentSofIds.contains(it.uId) || it.isInstallment }
+&nbsp;        resultSof.addAll(newSofItems)
+&nbsp;
+&nbsp;        val filteredCtaList = ctaList.filter { it.action.action == SofActionType.HaveNextStep }
+&nbsp;
+&nbsp;        return SuggestedSof(sofList = resultSof, ctaList = filteredCtaList)
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

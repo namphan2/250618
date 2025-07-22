@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > OTPAuthenticationVMKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel</a>
+</div>
+
+<h1>Coverage Summary for Class: OTPAuthenticationVMKt (vn.momo.compose.payment.payx.presentation.viewModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">OTPAuthenticationVMKt</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel
+&nbsp;
+&nbsp;import dev.icerock.moko.mvvm.viewmodel.ViewModel
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.TraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.GrafanaTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.PayXUserEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.TrackingErrorCode
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.OtpInputted
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PopupOtpDisplayed
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.ResendOtp
+&nbsp;import vn.momo.compose.payment.base.presentation.viewModel.state.PState
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.memory.PaymentSession
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmRequest
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmType
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmWithOtpRequest
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentError
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.RequestOtpUseCase
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.confirm.ConfirmUseCase
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.confirm.ConfirmWithOtpUseCase
+&nbsp;import vn.momo.compose.payment.payx.domain.useCases.confirm.HandlePaymentResultUseCase
+&nbsp;import vn.momo.compose.payment.payx.presentation.model.OTPBottomSheetScreenProps
+&nbsp;import vn.momo.compose.payment.payx.presentation.model.PaymentEvent
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.handlePaymentConfirmError
+&nbsp;import vn.momo.compose.payment.payx.presentation.viewModel.controller.paymentOverlay.handleConfirmOverlay
+&nbsp;
+&nbsp;const val MAX_OTP_LENGTH = 6
+&nbsp;
+&nbsp;class OTPAuthenticationVM(
+&nbsp;    private val confirm: ConfirmUseCase,
+&nbsp;    private val confirmWithOtp: ConfirmWithOtpUseCase,
+&nbsp;    private val requestOtp: RequestOtpUseCase,
+&nbsp;    private val handlePaymentResultUseCase: HandlePaymentResultUseCase,
+&nbsp;    private val paymentSession: PaymentSession
+&nbsp;) : ViewModel() {
+&nbsp;    val otpState = PState(viewModelScope, &quot;&quot;)
+&nbsp;    val errorMessageState = PState(viewModelScope, &quot;&quot;)
+&nbsp;    lateinit var props: OTPBottomSheetScreenProps
+&nbsp;
+&nbsp;    fun onCreate(referenceKey: String, flow: String, onClose: (data: JsonObject) -&gt; Unit) {
+&nbsp;        props = OTPBottomSheetScreenProps(referenceKey, flow, onClose)
+&nbsp;        GrafanaTrace.start(PayXUserEvent.ConfirmOTPMoMoAuthenticate.event)
+&nbsp;        FirebaseTrace.track(PopupOtpDisplayed())
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onResendOTP() {
+&nbsp;        FirebaseTrace.track(ResendOtp())
+&nbsp;        requestOtp().onEach {
+&nbsp;            clearErrorMessage()
+&nbsp;        }.catch {
+&nbsp;            setErrorMessage(it.message ?: &quot;&quot;)
+&nbsp;        }.launchIn(viewModelScope)
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun onCompleted(otp: String) {
+&nbsp;        FirebaseTrace.track(OtpInputted(status = &quot;true&quot;))
+&nbsp;        val execute =
+&nbsp;            if (props.flow == &quot;quickFraud&quot;) confirm(
+&nbsp;                ConfirmRequest(otp),
+&nbsp;                ConfirmType.ConfirmOtpMoMo
+&nbsp;            )
+&nbsp;            else confirmWithOtp(
+&nbsp;                ConfirmWithOtpRequest(
+&nbsp;                    otp, &quot;PAYMENT&quot;, props.referenceKey
+&nbsp;                ), ConfirmType.ConfirmOtpMoMo
+&nbsp;            )
+&nbsp;        execute.handleConfirmOverlay().onEach {
+&nbsp;            if (it.isFailure) {
+&nbsp;                throw it.exception
+&nbsp;            }
+&nbsp;            props.onClose(buildJsonObject { put(&quot;type&quot;, &quot;onClose&quot;) })
+&nbsp;            handlePaymentResultUseCase(it.data)
+&nbsp;        }.catch { err -&gt;
+&nbsp;            when (err) {
+&nbsp;                is PaymentError.InvalidOTP -&gt; {
+&nbsp;                    setErrorMessage(err.message ?: &quot;&quot;)
+&nbsp;                    onClearOTP()
+&nbsp;                }
+&nbsp;
+&nbsp;                else -&gt; {
+&nbsp;                    GrafanaTrace.fail(PayXUserEvent.ConfirmOTPMoMoAuthenticate.event)
+&nbsp;                    props.onClose(buildJsonObject { put(&quot;type&quot;, &quot;onClose&quot;) })
+&nbsp;                    throw err
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }.handlePaymentConfirmError().launchIn(viewModelScope)
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun setErrorMessage(str: String) {
+&nbsp;        errorMessageState.update { str }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun clearErrorMessage() {
+&nbsp;        errorMessageState.update { &quot;&quot; }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onBackSpace() {
+&nbsp;        if (otpState.state.toString().isNotEmpty()) {
+&nbsp;            otpState.update {
+&nbsp;                it.dropLast(1)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onItemPressed(number: String) {
+&nbsp;        clearErrorMessage()
+&nbsp;        val newOtp = otpState.state.value.plus(number)
+&nbsp;        if (otpState.state.value.length == MAX_OTP_LENGTH - 1) {
+&nbsp;            onCompleted(newOtp)
+&nbsp;        }
+&nbsp;        otpState.update {
+&nbsp;            newOtp
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onClearOTP() {
+&nbsp;        otpState.update { &quot;&quot; }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onClose() {
+&nbsp;        GrafanaTrace.fail(PayXUserEvent.ConfirmOTPMoMoAuthenticate.event)
+&nbsp;        GrafanaTrace.fail(
+&nbsp;            PayXUserEvent.UserConfirm.event,
+&nbsp;            TraceParameter(errorCode = TrackingErrorCode.OTPCancel.code.toDouble())
+&nbsp;        )
+&nbsp;        paymentSession.paymentEvent.tryEmit(PaymentEvent.AllowToConfirm)
+&nbsp;        props.onClose(buildJsonObject { put(&quot;type&quot;, &quot;onClose&quot;) })
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > TransactionRefreshHelperKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.viewModel.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionRefreshHelperKt (vn.momo.compose.payment.payx.presentation.viewModel.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionRefreshHelperKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/124)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.viewModel.controller
+&nbsp;
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import kotlinx.serialization.json.jsonPrimitive
+&nbsp;import vn.momo.compose.payment.base.domain.entities.ErrorPopupCallback
+&nbsp;import vn.momo.compose.payment.payx.presentation.model.RefIdEvent
+&nbsp;
+&nbsp;fun shouldForceReInit(
+&nbsp;    refId: String,
+&nbsp;    refParams: JsonObject?,
+&nbsp;    response: ErrorPopupCallback?,
+&nbsp;): Boolean {
+<b class="nc">&nbsp;    return when (refId) {</b>
+<b class="nc">&nbsp;        RefIdEvent.EKyc.id -&gt; {</b>
+<b class="nc">&nbsp;            verifyEKycResponse(</b>
+<b class="nc">&nbsp;                response,</b>
+<b class="nc">&nbsp;                refParams?.get(&quot;option&quot;)?.jsonPrimitive?.content</b>
+&nbsp;            )
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        RefIdEvent.EKycByFriend.id -&gt; true</b>
+<b class="nc">&nbsp;        else -&gt; response?.confirmToPayment == true</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;private fun verifyEKycResponse(response: ErrorPopupCallback?, option: String?): Boolean {
+<b class="nc">&nbsp;    val isFaceMatchingSuccess =</b>
+<b class="nc">&nbsp;        response?.faceData?.status == &quot;SUCCESS&quot;</b>
+<b class="nc">&nbsp;    val isOcrSuccess =</b>
+<b class="nc">&nbsp;        response?.ocrData?.kycStatus == &quot;APPROVED&quot;</b>
+<b class="nc">&nbsp;    val isNfcSuccess = response?.ocrData?.resultCode == 0</b>
+<b class="nc">&nbsp;    return when (option) {</b>
+<b class="nc">&nbsp;        &quot;FULL&quot; -&gt; isFaceMatchingSuccess &amp;&amp; isOcrSuccess &amp;&amp; isNfcSuccess</b>
+<b class="nc">&nbsp;        &quot;NFC_FACE&quot; -&gt; isNfcSuccess &amp;&amp; isFaceMatchingSuccess</b>
+<b class="nc">&nbsp;        else -&gt; isFaceMatchingSuccess || isOcrSuccess || isNfcSuccess</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

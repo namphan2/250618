@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > StringUtilsKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.napas.presentation.utils.extension</a>
+</div>
+
+<h1>Coverage Summary for Class: StringUtilsKt (vn.momo.compose.payment.napas.presentation.utils.extension)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">StringUtilsKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/214)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.napas.presentation.utils.extension
+&nbsp;
+&nbsp;fun String.removeInvalidChar(): String {
+<b class="nc">&nbsp;    var temporary = this;</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;[=_~`!@#$%^&amp;*()\\/\\\\#,;+()$~%&#39;\&quot;:*?&lt;&gt;{}\\[\\]|]|[0-9]&quot;.toRegex(), &quot;&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ&quot;.toRegex(), &quot;A&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ&quot;.toRegex(), &quot;E&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;Ì|Í|Ị|Ỉ|Ĩ&quot;.toRegex(), &quot;I&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ&quot;.toRegex(), &quot;O&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ&quot;.toRegex(), &quot;U&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;Ỳ|Ý|Ỵ|Ỷ|Ỹ&quot;.toRegex(), &quot;Y&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;Đ&quot;, &quot;D&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ&quot;.toRegex(), &quot;a&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ&quot;.toRegex(), &quot;e&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;ì|í|ị|ỉ|ĩ&quot;.toRegex(), &quot;i&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ&quot;.toRegex(), &quot;o&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ&quot;.toRegex(), &quot;u&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;ỳ|ý|ỵ|ỷ|ỹ&quot;.toRegex(), &quot;y&quot;)</b>
+<b class="nc">&nbsp;    temporary = temporary.replace(&quot;đ&quot;, &quot;d&quot;)</b>
+<b class="nc">&nbsp;    return temporary</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

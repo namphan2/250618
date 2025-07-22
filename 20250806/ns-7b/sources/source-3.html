@@ -1,0 +1,256 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > ConfirmWithOtpUseCase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.domain.useCases.confirm</a>
+</div>
+
+<h1>Coverage Summary for Class: ConfirmWithOtpUseCase (vn.momo.compose.payment.payx.domain.useCases.confirm)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConfirmWithOtpUseCase</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/41)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ConfirmWithOtpUseCase$invoke$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">ConfirmWithOtpUseCase$invoke$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">ConfirmWithOtpUseCase$invoke$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">ConfirmWithOtpUseCase$invoke$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/60)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.domain.useCases.confirm
+&nbsp;
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.flowOn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentOtpRequested
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.PaymentOtpResponded
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmResponse
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmType
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.ConfirmWithOtpRequest
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.Response
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.error.PaymentError
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.confirm.IConfirmWithOtpRepository
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;class ConfirmWithOtpUseCase(</b>
+<b class="nc">&nbsp;    private val repository: IConfirmWithOtpRepository</b>
+&nbsp;) {
+&nbsp;    operator fun invoke(
+&nbsp;        request: ConfirmWithOtpRequest, confirmType: ConfirmType
+&nbsp;    ): Flow&lt;Response&lt;ConfirmResponse&gt;&gt; {
+<b class="nc">&nbsp;        FirebaseTrace.track(PaymentOtpRequested(confirmType = confirmType.type))</b>
+<b class="nc">&nbsp;        return repository.confirmWithOTP(</b>
+<b class="nc">&nbsp;            request.otp, request.cartState, request.referenceKey, confirmType</b>
+<b class="nc">&nbsp;        ).map {</b>
+&nbsp;            FirebaseTrace.track(
+&nbsp;                PaymentOtpResponded(
+&nbsp;                    status = true,
+&nbsp;                    errorCode = if (it.isSuccess) 0 else (it.exception as? PaymentError)?.code,
+&nbsp;                    redirect = it.data.momoMsg?.redirectScreen ?: &quot;&quot;
+&nbsp;                )
+&nbsp;            )
+&nbsp;            return@map it
+<b class="nc">&nbsp;        }.catch { err -&gt;</b>
+<b class="nc">&nbsp;            if (err is PaymentError) {</b>
+<b class="nc">&nbsp;                FirebaseTrace.track(</b>
+<b class="nc">&nbsp;                    PaymentOtpResponded(</b>
+<b class="nc">&nbsp;                        status = false, errorCode = err.code, redirect = &quot;&quot; //TODO</b>
+&nbsp;                    )
+&nbsp;                )
+&nbsp;            }
+&nbsp;            throw err
+<b class="nc">&nbsp;        }.flowOn(Dispatchers.IO)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

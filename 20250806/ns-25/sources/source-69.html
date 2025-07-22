@@ -1,0 +1,981 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > UnlockPayLaterResponse</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.service.trace.model.journey</a>
+</div>
+
+<h1>Coverage Summary for Class: UnlockPayLaterResponse (vn.momo.compose.payment.base.core.service.trace.model.journey)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UnlockPayLaterResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/163)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UnlockPayLaterResponse$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/165)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.service.trace.model.journey
+&nbsp;
+&nbsp;import kotlinx.serialization.SerialName
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.Transient
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ConfirmButtonClicked(
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;confirm_payment&quot;,
+&nbsp;    @SerialName(&quot;promotion_ids&quot;) val promotionIds: String,
+&nbsp;    @SerialName(&quot;money_source_id&quot;) val moneySource: Int?,
+&nbsp;    @SerialName(&quot;bill_quantity&quot;) val quantity: Int,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;orderId_xsell&quot;) val xSaleOrderId: String? = null,
+&nbsp;    @SerialName(&quot;buy_cross_sale&quot;) val hasXSale: Boolean? = false,
+&nbsp;    @SerialName(&quot;order_id_sdk&quot;) var orderIdSdk: String? = null,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    val duration: Long = 0,
+&nbsp;    override var flowType: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;mission_id&quot;) val missionIds: String = &quot;&quot;
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ToggleTotalAmount(
+&nbsp;    @SerialName(&quot;icon_name&quot;) val iconName: String = &quot;detail_amount&quot;,
+&nbsp;    @SerialName(&quot;icon_value&quot;) val iconValue: String,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.ICON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PopupOtpDisplayed(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;momo_otp&quot;,
+&nbsp;    override val eventName: String = EventName.POPUP_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class OtpInputted(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;momo_otp&quot;,
+&nbsp;    @SerialName(&quot;otp_name&quot;) val otpName: String = &quot;otp&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: String,
+&nbsp;    override val eventName: String = EventName.OTP_INPUT.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ResendOtp(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;momo_otp&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;resent_otp&quot;,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PayXCheckoutRequested(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;checkout&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.BEFORE_PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AutoDebitRequested(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;active_ad&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AutoDebitResponded(
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean? = false,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;active_ad&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AutoDebitConfirmRequested(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    val action: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;active_ad&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AutoDebitConfirmResponded(
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean? = false,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    val action: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;active_ad&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class XSaleRequested(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;cross_sale&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AddCartXSaleRequest(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;item_id&quot;) val itemId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;addcart_xsell&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CheckoutXSaleRequest(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;item_id&quot;) val itemId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;checkout_xsell&quot;,
+&nbsp;    @SerialName(&quot;action_value&quot;) val action: String? = null,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CheckoutResponded(
+&nbsp;    val api: String = &quot;checkout&quot;,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int?,
+&nbsp;    @SerialName(&quot;error_category&quot;) val errorCategory: String?,
+&nbsp;    val status: Boolean,
+&nbsp;    val duration: Long = 0,
+&nbsp;    @SerialName(&quot;target_sof&quot;) val bundleSof: Int?,
+&nbsp;    val result: Boolean,
+&nbsp;    @SerialName(&quot;sof_empty&quot;) val isSofEmpty: Boolean,
+&nbsp;    @SerialName(&quot;bundle_sof&quot;) val availableSofs: String? = null,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.BEFORE_PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class XSaleResponded(
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean? = false,
+&nbsp;    @SerialName(&quot;cross_sale&quot;) val isShow: Boolean? = false,
+&nbsp;    @SerialName(&quot;service_xsell&quot;) val serviceId: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;cross_sale&quot;,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class AddCartXSellResponded(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;addcart_xsell&quot;,
+&nbsp;    @SerialName(&quot;item_id&quot;) val itemId: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean? = false,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class CheckoutXSellResponded(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;checkout_xsell&quot;,
+&nbsp;    @SerialName(&quot;item_id&quot;) val itemId: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;orderId_xsell&quot;) val xSalePurchaseId: String? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean? = false,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;action_value&quot;) val action: String? = null,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitRequested(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;init&quot;,
+&nbsp;    @SerialName(&quot;source&quot;) val source: String,
+&nbsp;    @SerialName(&quot;money_source&quot;) val moneySource: Int? = null,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitResponded(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;init&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int?,
+&nbsp;    @SerialName(&quot;source&quot;) val initType: String,
+&nbsp;    @SerialName(&quot;target_sof&quot;) val targetSof: Int?,
+&nbsp;    @SerialName(&quot;money_source&quot;) val moneySource: Int? = null,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentRequested(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment&quot;,
+&nbsp;    @SerialName(&quot;money_source&quot;) val moneySource: Int? = null,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentOtpRequested(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment_otp&quot;,
+&nbsp;    @SerialName(&quot;confirmType&quot;) val confirmType: String,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentResponded(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int?,
+&nbsp;    @SerialName(&quot;redirect&quot;) val redirect: String,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentOtpResponded(
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment_otp&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int?,
+&nbsp;    @SerialName(&quot;redirect&quot;) val redirect: String,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class FraudOtpRequested(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;otp_risk&quot;,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment_momo_otp&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class FraudOtpResponded(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;otp_risk&quot;,
+&nbsp;    @SerialName(&quot;api&quot;) val api: String = &quot;payment_momo_otp&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Boolean,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int?,
+&nbsp;    override val eventName: String = EventName.RESPONSE.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultScreenDisplayed(
+&nbsp;    @SerialName(&quot;merchant_id&quot;) val merchantId: String = &quot;none&quot;,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;order_id_sdk&quot;) var orderIdSdk: String? = null,
+&nbsp;    @SerialName(&quot;duration&quot;) val duration: Long = 0,
+&nbsp;    @SerialName(&quot;entry_point_type&quot;) val entryType: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_service&quot;) val entryService: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_screen&quot;) val entryScreen: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_block&quot;) val entryBlock: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_component&quot;) val entryComponent: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.AFTER_PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultScreenInteracted(
+&nbsp;    @SerialName(&quot;time_load&quot;) val timeLoad: Long = 0,
+&nbsp;    @SerialName(&quot;order_id_sdk&quot;) var orderIdSdk: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_INTERACTED.id,
+&nbsp;    override val screenName: String = ScreenName.AFTER_PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class MqttResponded(
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: String = &quot;N/A&quot;,
+&nbsp;    @SerialName(&quot;purchase_id&quot;) val purchaseId: String,
+&nbsp;    override val eventName: String = EventName.RECEIVE_MQTT.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT_RESULT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentInstallmentDisplayed(
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.INSTALLMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InstallmentOptionClicked(
+&nbsp;    @SerialName(&quot;list_name&quot;) val listName: String = &quot;list_installment&quot;,
+&nbsp;    @SerialName(&quot;list_value&quot;) val listValue: String,
+&nbsp;    @SerialName(&quot;list_value_detail&quot;) val listValueDetail: String,
+&nbsp;    override val eventName: String = EventName.LIST_SELECTED.id,
+&nbsp;    override val screenName: String = ScreenName.INSTALLMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InstallmentInstructionClicked(
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;view_instruction&quot;,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class WebViewDisplayed(
+&nbsp;    @Transient val webView: WebViewScreen = WebViewScreen.None,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_type&quot;) val entryType: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_service&quot;) val entryService: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_screen&quot;) val entryScreen: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_block&quot;) val entryBlock: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_component&quot;) val entryComponent: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = webView.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class WebViewDismissed(
+&nbsp;    val time: Long = 0,
+&nbsp;    val actor: String = ScreenDismissActor.SYSTEM.id,
+&nbsp;    @Transient val webView: WebViewScreen = WebViewScreen.None,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISMISSED.id,
+&nbsp;    override val screenName: String = webView.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ToggleViewSofList(
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;    override var flowType: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;block_name&quot;) val blockName: String = &quot;sof&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class RequestPromoteSof(
+&nbsp;    @SerialName(&quot;event_data&quot;) val eventData: JsonObject? = null,
+&nbsp;    override val eventName: String = EventName.REQUEST_PROMOTE_SOF.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LoadQuickActiveBanner(
+&nbsp;    @SerialName(&quot;event_data&quot;) val eventData: JsonObject? = null,
+&nbsp;    override val eventName: String = EventName.LOAD_QUICK_ACTIVE_BANNER.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ShowPromoteSof(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_sof&quot;,
+&nbsp;    @SerialName(&quot;component_type&quot;) val componentType: String = &quot;block&quot;,
+&nbsp;    val state: String,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.COMPONENT_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickPromoteSof(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_sof&quot;,
+&nbsp;    @SerialName(&quot;component_type&quot;) val componentType: String = &quot;block&quot;,
+&nbsp;    val state: String,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.COMPONENT_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickQuickActiveBanner(
+&nbsp;    @SerialName(&quot;event_data&quot;) val eventData: JsonObject? = null,
+&nbsp;    override val eventName: String = EventName.CLICK_QUICK_ACTIVE_BANNER.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LoadPromoteSofBanner(
+&nbsp;    @SerialName(&quot;event_data&quot;) val eventData: JsonObject? = null,
+&nbsp;    override val eventName: String = EventName.LOAD_PROMOTE_SOF_BANNER.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LoadLaw40Banner(
+&nbsp;    @SerialName(&quot;category&quot;) val category: String? = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;type&quot;) val type: String? = null,
+&nbsp;    @SerialName(&quot;entry_point_service&quot;) val refId: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    override val eventName: String = EventName.COMPONENT_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickLaw40Banner(
+&nbsp;    @SerialName(&quot;category&quot;) val category: String? = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;type&quot;) val type: String? = null,
+&nbsp;    @SerialName(&quot;button_name&quot;) val refId: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    override val eventName: String = EventName.COMPONENT_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickPromoteSofBanner(
+&nbsp;    @SerialName(&quot;event_data&quot;) val eventData: JsonObject? = null,
+&nbsp;    override val eventName: String = EventName.CLICK_PROMOTE_SOF_BANNER.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickChoosePromotion(
+&nbsp;    @SerialName(&quot;block_name&quot;) val blockName: String = &quot;promotion&quot;,
+&nbsp;    @SerialName(&quot;status&quot;) val status: Int,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class DismissSkipPaymentResult(
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;dismiss_type&quot;) val dismissType: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISMISSED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class LoadInstallmentPackage(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;installment&quot;,
+&nbsp;    val category: String = &quot;banner&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickInstallmentItem(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;installment&quot;,
+&nbsp;    val action: String = &quot;click&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickCloseInstallment(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_installment&quot;,
+&nbsp;    val category: String = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;close&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ToggleSofBalance(
+&nbsp;    @SerialName(&quot;icon_name&quot;) val componentName: String = &quot;value_sof&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;treatment_1&quot;,
+&nbsp;    @SerialName(&quot;icon_value&quot;) val value: String = &quot;&quot;,
+&nbsp;    override val eventName: String = EventName.ICON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickExpandInstallment(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_installment&quot;,
+&nbsp;    val category: String = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;expand&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickCollapseInstallment(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_installment&quot;,
+&nbsp;    val category: String = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;collapse&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ClickLearnMoreInstallment(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;promote_installment&quot;,
+&nbsp;    val category: String = &quot;banner&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;fee_info&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;// Tracking TransactionResultRevamp
+&nbsp;@Serializable
+&nbsp;data class TransactionResultRevampScreenDisplayed(
+&nbsp;    @SerialName(&quot;tran_id&quot;) val tranId: String? = null,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;error_desc&quot;) val errorDesc: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;status&quot;) val status: String? = null,
+&nbsp;    @SerialName(&quot;revamp&quot;) val revamp: Boolean? = true,
+&nbsp;    @SerialName(&quot;service&quot;) val service: String? = null,
+&nbsp;    @SerialName(&quot;bill_quantity&quot;) val billQuantity: Int? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class FeatureTransResult(
+&nbsp;    @SerialName(&quot;service&quot;) val service: String? = null,
+&nbsp;    @SerialName(&quot;stage&quot;) val stage: String? = &quot;scr_trans_result&quot;,
+&nbsp;    override val eventName: String = EventName.FEATURE_TRANS_RESULT.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultRevampScreenInteracted(
+&nbsp;    @SerialName(&quot;time_load&quot;) var timeLoad: Long = 0,
+&nbsp;    @SerialName(&quot;revamp&quot;) val revamp: Boolean? = true,
+&nbsp;    @SerialName(&quot;bill_quantity&quot;) val billQuantity: Int? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_INTERACTED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultRevampScreenUpdated(
+&nbsp;    @SerialName(&quot;status&quot;) val status: String? = null,
+&nbsp;    override var orderId: String? = null,
+&nbsp;    @SerialName(&quot;revamp&quot;) val revamp: Boolean? = true,
+&nbsp;    @SerialName(&quot;source&quot;) val source: String? = null,
+&nbsp;    @SerialName(&quot;final&quot;) val final: Int? = null,
+&nbsp;    @SerialName(&quot;bill_quantity&quot;) val billQuantity: Int? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_UPDATED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ShareCaptureButtonClick(
+&nbsp;    @SerialName(&quot;icon_name&quot;) val buttonName: String = &quot;share&quot;,
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    override val eventName: String = EventName.ICON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class HomeHeaderButtonClick(
+&nbsp;    @SerialName(&quot;icon_name&quot;) val buttonName: String = &quot;homescreen&quot;,
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;revamp&quot;) val revamp: Boolean? = true,
+&nbsp;    override val eventName: String = EventName.ICON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InfoTransactionResultButtonClick(
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;tranx_info&quot;,
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionInfoBottomSheetDisplayed(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.MORE_INFO.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TransactionResultWidgetDisplayed(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;widget_name&quot;) val widgetName: String? = null,
+&nbsp;    @SerialName(&quot;revamp&quot;) val revamp: Boolean? = true,
+&nbsp;    override val eventName: String = EventName.SCREEN_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;    override val serviceName: String = ServiceName.PAYMENT_RESULT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class NextBestActionButtonClick(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;action_type&quot;) val actionType: String? = null,
+&nbsp;    @SerialName(&quot;action_name&quot;) val actionName: String? = null,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String? = null,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.RESULT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class XSaleDisplayed(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;component_type&quot;) val layoutType: String? = null,
+&nbsp;    @SerialName(&quot;component_name&quot;) val uiItemType: String? = null,
+&nbsp;    @SerialName(&quot;purchase_id&quot;) val purchaseId: String? = null,
+&nbsp;    override val eventName: String = EventName.COMPONENT_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class XSaleInViewPort(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;component_type&quot;) val layoutType: String? = null,
+&nbsp;    @SerialName(&quot;component_name&quot;) val uiItemType: String? = null,
+&nbsp;    @SerialName(&quot;purchase_id&quot;) val purchaseId: String? = null,
+&nbsp;    override val eventName: String = EventName.COMPONENT_INTERACTED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class XSaleItemClicked(
+&nbsp;    @SerialName(&quot;service_id&quot;) val serviceId: String? = null,
+&nbsp;    @SerialName(&quot;purchase_id&quot;) val purchaseId: String? = null,
+&nbsp;    @SerialName(&quot;component_type&quot;) val layoutType: String? = null,
+&nbsp;    @SerialName(&quot;component_name&quot;) val uiItemType: String? = null,
+&nbsp;    @SerialName(&quot;action_value&quot;) val action: String? = null,
+&nbsp;    @SerialName(&quot;tab_id&quot;) val itemId: String? = null,
+&nbsp;    override val eventName: String = EventName.COMPONENT_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VADisplayed(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;qr_virtual_account&quot;,
+&nbsp;    val purchaseId: String? = null,
+&nbsp;    override val eventName: String = EventName.POPUP_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class VAButtonClicked(
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;qr_virtual_account&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String,
+&nbsp;    val purchaseId: String? = null,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class TRLModeStatusUpdated(
+&nbsp;    @SerialName(&quot;action&quot;) val action: String = &quot;message_received&quot;,
+&nbsp;    @SerialName(&quot;message_status&quot;) val messageStatus: Int? = null,
+&nbsp;    @SerialName(&quot;error_code&quot;) val errorCode: Int? = null,
+&nbsp;    @SerialName(&quot;miniapp_id&quot;) val miniappId: String? = null,
+&nbsp;    override val eventName: String = EventName.FEATURE_TRANS_CONFIRMATION.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT_RESULT_LOADING.id,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class UnlockPayLaterRequest(
+&nbsp;    val api: String = &quot;unlock&quot;,
+&nbsp;    override val eventName: String = EventName.REQUEST.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;    @SerialName(&quot;time_t0&quot;) val time: Long
+&nbsp;) : JourneyEvent()
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class UnlockPayLaterResponse(
+<b class="nc">&nbsp;    val api: String = &quot;unlock&quot;,</b>
+<b class="nc">&nbsp;    val status: String,</b>
+<b class="nc">&nbsp;    override val eventName: String = EventName.RESPONSE.id,</b>
+<b class="nc">&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,</b>
+<b class="nc">&nbsp;) : JourneyEvent()</b>
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ShowIconRewardPayLater(
+&nbsp;    @SerialName(&quot;component_name&quot;) val componentName: String = &quot;coin&quot;,
+&nbsp;    @SerialName(&quot;component_type&quot;) val componentType: String = &quot;block&quot;,
+&nbsp;    override val eventName: String = EventName.COMPONENT_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;    @SerialName(&quot;moneysource&quot;) val sofList: String? = null,
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ShowMissionBlock(
+&nbsp;    @SerialName(&quot;block_name&quot;) val componentName: String = &quot;mission&quot;,
+&nbsp;    @SerialName(&quot;money_source&quot;) val moneySource: String,
+&nbsp;    @SerialName(&quot;promotion_ids&quot;) val promotionIds: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;mission_id&quot;) val missionId: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;for_promotion&quot;) val isPromotionEvent: String = &quot;1&quot;,
+&nbsp;    override val eventName: String = &quot;service_block_displayed&quot;,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id,
+&nbsp;
+&nbsp;    ) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentInfoDetailClicked(
+&nbsp;    @SerialName(&quot;block_name&quot;) val blockName: String = &quot;payment_info&quot;,
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;view_detail&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;treatment_1&quot;,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentInfoBottomSheetDisplayed(
+&nbsp;    @SerialName(&quot;block_name&quot;) val blockName: String = &quot;payment_info&quot;,
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;view_detail&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;treatment_1&quot;,
+&nbsp;    override val eventName: String = EventName.POPUP_DISPLAYED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class PaymentInfoBottomSheetClosed(
+&nbsp;    @SerialName(&quot;button_name&quot;) val buttonName: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;popup_name&quot;) val popupName: String = &quot;view_detail&quot;,
+&nbsp;    @SerialName(&quot;tag_name&quot;) val tagName: String = &quot;treatment_1&quot;,
+&nbsp;    override val eventName: String = EventName.BUTTON_CLICKED.id,
+&nbsp;    override val screenName: String = ScreenName.PAYMENT.id
+&nbsp;) : JourneyEvent()
+&nbsp;
+&nbsp;enum class EventName(val id: String) {
+&nbsp;    REQUEST(&quot;service_platform_requested&quot;), RESPONSE(&quot;service_platform_responded&quot;), SCREEN_INTERACTED(
+&nbsp;        &quot;service_screen_interacted&quot;
+&nbsp;    ),
+&nbsp;    SCREEN_UPDATED(&quot;service_screen_updated&quot;), SCREEN_DISPLAYED(&quot;service_screen_displayed&quot;), SCREEN_DISMISSED(
+&nbsp;        &quot;service_screen_dismissed&quot;
+&nbsp;    ),
+&nbsp;    SCREEN_VIEWED(&quot;service_screen_viewed&quot;),
+&nbsp;    COMPONENT_DISPLAYED(&quot;service_component_displayed&quot;), COMPONENT_INTERACTED(&quot;service_component_interacted&quot;), OPTION_CHANGED(
+&nbsp;        &quot;service_option_changed&quot;
+&nbsp;    ),
+&nbsp;    RECEIVE_MQTT(
+&nbsp;        &quot;ops_receive_mqtt&quot;
+&nbsp;    ),
+&nbsp;    BUTTON_CLICKED(&quot;service_button_clicked&quot;), ICON_CLICKED(&quot;service_icon_clicked&quot;), LIST_SELECTED(
+&nbsp;        &quot;service_list_selected&quot;
+&nbsp;    ),
+&nbsp;    POPUP_OUT_CLICKED(&quot;service_popup_outclicked&quot;),
+&nbsp;    POPUP_DISPLAYED(&quot;service_popup_displayed&quot;), TOGGLE_SELECTED(
+&nbsp;        &quot;service_toggle_selected&quot;
+&nbsp;    ),
+&nbsp;    CHECKBOX_TICKED(&quot;service_checkbox_ticked&quot;), OTP_INPUT(&quot;service_otp_inputed&quot;), LABEL_CLICKED(&quot;service_label_clicked&quot;), COMPONENT_CLICKED(
+&nbsp;        &quot;service_component_clicked&quot;
+&nbsp;    ),
+&nbsp;    COMPONENT_INPUTED(&quot;service_component_inputed&quot;),
+&nbsp;    REQUEST_PROMOTE_SOF(&quot;request_promote_sof&quot;), LOAD_QUICK_ACTIVE_BANNER(
+&nbsp;        &quot;load_quick_active_banner&quot;
+&nbsp;    ),
+&nbsp;    CLICK_QUICK_ACTIVE_BANNER(&quot;click_quick_active_banner&quot;), LOAD_PROMOTE_SOF_BANNER(&quot;load_promote_sof_banner&quot;), CLICK_PROMOTE_SOF_BANNER(
+&nbsp;        &quot;click_promote_sof_banner&quot;
+&nbsp;    ),
+&nbsp;    FEATURE_TRANS_RESULT(
+&nbsp;        &quot;feature_trans_result&quot;
+&nbsp;    ),
+&nbsp;    FEATURE_TRANS_CONFIRMATION(&quot;feature_trans_confirmation&quot;),
+&nbsp;    PRODUCT_CLICKED(&quot;service_product_clicked&quot;), FIELD_INPUTTED(&quot;service_field_inputed&quot;),
+&nbsp;    ERROR_COMPONENT_VIEWED(&quot;error_component_viewed&quot;),
+&nbsp;}
+&nbsp;
+&nbsp;enum class ScreenName(val id: String) {
+&nbsp;    PAYMENT(&quot;payment&quot;), AFTER_PAYMENT(&quot;after_payment&quot;), PAYMENT_RESULT(&quot;payment_result&quot;), INSTALLMENT(
+&nbsp;        &quot;installment&quot;
+&nbsp;    ),
+&nbsp;    BEFORE_PAYMENT(&quot;before_payment&quot;), BEFORE_REQUEST_PAYMENT(&quot;before_request_payment&quot;), RESULT(&quot;result&quot;), MORE_INFO(
+&nbsp;        &quot;more_info&quot;
+&nbsp;    ),
+&nbsp;    PAYMENT_BANK_OTP(&quot;bank_otp&quot;),
+&nbsp;    PAYMENT_RESULT_LOADING(&quot;payment_result_loading&quot;),
+&nbsp;    CHOOSE_PROMOTION(&quot;promotion&quot;), CHOOSE_PROMOTION_POS(&quot;payment_vouchers&quot;),
+&nbsp;    CHOOSE_PROMOTION_POS_SEARCH(&quot;payment_vouchers_search&quot;), VOUCHER_DETAIL(&quot;voucher_detail_lite&quot;),
+&nbsp;}
+&nbsp;
+&nbsp;enum class ServiceName(val id: String) {
+&nbsp;    REQUEST_PAYMENT(&quot;request_payment&quot;), PAYMENT_RESULT(&quot;payment_result&quot;), PAYMENT_BANK_OTP(&quot;banK_otp&quot;),
+&nbsp;    CHOOSE_PROMOTION_MULTI(&quot;choose_promotion_v2&quot;), CHOOSE_PROMOTION_SINGLE(&quot;select_promotion&quot;),
+&nbsp;    CHOOSE_PROMOTION_POS(&quot;choose_promotion&quot;), VOUCHER_DETAIL(&quot;instant_voucher_detail&quot;),
+&nbsp;}
+&nbsp;
+&nbsp;enum class WebViewScreen(val id: String) {
+&nbsp;    BANK_OTP(&quot;bank_otp&quot;), NAPAS_OTP(&quot;napas_otp&quot;), TDS_OTP(&quot;3ds_otp&quot;), None(&quot;unknown&quot;)
+&nbsp;}
+&nbsp;
+&nbsp;enum class ScreenDismissActor(val id: String) {
+&nbsp;    MANUAL(&quot;manual&quot;), SYSTEM(&quot;system&quot;)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class EntryPointData(
+&nbsp;    val merchantId: String = &quot;&quot;,
+&nbsp;    var orderId: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;entry_point_type&quot;) val entryPointType: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;entry_point_service&quot;) val entryPointService: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;entry_point_block&quot;) val entryPointBlock: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;entry_point_screen&quot;) val entryPointScreen: String = &quot;&quot;,
+&nbsp;    @SerialName(&quot;entry_point_component&quot;) val entryPointComponent: String = &quot;&quot;
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

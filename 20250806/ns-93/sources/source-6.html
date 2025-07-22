@@ -1,0 +1,180 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > TicketShapeKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.presentation.view.components.modifiers</a>
+</div>
+
+<h1>Coverage Summary for Class: TicketShapeKt (vn.momo.compose.payment.payx.presentation.view.components.modifiers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">TicketShapeKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/99)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.presentation.view.components.modifiers
+&nbsp;
+&nbsp;import androidx.compose.ui.geometry.Rect
+&nbsp;import androidx.compose.ui.geometry.Size
+&nbsp;import androidx.compose.ui.graphics.Outline
+&nbsp;import androidx.compose.ui.graphics.Path
+&nbsp;import androidx.compose.ui.graphics.Shape
+&nbsp;import androidx.compose.ui.unit.Density
+&nbsp;import androidx.compose.ui.unit.LayoutDirection
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;
+&nbsp;class TicketShape(private val cornerRadius: Float) : Shape {
+&nbsp;    override fun createOutline(
+&nbsp;        size: Size,
+&nbsp;        layoutDirection: LayoutDirection,
+&nbsp;        density: Density
+&nbsp;    ): Outline {
+&nbsp;        return Outline.Generic(
+&nbsp;            path = drawTicketPath(size = size, density, cornerRadius)
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun drawTicketPath(size: Size, density: Density, cornerRadius: Float): Path {
+<b class="nc">&nbsp;    val middleY = size.height.div(other = 2f)</b>
+<b class="nc">&nbsp;    val circleRadiusInPx = with(density) { cornerRadius.dp.toPx() }</b>
+<b class="nc">&nbsp;    return Path().apply {</b>
+<b class="nc">&nbsp;        reset()</b>
+<b class="nc">&nbsp;        lineTo(x = 0F, y = 0F)</b>
+<b class="nc">&nbsp;        lineTo(x = size.width, y = 0F)</b>
+<b class="nc">&nbsp;        lineTo(x = size.width, y = middleY)</b>
+<b class="nc">&nbsp;        arcTo(</b>
+<b class="nc">&nbsp;            rect = Rect(</b>
+<b class="nc">&nbsp;                left = size.width - circleRadiusInPx,</b>
+<b class="nc">&nbsp;                top = middleY - circleRadiusInPx,</b>
+<b class="nc">&nbsp;                right = size.width + circleRadiusInPx,</b>
+<b class="nc">&nbsp;                bottom = middleY + circleRadiusInPx</b>
+&nbsp;            ),
+<b class="nc">&nbsp;            startAngleDegrees = 270f,</b>
+<b class="nc">&nbsp;            sweepAngleDegrees = -180F,</b>
+<b class="nc">&nbsp;            forceMoveTo = false</b>
+&nbsp;        )
+<b class="nc">&nbsp;        lineTo(x = size.width, y = size.height)</b>
+<b class="nc">&nbsp;        lineTo(0F, size.height)</b>
+<b class="nc">&nbsp;        lineTo(x = 0F, y = size.height)</b>
+<b class="nc">&nbsp;        arcTo(</b>
+<b class="nc">&nbsp;            rect = Rect(</b>
+<b class="nc">&nbsp;                left = 0F - circleRadiusInPx,</b>
+<b class="nc">&nbsp;                top = middleY - circleRadiusInPx,</b>
+<b class="nc">&nbsp;                right = circleRadiusInPx,</b>
+<b class="nc">&nbsp;                bottom = middleY + circleRadiusInPx</b>
+&nbsp;            ),
+<b class="nc">&nbsp;            startAngleDegrees = 90f,</b>
+<b class="nc">&nbsp;            sweepAngleDegrees = -180F,</b>
+<b class="nc">&nbsp;            forceMoveTo = false</b>
+&nbsp;        )
+<b class="nc">&nbsp;        lineTo(x = 0F, y = 0F)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

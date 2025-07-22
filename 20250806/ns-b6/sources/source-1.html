@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > GetFooterButtonPropsKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.utils</a>
+</div>
+
+<h1>Coverage Summary for Class: GetFooterButtonPropsKt (vn.momo.compose.payment.promotion.presentation.utils)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">GetFooterButtonPropsKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/160)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GetFooterButtonPropsKt$getFooterButtonPropsUtil$$inlined$sortedBy$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">GetFooterButtonPropsKt$getFooterButtonPropsUtil$$inlined$sortedBy$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">GetFooterButtonPropsKt$getFooterButtonPropsUtil$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/160)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.utils
+&nbsp;
+&nbsp;import org.jetbrains.compose.resources.getString
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.IVoucherBase
+&nbsp;import vn.momo.compose.payment.promotion.domain.entities.VoucherLocalType
+&nbsp;import vn.momo.compose.payment.promotion.presentation.model.FooterButtonProps
+&nbsp;import vn.momo.compose.resources.Res
+&nbsp;import vn.momo.compose.resources.applyButtonLabel
+&nbsp;import vn.momo.compose.resources.skipButtonLabel
+&nbsp;import vn.momo.kits.components.ButtonType
+&nbsp;
+&nbsp;suspend fun getFooterButtonPropsUtil(
+&nbsp;    selectedVouchers: List&lt;IVoucherBase&gt;,
+&nbsp;    defaultSelectedVouchers: List&lt;IVoucherBase&gt;,
+&nbsp;    callbackToPayment: () -&gt; Unit,
+&nbsp;): FooterButtonProps {
+<b class="nc">&nbsp;    val isSelectedVouchersUpdated =</b>
+<b class="nc">&nbsp;        selectedVouchers.map { it.ID }.sortedBy { it }.toString() !=</b>
+<b class="nc">&nbsp;                defaultSelectedVouchers.map { it.ID }.sortedBy { it }.toString()</b>
+&nbsp;
+<b class="nc">&nbsp;    val vouchersToApply = selectedVouchers.filter {</b>
+<b class="nc">&nbsp;        it.localType != VoucherLocalType.Invalid</b>
+<b class="nc">&nbsp;    }.distinctById()</b>
+&nbsp;
+<b class="nc">&nbsp;    val shouldAllowToApply = if (defaultSelectedVouchers.isNotEmpty()) {</b>
+<b class="nc">&nbsp;        true</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;        selectedVouchers.isNotEmpty() &amp;&amp; isSelectedVouchersUpdated</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    val buttonType =</b>
+<b class="nc">&nbsp;        if (shouldAllowToApply) {</b>
+<b class="nc">&nbsp;            ButtonType.PRIMARY</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            ButtonType.DISABLED</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;    val isAnyDefaultSelectedInvalid =</b>
+<b class="nc">&nbsp;        defaultSelectedVouchers.isNotEmpty() &amp;&amp; defaultSelectedVouchers.any { it.localType == VoucherLocalType.Invalid }</b>
+&nbsp;
+<b class="nc">&nbsp;    val buttonTitle =</b>
+<b class="nc">&nbsp;        if (isAnyDefaultSelectedInvalid &amp;&amp; !isSelectedVouchersUpdated) {</b>
+<b class="nc">&nbsp;            getString(Res.string.skipButtonLabel)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            if (vouchersToApply.isNotEmpty()) {</b>
+<b class="nc">&nbsp;                getString(Res.string.applyButtonLabel) +</b>
+<b class="nc">&nbsp;                        &quot; (${vouchersToApply.size})&quot;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                getString(Res.string.applyButtonLabel)</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;    return FooterButtonProps(</b>
+<b class="nc">&nbsp;        title = buttonTitle,</b>
+<b class="nc">&nbsp;        onClick = { callbackToPayment() },</b>
+<b class="nc">&nbsp;        type = buttonType,</b>
+&nbsp;    )
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

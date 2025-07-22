@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PState</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.presentation.viewModel.state</a>
+</div>
+
+<h1>Coverage Summary for Class: PState (vn.momo.compose.payment.base.presentation.viewModel.state)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PState</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.presentation.viewModel.state
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.flow.MutableStateFlow
+&nbsp;import kotlinx.coroutines.flow.SharingStarted
+&nbsp;import kotlinx.coroutines.flow.stateIn
+&nbsp;import kotlinx.coroutines.flow.update
+&nbsp;
+<b class="nc">&nbsp;class PState&lt;Data&gt;(</b>
+&nbsp;    scope: CoroutineScope,
+<b class="nc">&nbsp;    private val initialState: Data,</b>
+&nbsp;) {
+<b class="nc">&nbsp;    val _state = MutableStateFlow(initialState)</b>
+&nbsp;
+<b class="nc">&nbsp;    val state =</b>
+<b class="nc">&nbsp;        _state.stateIn(scope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 200), initialState)</b>
+&nbsp;
+&nbsp;    val value
+<b class="nc">&nbsp;        get() = state.value</b>
+&nbsp;
+&nbsp;    val _value
+<b class="nc">&nbsp;        get() = _state.value</b>
+&nbsp;
+&nbsp;    fun update(function: (Data) -&gt; Data) {
+<b class="nc">&nbsp;        _state.update(function)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun update(value: Data) {
+<b class="nc">&nbsp;        _state.update { value }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun reset() {
+<b class="nc">&nbsp;        _state.update { initialState }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

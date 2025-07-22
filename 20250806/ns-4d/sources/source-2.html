@@ -1,0 +1,272 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > InitCashInDataDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.napas.data.dataSource.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: InitCashInDataDTO (vn.momo.compose.payment.napas.data.dataSource.mapper)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">InitCashInDataDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">InitCashInDataDTO$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.napas.data.dataSource.mapper
+&nbsp;
+&nbsp;import kotlinx.serialization.Serializable
+&nbsp;import kotlinx.serialization.json.JsonElement
+&nbsp;import kotlinx.serialization.json.JsonObject
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.PaymentNetworkRequest
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.request.RemoteAPIOption
+&nbsp;import vn.momo.compose.payment.base.data.dataSource.dto.response.PaymentNetWorkResponse
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.InformMessageDTO
+&nbsp;import vn.momo.compose.payment.payx.data.dataSource.dto.response.OverlayDialogDTO
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.tryGetString
+&nbsp;import vn.momo.core.features.sofManager.constants.MoneySource
+&nbsp;import vn.momo.core.utils.ModelConvertHelper
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitCashInRequestDTO(
+&nbsp;    override val msgType: String,
+&nbsp;    override val options: RemoteAPIOption = RemoteAPIOption(
+&nbsp;        loading = true,
+&nbsp;    ),
+&nbsp;    override val headers: JsonObject,
+&nbsp;    override val path: String? = null,
+&nbsp;    override val subPath: String,
+&nbsp;    override val subDomain: String = &quot;api&quot;,
+&nbsp;    val momoMsg: InitCashInPayloadDTO,
+&nbsp;) : PaymentNetworkRequest {
+&nbsp;    override fun toJson(): JsonElement? =
+&nbsp;        ModelConvertUtils.encodeToJson(InitCashInRequestDTO.serializer(), this)
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitCashInPayloadDTO(
+&nbsp;    val amount: Long? = null,
+&nbsp;    val cardNumber: String? = null,
+&nbsp;    val cardFullName: String? = null,
+&nbsp;    val cardIssueDate: String? = null,
+&nbsp;    val partnerCode: String? = null,
+&nbsp;    val personalId: String? = null,
+&nbsp;    val isSaveToken: Boolean? = false,
+&nbsp;    val isLinkCard: Boolean? = true,
+&nbsp;    val clientIP: String? = null,
+&nbsp;    val merchantId: String? = null,
+&nbsp;    val tranType: Int? = 1, // Bank In = 1
+&nbsp;    val moneySource: Int? = MoneySource.Napas.id,
+&nbsp;    val _class: String? = &quot;mservice.backend.entity.msg.NapasCashInInitMsg&quot;,
+&nbsp;    val extras: String? = null,
+&nbsp;    val serviceId: String? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitCashInResponseDTO(
+&nbsp;    val momoMsg: InitCashInDataDTO? = null,
+&nbsp;    override val result: Boolean? = false,
+&nbsp;    override val msgType: String? = null,
+&nbsp;    override val errorCode: Int? = null,
+&nbsp;    override val errorDesc: String? = null,
+&nbsp;    override val extra: JsonObject? = null,
+&nbsp;) : PaymentNetWorkResponse {
+&nbsp;    override fun toJson(): JsonElement? =
+&nbsp;        ModelConvertUtils.encodeToJson(InitCashInResponseDTO.serializer(), this)
+&nbsp;
+&nbsp;    fun toModel(): InitCashInResponse {
+&nbsp;        val extras =
+&nbsp;            momoMsg?.extras?.let {
+&nbsp;                ModelConvertHelper.decode(
+&nbsp;                    ExtrasInitCashInData.serializer(),
+&nbsp;                    it
+&nbsp;                )
+&nbsp;            }
+&nbsp;        return InitCashInResponse(
+&nbsp;            url = extras?.form_submit_url,
+&nbsp;            orderId = extras?.napas_data_for_html_form?.tryGetString(&quot;orderId&quot;)
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class InitCashInResponse(
+&nbsp;    val url: String? = null,
+&nbsp;    val orderId: String? = null,
+&nbsp;)
+&nbsp;
+&nbsp;@Serializable
+&nbsp;data class ExtrasInitCashInData(
+&nbsp;    val form_submit_url: String? = null,
+&nbsp;    val napas_data_for_html_form: JsonObject? = null,
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;@Serializable</b>
+&nbsp;data class InitCashInDataDTO(
+<b class="nc">&nbsp;    val extras: String? = null,</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

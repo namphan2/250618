@@ -1,0 +1,329 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > StringHtmlHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal</a>
+</div>
+
+<h1>Coverage Summary for Class: StringHtmlHandler (vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">StringHtmlHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/92)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/601)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">StringHtmlHandler$Companion</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/92)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/601)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.internal
+&nbsp;
+&nbsp;import vn.momo.compose.payment.promotion.presentation.view.components.htmlrenderer.HtmlHandler
+&nbsp;
+&nbsp;/**
+&nbsp; * Simplified version of AnnotatedStringHtmlHandler without styling.
+&nbsp; */
+<b class="nc">&nbsp;internal class StringHtmlHandler(</b>
+&nbsp;    builder: StringBuilder,
+<b class="nc">&nbsp;    private val compactMode: Boolean</b>
+&nbsp;) : HtmlHandler {
+<b class="nc">&nbsp;    private val textWriter = HtmlTextWriter(builder)</b>
+&nbsp;    private var listLevel = 0
+&nbsp;    // A negative index means the list is unordered
+<b class="nc">&nbsp;    private var listIndexes: IntArray = EMPTY_LIST_INDEXES</b>
+&nbsp;    private var preformattedLevel = 0
+&nbsp;    private var skippedTagsLevel = 0
+&nbsp;
+&nbsp;    override fun onOpenTag(name: String, attributes: (String) -&gt; String?) {
+<b class="nc">&nbsp;        when (name) {</b>
+<b class="nc">&nbsp;            &quot;br&quot; -&gt; handleLineBreakStart()</b>
+<b class="nc">&nbsp;            &quot;hr&quot; -&gt; handleHorizontalRuleStart()</b>
+<b class="nc">&nbsp;            &quot;p&quot;, &quot;blockquote&quot; -&gt; handleBlockStart(2, 0)</b>
+&nbsp;            &quot;div&quot;, &quot;header&quot;, &quot;footer&quot;, &quot;main&quot;, &quot;nav&quot;, &quot;aside&quot;, &quot;section&quot;, &quot;article&quot;,
+&nbsp;            &quot;address&quot;, &quot;figure&quot;, &quot;figcaption&quot;,
+<b class="nc">&nbsp;            &quot;video&quot;, &quot;audio&quot; -&gt; handleBlockStart(1, 0)</b>
+<b class="nc">&nbsp;            &quot;ul&quot;, &quot;dl&quot; -&gt; handleListStart(-1)</b>
+<b class="nc">&nbsp;            &quot;ol&quot; -&gt; handleListStart(1)</b>
+<b class="nc">&nbsp;            &quot;li&quot; -&gt; handleListItemStart()</b>
+<b class="nc">&nbsp;            &quot;dt&quot; -&gt; handleDefinitionTermStart()</b>
+<b class="nc">&nbsp;            &quot;dd&quot; -&gt; handleDefinitionDetailStart()</b>
+<b class="nc">&nbsp;            &quot;pre&quot; -&gt; handlePreStart()</b>
+<b class="nc">&nbsp;            &quot;h1&quot;, &quot;h2&quot;, &quot;h3&quot;, &quot;h4&quot;, &quot;h5&quot;, &quot;h6&quot; -&gt; handleHeadingStart()</b>
+<b class="nc">&nbsp;            &quot;script&quot;, &quot;head&quot;, &quot;table&quot;, &quot;form&quot;, &quot;fieldset&quot; -&gt; handleSkippedTagStart()</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleLineBreakStart() {
+<b class="nc">&nbsp;        textWriter.writeLineBreak()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleHorizontalRuleStart() {
+<b class="nc">&nbsp;        textWriter.markBlockBoundary(if (compactMode) 1 else 2, 0)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleBlockStart(prefixNewLineCount: Int, indentCount: Int) {
+<b class="nc">&nbsp;        textWriter.markBlockBoundary(if (compactMode) 1 else prefixNewLineCount, indentCount)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleListStart(initialIndex: Int) {
+<b class="nc">&nbsp;        val currentListLevel = listLevel</b>
+<b class="nc">&nbsp;        handleBlockStart(if (listLevel == 0) 2 else 1, 0)</b>
+<b class="nc">&nbsp;        val listIndexesSize = listIndexes.size</b>
+&nbsp;        // Ensure listIndexes capacity
+<b class="nc">&nbsp;        if (currentListLevel == listIndexesSize) {</b>
+<b class="nc">&nbsp;            listIndexes = if (listIndexesSize == 0) {</b>
+<b class="nc">&nbsp;                IntArray(INITIAL_LIST_INDEXES_SIZE)</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                listIndexes.copyOf(listIndexesSize * 2)</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        listIndexes[currentListLevel] = initialIndex</b>
+<b class="nc">&nbsp;        listLevel = currentListLevel + 1</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleListItemStart() {
+<b class="nc">&nbsp;        val currentListLevel = listLevel</b>
+<b class="nc">&nbsp;        handleBlockStart(1, currentListLevel - 1)</b>
+<b class="nc">&nbsp;        val itemIndex = if (currentListLevel == 0) {</b>
+<b class="nc">&nbsp;            -1</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            listIndexes[currentListLevel - 1]</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (itemIndex &lt; 0) {</b>
+<b class="nc">&nbsp;            textWriter.write(&quot;• &quot;)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            textWriter.write(itemIndex.toString())</b>
+<b class="nc">&nbsp;            textWriter.write(&quot;. &quot;)</b>
+<b class="nc">&nbsp;            listIndexes[currentListLevel - 1] = itemIndex + 1</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleDefinitionTermStart() {
+<b class="nc">&nbsp;        handleBlockStart(1, listLevel - 1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleDefinitionDetailStart() {
+<b class="nc">&nbsp;        handleBlockStart(1, listLevel)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handlePreStart() {
+<b class="nc">&nbsp;        handleBlockStart(2, 0)</b>
+<b class="nc">&nbsp;        preformattedLevel++</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleHeadingStart() {
+<b class="nc">&nbsp;        handleBlockStart(2, 0)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleSkippedTagStart() {
+<b class="nc">&nbsp;        skippedTagsLevel++</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun onCloseTag(name: String) {
+<b class="nc">&nbsp;        when (name) {</b>
+&nbsp;            &quot;br&quot;,
+&nbsp;            &quot;hr&quot; -&gt; {}
+<b class="nc">&nbsp;            &quot;p&quot;, &quot;blockquote&quot; -&gt; handleBlockEnd(2)</b>
+&nbsp;            &quot;div&quot;, &quot;header&quot;, &quot;footer&quot;, &quot;main&quot;, &quot;nav&quot;, &quot;aside&quot;, &quot;section&quot;, &quot;article&quot;,
+&nbsp;            &quot;address&quot;, &quot;figure&quot;, &quot;figcaption&quot;,
+<b class="nc">&nbsp;            &quot;video&quot;, &quot;audio&quot; -&gt; handleBlockEnd(1)</b>
+&nbsp;            &quot;ul&quot;, &quot;dl&quot;,
+<b class="nc">&nbsp;            &quot;ol&quot; -&gt; handleListEnd()</b>
+<b class="nc">&nbsp;            &quot;li&quot; -&gt; handleListItemEnd()</b>
+<b class="nc">&nbsp;            &quot;dt&quot; -&gt; handleDefinitionTermEnd()</b>
+<b class="nc">&nbsp;            &quot;dd&quot; -&gt; handleDefinitionDetailEnd()</b>
+<b class="nc">&nbsp;            &quot;pre&quot; -&gt; handlePreEnd()</b>
+<b class="nc">&nbsp;            &quot;h1&quot;, &quot;h2&quot;, &quot;h3&quot;, &quot;h4&quot;, &quot;h5&quot;, &quot;h6&quot; -&gt; handleHeadingEnd()</b>
+<b class="nc">&nbsp;            &quot;script&quot;, &quot;head&quot;, &quot;table&quot;, &quot;form&quot;, &quot;fieldset&quot; -&gt; handleSkippedTagEnd()</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleBlockEnd(suffixNewLineCount: Int) {
+<b class="nc">&nbsp;        textWriter.markBlockBoundary(if (compactMode) 1 else suffixNewLineCount, 0)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleListEnd() {
+<b class="nc">&nbsp;        listLevel--</b>
+<b class="nc">&nbsp;        handleBlockEnd(if (listLevel == 0) 2 else 1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleListItemEnd() {
+<b class="nc">&nbsp;        handleBlockEnd(1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleDefinitionTermEnd() {
+<b class="nc">&nbsp;        handleBlockEnd(1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleDefinitionDetailEnd() {
+<b class="nc">&nbsp;        handleBlockEnd(1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handlePreEnd() {
+<b class="nc">&nbsp;        preformattedLevel--</b>
+<b class="nc">&nbsp;        handleBlockEnd(2)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleHeadingEnd() {
+<b class="nc">&nbsp;        handleBlockEnd(1)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun handleSkippedTagEnd() {
+<b class="nc">&nbsp;        skippedTagsLevel--</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun onText(text: String) {
+&nbsp;        // Skip text inside skipped tags
+<b class="nc">&nbsp;        if (skippedTagsLevel &gt; 0) {</b>
+&nbsp;            return
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (preformattedLevel == 0) {</b>
+<b class="nc">&nbsp;            textWriter.write(text)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            textWriter.writePreformatted(text)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    companion object {
+<b class="nc">&nbsp;        private val EMPTY_LIST_INDEXES = intArrayOf()</b>
+&nbsp;        private const val INITIAL_LIST_INDEXES_SIZE = 8
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

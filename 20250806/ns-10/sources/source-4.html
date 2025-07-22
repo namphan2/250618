@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > IBalanceConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.base.core.composeApi.balanceConfig</a>
+</div>
+
+<h1>Coverage Summary for Class: IBalanceConfig (vn.momo.compose.payment.base.core.composeApi.balanceConfig)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+</tr>
+<tr>
+  <td class="name">IBalanceConfig</td>
+    <td class="coverageStat"/>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.base.core.composeApi.balanceConfig
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import kotlinx.serialization.builtins.serializer
+&nbsp;import kotlinx.serialization.json.buildJsonObject
+&nbsp;import kotlinx.serialization.json.put
+&nbsp;import vn.momo.api.APIs
+&nbsp;import vn.momo.api.IComposeApi
+&nbsp;import vn.momo.api.requestWithFlow
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.model.VixResponse
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;
+&nbsp;interface IBalanceConfig {
+&nbsp;    fun get(): Flow&lt;Boolean&gt;
+&nbsp;    fun set(value: Boolean)
+&nbsp;}
+&nbsp;
+&nbsp;class PayXBalanceConfig(private val vixApi: IComposeApi) : IBalanceConfig {
+&nbsp;    override fun get(): Flow&lt;Boolean&gt; {
+&nbsp;        return vixApi.requestWithFlow(
+&nbsp;            APIs.getItemLocal.name, listOf(
+&nbsp;                buildJsonObject {
+&nbsp;                    put(&quot;type&quot;, &quot;IS_SECURE_BALANCE&quot;)
+&nbsp;                    put(&quot;key&quot;, &quot;IS_SECURE_BALANCE&quot;)
+&nbsp;                }
+&nbsp;            )).take(1).map {
+&nbsp;            ModelConvertUtils.decode(VixResponse.serializer(Boolean.serializer()), it)?.response
+&nbsp;                ?: false
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun set(value: Boolean) {
+&nbsp;        vixApi.requestWithFlow(APIs.updateItemLocal.name, listOf(
+&nbsp;            buildJsonObject {
+&nbsp;                put(&quot;type&quot;, &quot;IS_SECURE_BALANCE&quot;)
+&nbsp;                put(&quot;key&quot;, &quot;IS_SECURE_BALANCE&quot;)
+&nbsp;                put(&quot;value&quot;, value)
+&nbsp;            }
+&nbsp;        )).take(1).launchIn(CoroutineScope(Dispatchers.IO))
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

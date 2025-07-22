@@ -1,0 +1,280 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > AutoDebitRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.payx.data.repositoryImpl.orderExtra.autodebit</a>
+</div>
+
+<h1>Coverage Summary for Class: AutoDebitRepository (vn.momo.compose.payment.payx.data.repositoryImpl.orderExtra.autodebit)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">AutoDebitRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37.5%
+  </span>
+  <span class="absValue">
+    (9/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    58.3%
+  </span>
+  <span class="absValue">
+    (21/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (35/35)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$filter$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$filter$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$filter$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">AutoDebitRepository$getConfig$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (3/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37.5%
+  </span>
+  <span class="absValue">
+    (9/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    58.3%
+  </span>
+  <span class="absValue">
+    (21/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (35/35)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.payx.data.repositoryImpl.orderExtra.autodebit
+&nbsp;
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.filter
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.take
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.TraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.GrafanaTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.journey.FirebaseTrace
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.PayXApiPerformanceEvent
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.AutoDebitRequested
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.journey.AutoDebitResponded
+&nbsp;import vn.momo.compose.payment.payx.data.dataMapper.toModel
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.PayXResult
+&nbsp;import vn.momo.compose.payment.payx.domain.entities.autodebit.AutoDebitItem
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.orderExtra.OrderExtraRepository
+&nbsp;import vn.momo.compose.payment.payx.domain.repositories.orderExtra.autodebit.IAutoDebitRepository
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.compose.utils.tryGetIntNullable
+&nbsp;
+<b class="fc">&nbsp;class AutoDebitRepository(</b>
+<b class="fc">&nbsp;    private val orderExtraRepository: OrderExtraRepository</b>
+&nbsp;) : IAutoDebitRepository {
+&nbsp;    override fun getConfig(tagName: String): Flow&lt;Pair&lt;List&lt;AutoDebitItem&gt;?, Boolean?&gt;?&gt; {
+<b class="fc">&nbsp;        FirebaseTrace.track(AutoDebitRequested())</b>
+<b class="fc">&nbsp;        GrafanaTrace.start(PayXApiPerformanceEvent.GetAutoDebitConfig.event)</b>
+<b class="fc">&nbsp;        return orderExtraRepository.extraConfig</b>
+<b class="pc">&nbsp;            .filter { it != null &amp;&amp; it != PayXResult.Loading }</b>
+<b class="fc">&nbsp;            .take(1)</b>
+<b class="fc">&nbsp;            .map { result -&gt;</b>
+<b class="fc">&nbsp;                return@map when (result) {</b>
+<b class="pc">&nbsp;                    is PayXResult.Success -&gt; {</b>
+<b class="fc">&nbsp;                        val data = result.data</b>
+<b class="fc">&nbsp;                        GrafanaTrace.stop(</b>
+<b class="fc">&nbsp;                            PayXApiPerformanceEvent.GetAutoDebitConfig.event,</b>
+<b class="fc">&nbsp;                            true,</b>
+<b class="pc">&nbsp;                            TraceParameter(errorCode = data?.errorCode?.toDouble())</b>
+&nbsp;                        )
+<b class="fc">&nbsp;                        FirebaseTrace.track(</b>
+<b class="fc">&nbsp;                            AutoDebitResponded(</b>
+<b class="pc">&nbsp;                                errorCode = data?.errorCode,</b>
+<b class="fc">&nbsp;                                status = true,</b>
+<b class="fc">&nbsp;                                tagName = tagName</b>
+&nbsp;                            )
+&nbsp;                        )
+<b class="pc">&nbsp;                        Pair(result.data?.autoDebit?.map { it.toModel() }, result.data?.skipLoading)</b>
+&nbsp;                    }
+&nbsp;
+<b class="nc">&nbsp;                    is PayXResult.Fail -&gt; {</b>
+<b class="nc">&nbsp;                        val err = result.error</b>
+<b class="nc">&nbsp;                        val errorCode = if (err.message.isNullOrEmpty()) null else {</b>
+<b class="nc">&nbsp;                            ModelConvertUtils.decodeToPureMap(err.message!!)</b>
+<b class="nc">&nbsp;                                .tryGetIntNullable(&quot;errorCode&quot;)</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        GrafanaTrace.fail(</b>
+<b class="nc">&nbsp;                            PayXApiPerformanceEvent.GetAutoDebitConfig.event,</b>
+<b class="nc">&nbsp;                            TraceParameter(errorCode = errorCode?.toDouble())</b>
+&nbsp;                        )
+<b class="nc">&nbsp;                        FirebaseTrace.track(</b>
+<b class="nc">&nbsp;                            AutoDebitResponded(</b>
+<b class="nc">&nbsp;                                errorCode = errorCode,</b>
+<b class="nc">&nbsp;                                status = false,</b>
+<b class="nc">&nbsp;                                tagName = tagName</b>
+&nbsp;                            )
+&nbsp;                        )
+<b class="nc">&nbsp;                        Pair(null, true)</b>
+&nbsp;                    }
+&nbsp;
+<b class="nc">&nbsp;                    else -&gt; Pair(null, true)</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>

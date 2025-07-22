@@ -1,0 +1,357 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>MoMoCompose Coverage Report > PromotionGrafanaTraceKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: MoMoCompose<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">vn.momo.compose.payment.promotion.core.utils</a>
+</div>
+
+<h1>Coverage Summary for Class: PromotionGrafanaTraceKt (vn.momo.compose.payment.promotion.core.utils)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PromotionGrafanaTraceKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PromotionGrafanaTraceKt$tracePromotionApi$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PromotionGrafanaTraceKt$tracePromotionApi$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PromotionGrafanaTraceKt$tracePromotionApi$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PromotionGrafanaTraceKt$tracePromotionApi$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/63)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/78)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package vn.momo.compose.payment.promotion.core.utils
+&nbsp;
+&nbsp;import kotlinx.coroutines.CoroutineExceptionHandler
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.IO
+&nbsp;import kotlinx.coroutines.Job
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.catch
+&nbsp;import kotlinx.coroutines.flow.firstOrNull
+&nbsp;import kotlinx.coroutines.flow.launchIn
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.flow.onEach
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.ILogger
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.IGrafanaTracer
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.StartTraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.composeApi.grafana.model.TraceParameter
+&nbsp;import vn.momo.compose.payment.base.core.service.trace.model.grafana.GrafanaMetric
+&nbsp;import vn.momo.compose.payment.promotion.core.network.model.PromotionNetworkResponse
+&nbsp;import vn.momo.compose.utils.datamapping.ModelConvertUtils
+&nbsp;import vn.momo.koin.KoinHelper
+&nbsp;
+&nbsp;object PromotionGrafanaTrace {
+&nbsp;    private val tracer: IGrafanaTracer = KoinHelper.getInjected&lt;IGrafanaTracer&gt;()
+&nbsp;    private val logger: ILogger = KoinHelper.getInjected&lt;ILogger&gt;()
+&nbsp;
+&nbsp;    private var buffer = mutableMapOf&lt;String, String?&gt;()
+&nbsp;    private val jobs = mutableMapOf&lt;String, Job&gt;()
+&nbsp;
+&nbsp;    private val exceptionHandler = CoroutineExceptionHandler { _, throwable -&gt;
+&nbsp;        logger.e(&quot;[ChoosePromotion] GrafanaTrace.exceptionHandler: ${throwable.message}&quot;)
+&nbsp;    }
+&nbsp;    private val scope = CoroutineScope(Dispatchers.IO + exceptionHandler)
+&nbsp;
+&nbsp;    fun start(event: GrafanaMetric) {
+&nbsp;        val startTraceParameter = StartTraceParameter(
+&nbsp;            event.flow,
+&nbsp;            event.step,
+&nbsp;        )
+&nbsp;        jobs[event.label] = tracer.start(startTraceParameter)
+&nbsp;            .onEach { buffer[event.label] = it.traceId }
+&nbsp;            .catch { logger.e(&quot;[ChoosePromotion] GrafanaTrace.start error: ${it.message}&quot;) }
+&nbsp;            .launchIn(scope)
+&nbsp;    }
+&nbsp;
+&nbsp;    suspend fun startTrace(event: GrafanaMetric): String? {
+&nbsp;        val traceId = tracer.start(
+&nbsp;            StartTraceParameter(
+&nbsp;                event.flow,
+&nbsp;                event.step,
+&nbsp;            )
+&nbsp;        ).firstOrNull()?.traceId
+&nbsp;        buffer[event.label] = traceId
+&nbsp;        return traceId
+&nbsp;    }
+&nbsp;
+&nbsp;    fun success(event: GrafanaMetric, params: TraceParameter = TraceParameter()) {
+&nbsp;        stop(event, true, params)
+&nbsp;    }
+&nbsp;
+&nbsp;    fun fail(event: GrafanaMetric, params: TraceParameter = TraceParameter()) {
+&nbsp;        stop(event, false, params)
+&nbsp;    }
+&nbsp;
+&nbsp;    fun stop(event: GrafanaMetric, status: Boolean, params: TraceParameter) {
+&nbsp;        buildTraceParameters(event, params) { traceParams -&gt;
+&nbsp;            withTraceId(event, &quot;stop&quot;) { traceId -&gt;
+&nbsp;                if (status) {
+&nbsp;                    tracer.success(traceId, traceParams)
+&nbsp;                } else {
+&nbsp;                    tracer.fail(traceId, traceParams)
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun withTraceId(
+&nbsp;        event: GrafanaMetric,
+&nbsp;        operation: String,
+&nbsp;        action: (String) -&gt; Unit
+&nbsp;    ) {
+&nbsp;        scope.launch {
+&nbsp;            jobs[event.label]?.join()
+&nbsp;            buffer[event.label]?.let { traceId -&gt;
+&nbsp;                action(traceId)
+&nbsp;                buffer.remove(event.label)
+&nbsp;                jobs.remove(event.label)
+&nbsp;            } ?: run {
+&nbsp;                logger.e(&quot;[ChoosePromotion] GrafanaTrace.$operation:: no traceId $event&quot;)
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildTraceParameters(
+&nbsp;        event: GrafanaMetric,
+&nbsp;        callback: ((TraceParameter) -&gt; Unit)? = null,
+&nbsp;    ): TraceParameter {
+&nbsp;        val traceParams = TraceParameter(
+&nbsp;            flow = event.flow,
+&nbsp;            step = event.step,
+&nbsp;        )
+&nbsp;        callback?.invoke(traceParams)
+&nbsp;        return traceParams
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun buildTraceParameters(
+&nbsp;        event: GrafanaMetric,
+&nbsp;        params: TraceParameter,
+&nbsp;        callback: ((TraceParameter) -&gt; Unit)? = null,
+&nbsp;    ): TraceParameter {
+&nbsp;        val traceParams = params.copy(
+&nbsp;            flow = event.flow,
+&nbsp;            step = event.step,
+&nbsp;        )
+&nbsp;        callback?.invoke(traceParams)
+&nbsp;        return traceParams
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun &lt;T&gt; Flow&lt;T&gt;.tracePromotionApi(
+&nbsp;    event: GrafanaMetric
+&nbsp;): Flow&lt;T&gt; {
+<b class="nc">&nbsp;    PromotionGrafanaTrace.start(event)</b>
+<b class="nc">&nbsp;    return this.catch {</b>
+<b class="nc">&nbsp;        if (it.message.isNullOrEmpty()) {</b>
+<b class="nc">&nbsp;            PromotionGrafanaTrace.fail(event)</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            val json = ModelConvertUtils.decodeToPureMap(it.message!!)</b>
+<b class="nc">&nbsp;            PromotionGrafanaTrace.fail(</b>
+<b class="nc">&nbsp;                event,</b>
+<b class="nc">&nbsp;                TraceParameter(</b>
+<b class="nc">&nbsp;                    errorCode = json[&quot;errorCode&quot;] as? Double,</b>
+<b class="nc">&nbsp;                    errorMessage = json[&quot;errorDesc&quot;]?.toString()</b>
+&nbsp;                )
+&nbsp;            )
+&nbsp;        }
+&nbsp;        throw it
+<b class="nc">&nbsp;    }.map {</b>
+&nbsp;        if (it is PromotionNetworkResponse) {
+&nbsp;            PromotionGrafanaTrace.success(
+&nbsp;                event,
+&nbsp;                TraceParameter(errorCode = it.errorCode?.toDouble())
+&nbsp;            )
+&nbsp;        } else {
+&nbsp;            PromotionGrafanaTrace.success(event)
+&nbsp;        }
+&nbsp;        return@map it
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-07-22 15:26</div>
+</div>
+</body>
+</html>
