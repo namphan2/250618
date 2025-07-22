@@ -100,7 +100,7 @@ mv "$YYMMDD" /Users/nam.phan2/html-doc/
 # Bước 5: Quay lại project html-doc và chạy update_folders
 cd /Users/nam.phan2/html-doc
 echo ">>>>>>>>>>>>> Chạy update_folders ..."
-./update_folders
+./update_folders.sh
 
 # Bước 6.1: Commit và push folder vừa move với message là tên folder
 if [[ -d "$YYMMDD" ]]; then

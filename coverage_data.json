@@ -19,5 +19,12 @@
     "Branch": 1.8,
     "Line": 3.8,
     "Instruction": 3.7
+  },
+  "250806": {
+    "Class": 6.4,
+    "Method": 4.7,
+    "Branch": 1.8,
+    "Line": 3.8,
+    "Instruction": 3.7
   }
 }
